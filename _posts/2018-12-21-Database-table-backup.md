@@ -6,6 +6,8 @@ category: Mysql
 tags: [Mysql, SQL]
 ---
 
+# 数据库表备份
+
 `create table ... as ...` 语法可以备份表结构和数据
 `insert into ... select ...` 语法可以备份表数据
 

@@ -6,6 +6,8 @@ category: Shell
 tags: [Shell, awk]
 ---
 
+# 外部参数传入awk后不一致问题
+
 ## 问题描述
 
 在编写shell时, 需要向shell 中传递外部定义的参数, Google到这篇文章
