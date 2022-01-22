@@ -1,0 +1,23 @@
+---
+layout: article
+title: Git 设置代理
+date: 2020-01-15 10:27
+category: Git
+tags: [Git, proxy, 科学上网]
+---
+
+环境:
+    已启动代理软件, 本地端口为 10808
+
+在 Git Bash 中输入
+```shell
+git config --global http.proxy 'socks5://127.0.0.1:10808'
+git config --global https.proxy 'socks5://127.0.0.1:10808'
+```
+即可启动全局 git 的 HTTP&HTTPS 代理
+
+取消代理
+```shell
+git config --global --unset http.proxy
+git config --global --unset https.proxy
+```
