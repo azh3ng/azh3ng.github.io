@@ -1,14 +1,12 @@
 ---
 layout: article
-title: Spring-Boot 整合 DBUnit 使用笔记
+title: Spring-Boot 整合 DBUnit 单元测试
 date: 2019-01-12 10:27
 category: UnitTest
 tags: [UnitTest, Spring-Boot, DBUnit]
-aside:
-  toc: true
 ---
 
-# Spring-Boot 整合 DBUnit 使用笔记
+# Spring-Boot 整合 DBUnit 单元测试    
 
 Spring-Boot 整合 DBUnit 对 Dao 层进行单元测试  
 Dao 层查询方法的单元测试相对简单，将数据查询出来，再在代码中用 `assert` 方法进行测试即可  
@@ -25,7 +23,7 @@ DBUnit 的测试流程是
 对于不同的 `@Test` 测试方法，需要不同的初始状态及预期结果，DBUnit 提供了 `@DatabaseSetup` `@ExpectedDatabase` `@DatabaseTearDown`
 等注解，作用于不同的测试方法，设置其初始状态和预期
 
-DBUnit 中 IDataSet 接口对应数据库的表数据
+DBUnit 中 IDataSet 接口对应数据库的表数据  
 IDataSet 的实现有很多，每一个都对应一个不同的数据源或加载机制。最常用的几种 IDataSet 实现为：
 - FlatXmlDataSet：对应 xml 文件
 - QueryDataSet：用 SQL 查询获得的数据
