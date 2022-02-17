@@ -2,7 +2,6 @@
 layout: article
 title: Spring-Boot 整合 DBUnit 单元测试
 date: 2019-01-12 10:27
-category: UnitTest
 tags: [UnitTest, Spring-Boot, DBUnit]
 ---
 

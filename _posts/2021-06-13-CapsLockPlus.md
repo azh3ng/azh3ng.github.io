@@ -52,7 +52,7 @@ CapsLock + n/m 分别对应 Backspace/Delete 键
 
 ### 功能键(F1~F12)
 
-CapsLock + 1/2/3...9/0/-/= 分别对应 F1~F12
+CapsLock + `1`/`2`/`3`...`9`/`0`/`-`/`=` 分别对应 F1~F12
 
 ### 菜单键
 
