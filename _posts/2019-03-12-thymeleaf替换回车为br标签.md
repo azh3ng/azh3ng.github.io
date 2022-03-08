@@ -5,7 +5,7 @@ date: 2019-03-12
 tags: []  
 ---
 
-# thymeleaf替换回车为<br>标签
+# thymeleaf替换回车为br标签
 
 项目中使用 thymeleaf 生成邮件信息，当数据中有换行符时，邮件内容无法正常显示换行（特别是使用 Outlook）  
 尝试通过设置`style="white-space: pre-wrap;word-wrap: break-word;"`让其显示换行  
