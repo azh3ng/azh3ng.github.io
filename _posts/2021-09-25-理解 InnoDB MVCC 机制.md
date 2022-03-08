@@ -9,13 +9,32 @@ tags: []
 # 理解 InnoDB MVCC 机制
 
 MVCC，全称 Multi-Version Concurrency Control，即多版本并发控制。  
-要理解数据库的 MVCC 需要先了解数据库的[事务隔离级别](./事务隔离界别.md)。
+要理解数据库的 MVCC 需要先了解数据库的[事务隔离级别](./事务隔离界别.md)。  
 其中 Read Uncommitted 几乎没有隔离性，所以无需做任何处理；Serializable 要保证每个事务强隔离，所以对每个事务强行串行化，所以无需考虑并发导致的数据不一致。  
 但是 Read Commited 和 Repeatable Read 需要保证每次读取到的数据的一致性。  
 Read Commited 不能读到其他事务未提交的修改，Repeatable Read 在此基础上还需要保证当前事务中每次读取到的数据都是一致的。
 
 以 Repeatable Read 为例，思考如何实现在并发情况下，当前事务的修改不被其他事务读取，自己读取不到其他未提交事务的修改，同时当前事务中每次读取都是一致的。
 假设场景，只有一个表，且表中只有一行数据，对于这一行数据：
+```mermaid
+sequenceDiagram
+    participant 事务1
+    participant 事务2
+    participant 事务3
+    participant 事务4
+    participant 事务A
+    participant 事务5
+    participant 事务6
+    participant 数据
+    事务1 -> 数据 : 修改 & 提交
+    事务2 --> 数据 : 修改
+    事务3 -> 数据 : 修改 & 提交
+    事务4 --> 数据 : 修改
+    Note over 事务A,数据 : query
+    事务5 -> 数据 : 修改 & 提交
+    事务6 --> 数据 : 修改
+```
+
 - `事务1`：修改，且已提交 1
 - `事务2`：修改，还未提交
 - `事务3`：修改，且已提交 2
