@@ -35,7 +35,8 @@ MVCC，全称 Multi-Version Concurrency Control，即多版本并发控制。
 其次想到的是对于事务修改的行进行加锁，其他事务无法同时查询或修改，对于事务查询的行进行加锁，其他事务无法同时修改。但是这对于高并发的场景同样性能很差。
 
 MVCC 可以解决 Read Commited 和 Repeatable Read 面临的问题。
-它的做法是对每一行数据维护一个**修改链**，每次修改都将原始行数据进行备份、修改，并添加到修改链的头部，同时在行中添加两个隐藏的列(trx_id 和 roll_pointer)，其中一列(trx_id)记录此次修改的**事务ID**，另一列(roll_pointer)指向修改前的数据（这么说只是为了方便，实际指向的是 undo log 中的记录）。
+它的做法是对每一行数据维护一个**修改链**，每次修改都将原始行数据进行备份、修改，并添加到修改链的头部，
+同时在行中添加两个隐藏的列(trx_id 和 roll_pointer)，其中一列(trx_id)记录此次修改的**事务ID**，另一列(roll_pointer)指向修改前的数据（这么说只是为了方便，实际指向的是 undo log 中的记录）。
 数据库对事务ID进行强制的升序分配，这样事务在查询数据时就可以根据事务ID的大小来判断应该读取修改链中的哪一行数据。
 
 ## ReadView 机制
@@ -66,8 +67,8 @@ ReadView 机制就是用来判断当前事务能够看见哪些版本的。
 
 
 ## 参考
-https://www.cnblogs.com/cswiki/p/15338928.html
-https://blog.csdn.net/Win_Dan/article/details/119171531
-https://www.cnblogs.com/CodeBear/p/12710670.html
-https://segmentfault.com/a/1190000039809030
+<https://www.cnblogs.com/cswiki/p/15338928.html>
+<https://blog.csdn.net/Win_Dan/article/details/119171531>
+<https://www.cnblogs.com/CodeBear/p/12710670.html>
+<https://segmentfault.com/a/1190000039809030>
 
