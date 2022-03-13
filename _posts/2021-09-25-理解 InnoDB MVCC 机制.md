@@ -13,7 +13,7 @@ MVCC，全称 Multi-Version Concurrency Control，即多版本并发控制。
 **多版本并发控制（Multi-version Concurrency Control）**: 指的是一种提高并发的技术。最早的数据库系统，只有读读之间可以并发，读写，写读，写写都要阻塞。引入多版本之后，**只有写写之间相互阻塞**，其他三种操作都可以并行，这样大幅度提高了InnoDB的并发度。
 MVCC在 Read Committed 和 Repeatable Read两个隔离级别下工作。
 
-要理解数据库的 MVCC 需要先了解数据库的[事务隔离级别](./事务隔离界别.md)。  
+要理解数据库的 MVCC 需要先了解数据库的[事务隔离级别](https://azh3ng.com/mysql/2021/09/21/%E7%90%86%E8%A7%A3%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%95%8C%E5%88%AB.html)。  
 其中 Read Uncommitted 几乎没有隔离性，所以无需做任何处理；
 Serializable 要保证每个事务强隔离，所以对每个事务强行串行化，所以无需考虑并发导致的数据不一致。  
 但是 Read Commited 和 Repeatable Read 需要保证读取到的数据的一致性。  
