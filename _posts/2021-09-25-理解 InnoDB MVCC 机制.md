@@ -3,7 +3,7 @@ layout: article
 title: 理解 InnoDB MVCC 机制  
 date: 2021-09-25  
 category:  
-tags: []
+tags: [MySQL, 事务]
 ---
 
 # 理解 InnoDB MVCC 机制
@@ -284,9 +284,9 @@ sequenceDiagram
 8. 100（`trx_id`）**小于** 101（`up_limit_id`），表示数据在 Read View 中是已提交状态，表示数据对于当前 Read View 可见，即返回数据
 9. 最终查到的数据为：
 
-| id  | name | 
-| --- | ---- | 
-| 1   | tom  | 
+| id  | name |
+| --- | ---- |
+| 1   | tom  |
 
 是想要查到的数据，实现了 Read Commited 级别的隔离，查询没有读到其他事务未提交的修改。
 
@@ -329,9 +329,9 @@ sequenceDiagram
 
 第一次查询的结果为
 
-| id  | name | 
-| --- | ---- | 
-| 1   | tom  | 
+| id  | name |
+| --- | ---- |
+| 1   | tom  |
 
 与[场景一：Read Commited](#场景一：Read Commited)相同，不再赘述。
 
@@ -378,9 +378,9 @@ sequenceDiagram
 14. 100（`trx_id`）**小于** 101（`up_limit_id`），表示数据在 Read View 中是已提交状态，表示数据对于当前 Read View 可见，即返回数据
 15. 最终查到的数据为：
 
-| id  | name | 
-| --- | ---- | 
-| 1   | tom  | 
+| id  | name |
+| --- | ---- |
+| 1   | tom  |
 
 两次查询结果相同，实现了 Repeatable Read 级别的隔离，查询没有读到其他事务未提交的修改，没有读到事务开启之后的数据修改，并且两次查询结果相同。
 
