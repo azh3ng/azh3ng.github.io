@@ -1,5 +1,5 @@
 ---
-layout: post  
+layout: article  
 title: 理解 BeanDefinition
 date: 2022-01-08 23:16
 category:  
