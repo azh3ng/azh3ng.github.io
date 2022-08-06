@@ -8,7 +8,7 @@ tags: [Spring]
 
 # 理解 AbstractBeanFactory.getBean()
 
-`DefaultListableBeanFactory.preInstantiateSingletons() // line 967`
+代码入口：`DefaultListableBeanFactory.preInstantiateSingletons()`
 Spring 在合并 BeanDefinition 之后，调用 `AbstractBeanFactory.getBean()` 获取 Bean
 
 `AbstractBeanFactory.getBean()` 有许多重载方法，其最终调用的是
