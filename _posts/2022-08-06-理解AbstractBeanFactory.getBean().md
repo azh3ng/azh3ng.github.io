@@ -39,11 +39,11 @@ protected <T> T doGetBean(
     1. 单例（Singleton）：从单例池中获取 Bean，如果没有，**创建 Bean**
     2. 多例（Prototype）：**创建 Bean**
     3. 其他（Request、Session 等）：判断各自的缓存池，获取 Bean，如果没有，则**创建 Bean**
-8. [[Bean 创建|创建 Bean]]
+8. [创建 Bean](https://azh3ng.com/2022/01/08/%E7%90%86%E8%A7%A3Bean%E5%88%9B%E5%BB%BA.html)
 
 
 ## get FactoryBean
 `getBean(FACTORY_BEAN_PREFIX + beanName)`
-getBean 方法可以获取普通 Bean 和 [[FactoryBean]]。
+getBean 方法可以获取普通 Bean 和 [FactoryBean](https://azh3ng.com/2022/01/08/%E7%90%86%E8%A7%A3FactoryBean.html)。
 如果传入参数 beanName 以“&”(`FACTORY_BEAN_PREFIX`) 开头（由于 FactoryBean 有多级继承关系，所以“&”可以有多个，例如“&&&demoService” ），表示希望获取 FactoryBean，则 Spring 将前缀的“&”去除，在单例池中获取到 FactoryBean 后直接返回；
 如果传入参数 beanName 不以“&”开头，但在单例池中获取的 bean 是 FactoryBean，表示希望获取 FactoryBean 生产的 bean，则到缓存 `factoryBeanObjectCache` 中获取，如果没有，则调用 `FactoryBean.getObject()` 获取 bean，放入缓存中后返回。
