@@ -48,7 +48,7 @@ Undo log中存储的是老版本数据。当一个事务需要读取记录行时
 
 ## 隐藏字段
 InnoDB存储引擎在每行数据的后面添加了三个隐藏字段：
-1. `DB_TRX_ID`(6字节)：表示最后一次对本记录行作修改（insert | update）的事务标识符（事务ID）。此外 delete 操作被 InnoDB 认作一种update 操作，行中的一个特殊的位（a special bit）用来标记该行被删除，并非真正物理删除。
+1. `DB_TRX_ID`(6字节)：表示最后一次对本记录行作修改（insert、update）的事务标识符（事务ID）。此外 delete 操作被 InnoDB 认作一种update 操作，行中的一个特殊的位（a special bit）用来标记该行被删除，并非真正物理删除。
 2. `DB_ROLL_PTR`(7字节)：回滚指针，指向当前记录行的 undo log 信息。
 3. `DB_ROW_ID`(6字节)：随着新行插入而单调递增的行ID。当表**没有**`主键`或`唯一非空索引`时，InnoDB 就会使用这个`DB_ROW_ID`自动生成索引。否则`DB_ROW_ID`列不会出现在任何索引中，`DB_ROW_ID`跟 MVCC 关系不大。
    官方文档：[14.3 InnoDB Multi-Versioning](https://dev.mysql.com/doc/refman/5.7/en/innodb-multi-versioning.html)
@@ -168,7 +168,8 @@ Read View 中的
     1. 如果在，说明创建 Read View 的时候，生成该版本的事务还是活跃的（没有被提交），该版本不可以被读出来，转到步骤 5；
     2. 如果不在，说明创建 Read View 的时候，生成该版本的事务已经被提交了，该版本可以被读出来，返回数据，结束；
 5. 根据这行数据的`DB_ROLL_PTR`，找到 undo log 修改链中这行数据的上一个版本，拿到这行数据上个版本的 `DB_TRX_ID`，赋值给`trx_id`，转到步骤 1 重新开始判断。  
-   总之根据这行数据的`DB_TRX_ID`和 Read View 中记录的事务ID做比较，如果结果可见，则返回数据，如果结果不可见，则顺`DB_ROLL_PTR`找到上一个版本的数据，继续做上述判断。如果找到版本链最末尾的的数据判断还是不可见，则表示该数据对当前事务完全不可见，查询结果就不应该包含这条记录了。
+   
+总之根据这行数据的`DB_TRX_ID`和 Read View 中记录的事务ID做比较，如果结果可见，则返回数据，如果结果不可见，则顺`DB_ROLL_PTR`找到上一个版本的数据，继续做上述判断。如果找到版本链最末尾的的数据判断还是不可见，则表示该数据对当前事务完全不可见，查询结果就不应该包含这条记录了。
 
 [比较逻辑的源码](https://github.com/facebook/mysql-5.6/blob/42a5444d52f264682c7805bf8117dd884095c476/storage/innobase/include/read0read.ic#L84)：
 > ```
