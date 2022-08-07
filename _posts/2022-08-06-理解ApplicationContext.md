@@ -11,7 +11,7 @@ tags: [Spring]
 在 Spring 中 `ApplicationContext` 继承了 `ListableBeanFactory` 和 `HierarchicalBeanFactory`，而 `ListableBeanFactory` 和 `HierarchicalBeanFactory` 都继承至 `BeanFactory`, 所以可以认为 `ApplicationContext` 继承了 `BeanFactory`
 ```java
 public interface ApplicationContext extends EnvironmentCapable, ListableBeanFactory, HierarchicalBeanFactory,
-		MessageSource, ApplicationEventPublisher, ResourcePatternResolver {
+        MessageSource, ApplicationEventPublisher, ResourcePatternResolver {
 }
 ```
 不过 `ApplicationContext` 比 `BeanFactory` 更加强大，`ApplicationContext` 还基础了其他接口，比如 `MessageSource` 表示国际化，`ApplicationEventPublisher` 表示事件发布，`EnvironmentCapable` 表示获取环境变量，等等
@@ -59,7 +59,7 @@ ApplicationContext 的子类 `GenericApplicationContext` 持有 `ResourceLoader`
 public static void main(String[] args) {
     AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-    Resource resource = context.getResource("file://D:\\dev\\code\\demo\\src\\main\\java\\com\\azh3ng\\service\\UserService.java");
+    Resource resource = context.getResource("file://D:\\demo\\src\\main\\java\\com\\azh3ng\\service\\UserService.java");
     System.out.println(resource.contentLength());
     System.out.println(resource.getFilename());
 
@@ -72,7 +72,7 @@ public static void main(String[] args) {
     System.out.println(resource2.getURL());
     
     // 一次性获取多个文件
-    Resource[] resources = context.getResources("classpath:com/zhouyu/*.class");
+    Resource[] resources = context.getResources("classpath:com/azh3ng/*.class");
     for (Resource resource : resources) {
         System.out.println(resource.contentLength());
         System.out.println(resource.getFilename());

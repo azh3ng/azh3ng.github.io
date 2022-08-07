@@ -53,6 +53,7 @@ public class SomeBean {
 
 ## 进阶使用
 1. 定义两个注解：
+
 ```java
 @Target({ElementType.TYPE, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
@@ -68,7 +69,9 @@ public @interface Foo {
 public @interface Bar {
 }
 ```
-1. 定义一个接口和两个实现类，表示负载均衡：
+
+2. 定义一个接口和两个实现类，表示负载均衡：
+
 ```java
 @Component 
 @Foo
@@ -80,7 +83,8 @@ public class BarService implements BaseService {
 }
 ```
 
-1. 使用：
+3. 使用：
+
 ```java
 @Component
 public class SomeBean {

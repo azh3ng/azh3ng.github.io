@@ -44,7 +44,7 @@ BeanDefinition.SetInitMethodName("init"); // 设置初始化方法
 BeanDefinition.SetLazyInit(true); // 设置懒加载
 ```
 
-和申明式事务、编程式事务类似，通过 `\<bean/>`，`@Bean`，`@Component` 等申明式方式所定义的 Bean，最终都会被 Spring 解析为对应的 BeanDefinition 对象，并放入 Spring 容器中。
+和申明式事务、编程式事务类似，通过 `<bean/>`，`@Bean`，`@Component` 等申明式方式所定义的 Bean，最终都会被 Spring 解析为对应的 BeanDefinition 对象，并放入 Spring 容器中。
 
 ## RootBeanDefinition
 
