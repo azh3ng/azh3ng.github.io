@@ -1,12 +1,12 @@
 ---
 layout: article  
-title: 理解 AbstractBeanFactory.getBean()
+title: [理解Spring] AbstractBeanFactory.getBean()
 date: 2022-01-08 15:22
 category:  
 tags: [Spring]
 ---
 
-# 理解 AbstractBeanFactory.getBean()
+# [理解Spring] AbstractBeanFactory.getBean()
 
 代码入口：`DefaultListableBeanFactory.preInstantiateSingletons()`  
 Spring 在合并 BeanDefinition 之后，调用 `AbstractBeanFactory.getBean()` 获取 Bean

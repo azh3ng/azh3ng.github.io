@@ -1,12 +1,12 @@
 ---
 layout: article  
-title: 理解 Spring 对 static 字段不支持自动注入的原因  
+title: [理解Spring] 自动注入对 static 字段不支持的原因  
 date: 2022-01-08 23:17  
 category:
 tags: [Spring]
 ---
 
-# 理解 Spring 对 static 字段不支持自动注入的原因
+# [理解Spring] 自动注入对 static 字段不支持的原因
 
 举个例子：
 有一个原型类 `OrderService`
