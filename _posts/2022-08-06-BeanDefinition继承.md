@@ -6,7 +6,7 @@ category:
 tags: [Spring]
 ---
 
-# 理解 BeanDefinition 继承
+# [理解Spring]BeanDefinition 继承
 BeanDefinition 可以通过继承获得父 BeanDefinition 的属性，开发中实际运用的比较少。
 
 **非继承：**

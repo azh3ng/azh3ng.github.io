@@ -6,7 +6,7 @@ category:
 tags: []  
 ---
 
-# 理解 BeanDefinitionReader
+# [理解Spring] BeanDefinitionReader
 
 Spring 提供的 BeanDefinition 读取器（`BeanDefinitionReader`），在使用 Spring 开发时用得少，但在 Spring 源码中很常见，相当于 Spring 基础设施
 
