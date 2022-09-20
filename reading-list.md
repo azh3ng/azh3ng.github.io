@@ -1,5 +1,7 @@
 ---
 layout: article
+aside:
+  toc: true
 ---
 
 ## IT
