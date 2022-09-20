@@ -1,12 +1,12 @@
 ---
 layout: article  
-title: 【理解Spring】 ApplicationContext
+title: 【理解Spring】ApplicationContext
 date: 2022-01-08 23:16
 category:  
 tags: [Spring]
 ---
 
-# 【理解Spring】 ApplicationContext
+# 【理解Spring】ApplicationContext
 
 在 Spring 中 `ApplicationContext` 继承了 `ListableBeanFactory` 和 `HierarchicalBeanFactory`，而 `ListableBeanFactory` 和 `HierarchicalBeanFactory` 都继承至 `BeanFactory`, 所以可以认为 `ApplicationContext` 继承了 `BeanFactory`
 ```java
