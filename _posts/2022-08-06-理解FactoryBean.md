@@ -1,12 +1,12 @@
 ---
 layout: article  
-title: [理解Spring] FactoryBean  
+title: 【理解Spring】 FactoryBean  
 date: 2022-01-08 23:26  
 category:  
 tags: [Spring]  
 ---
 
-# [理解Spring] FactoryBean
+# 【理解Spring】 FactoryBean
 
 代码示例：
 ```java
