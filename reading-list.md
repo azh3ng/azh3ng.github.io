@@ -1,8 +1,6 @@
 ---
 layout: article
 title: 阅读清单
-aside:
-  toc: true
 ---
 
 ## IT
