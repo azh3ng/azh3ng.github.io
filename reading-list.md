@@ -1,7 +1,6 @@
 ---
 layout: article
 title: 阅读清单
-date: 2022-09-20 17:17
 aside:
   toc: true
 ---
