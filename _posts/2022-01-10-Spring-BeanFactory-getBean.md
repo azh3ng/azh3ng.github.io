@@ -6,8 +6,6 @@ category:
 tags: [Spring]
 ---
 
-# 【理解Spring】AbstractBeanFactory.getBean()
-
 代码入口：`DefaultListableBeanFactory.preInstantiateSingletons()`  
 Spring 在合并 BeanDefinition 之后，调用 `AbstractBeanFactory.getBean()` 获取 Bean
 

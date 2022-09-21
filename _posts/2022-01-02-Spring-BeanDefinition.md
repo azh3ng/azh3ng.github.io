@@ -6,8 +6,6 @@ category:
 tags: [Spring]
 ---
 
-# 【理解Spring】BeanDefinition
-
 > A BeanDefinition describes a bean instance, which has property values, constructor argument values, and further information supplied by concrete implementations.
 
 BeanDefinition，表示 Bean 定义。

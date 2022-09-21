@@ -5,7 +5,6 @@ date: 2022-01-01 00:00
 tags: [Spring]
 ---
 
-# 【理解Spring】前言
 在开发中，Spring 算是我接触最多的框架了，故而想对它进行更深入的学习，可以更快的实现想要的功能，同时写出更优雅的实现。
 后续所有的内容都基于 [Spring Framework 5.3.10-SNAPSHOT](https://github.com/spring-projects/spring-framework/tree/v5.3.10)。
 

@@ -7,7 +7,6 @@ tags: [Spring]
 extends: "[[Spring]]"
 ---
 
-# 【理解Spring】解决循环依赖
 ## 什么是循环依赖？
 举个例子：
 ```java

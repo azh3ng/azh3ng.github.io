@@ -5,8 +5,6 @@ date: 2022-01-12 00:00
 tags: [Spring]
 ---
 
-# 【理解Spring】Bean生命周期
-
 Spring 最重要的功能就是帮助程序员创建对象（也就是 IOC），而启动 Spring 就是为创建 Bean 对象做准备，所以我们先明白 Spring 到底是怎么去创建 Bean 的，也就是先弄明白 Bean 的生命周期。
 
 Bean 的生命周期就是指：在 Spring 中，一个 Bean 是如何生成的，如何销毁的

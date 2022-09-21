@@ -6,8 +6,6 @@ category:
 tags: [Spring]
 ---
 
-# 【Spring实战】@Qualifier 注解的使用
-
 在使用 Spring 的过程中，当需要进行依赖注入时，往往会选用 `@Autowired` 注解进行自动装配，如果被  `@Autowired` 注解的类在 Spring 中有多个 Bean，则通过变量名称选取合适的 Bean，例如：
 ```java
 @Component 

@@ -5,8 +5,6 @@ date: 2022-01-07 00:00
 tags: [Spring]  
 ---
 
-# 【理解Spring】扫描
-
 Spring 启动的时候会调用 
 - `ClassPathBeanDefinitionScanner.scan(String... basePackages)`
     - `ClassPathBeanDefinitionScanner.doScan(String... basePackages)`

@@ -6,8 +6,6 @@ category:
 tags: []  
 ---
 
-# 【理解Spring】BeanPostProcessor
-
 `BeanPostProcess`表示 Bean 的后置处理器
 一个`BeanPostProcessor`可以在任意一个 Bean 的初始化之前以及初始化之后去额外的做一些用户自定义的逻辑
 当然，也可以通过判断 beanName 来进行针对性处理（针对某个Bean，或某部分Bean）

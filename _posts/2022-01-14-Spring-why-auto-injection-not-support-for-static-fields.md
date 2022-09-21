@@ -6,8 +6,6 @@ category:
 tags: [Spring]
 ---
 
-# 【理解Spring】自动注入对 static 字段不支持的原因
-
 举个例子：
 有一个原型类 `OrderService`
 ```java

@@ -5,7 +5,6 @@ date: 2022-01-11 00:00
 category:  
 tags: [Spring]
 ---
-# 【理解Spring】Bean 创建
 
 在 [AbstractBeanFactory.getBean()](https://azh3ng.com/2022/01/08/%E7%90%86%E8%A7%A3AbstractBeanFactory.getBean().html) 中，如果从单例池没有获取到 Bean，则创建 Bean
 

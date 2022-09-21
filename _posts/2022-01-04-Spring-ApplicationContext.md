@@ -6,8 +6,6 @@ category:
 tags: [Spring]
 ---
 
-# 【理解Spring】ApplicationContext
-
 在 Spring 中 `ApplicationContext` 继承了 `ListableBeanFactory` 和 `HierarchicalBeanFactory`，而 `ListableBeanFactory` 和 `HierarchicalBeanFactory` 都继承至 `BeanFactory`, 所以可以认为 `ApplicationContext` 继承了 `BeanFactory`
 ```java
 public interface ApplicationContext extends EnvironmentCapable, ListableBeanFactory, HierarchicalBeanFactory,

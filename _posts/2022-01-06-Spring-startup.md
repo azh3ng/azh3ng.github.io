@@ -6,8 +6,6 @@ tags: [Spring]
 extends:
 ---
 
-# 【理解Spring】Spring启动
-
 ## 概览
 通常所说的 Spring 启动，就是构造 ApplicationContext 对象以及调用 `refresh()` 方法的过程，其中最核心的内容是 [Spring扫描] 和 [加载Bean]。  
 

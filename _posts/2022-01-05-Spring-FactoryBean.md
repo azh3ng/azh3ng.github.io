@@ -6,8 +6,6 @@ category:
 tags: [Spring]  
 ---
 
-# 【理解Spring】FactoryBean
-
 代码示例：
 ```java
 @Component

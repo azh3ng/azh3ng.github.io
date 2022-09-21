@@ -6,8 +6,6 @@ category:
 tags: []  
 ---
 
-# BeanFactory
-
 BeanFactory 顾名思义负责创建 Bean，并且提供获取 Bean 的 API。
 
 ### DefaultListableBeanFactory
