@@ -133,7 +133,7 @@ public ApplicationListener applicationListener() {
 然后发布一个事件：
 
 ```java
-context.publishEvent("kkk");
+context.publishEvent("foo");
 ```
 
 事件发布后, 会触发 `ApplicationListener`. `onApplicationEvent()` 执行自定义的逻辑

@@ -9,10 +9,10 @@ tags: []
 # 【理解Spring】扫描
 
 Spring 启动的时候会调用 
-- ClassPathBeanDefinitionScanner.scan(String... basePackages)
-    - ClassPathBeanDefinitionScanner.doScan(String... basePackages)
-        - ClassPathScanningCandidateComponentProvider.findCandidateComponents()
-            - ClassPathScanningCandidateComponentProvider.scanCandidateComponents()
+- `ClassPathBeanDefinitionScanner.scan(String... basePackages)`
+    - `ClassPathBeanDefinitionScanner.doScan(String... basePackages)`
+        - `ClassPathScanningCandidateComponentProvider.findCandidateComponents()`
+            - `ClassPathScanningCandidateComponentProvider.scanCandidateComponents()`
 扫描某个包路径，筛选 `.class` 并得到 BeanDefinition 的 Set 集合。
 
 ## 扫描
@@ -20,7 +20,7 @@ Spring 启动的时候会调用
     1. 如果有，则以此文件内指定的 class 和注解类型，判断扫描包路径和 `includeFilters` 是否匹配，继续判断 class 能否视作 Bean
     2. 如果没有，则执行 2
 2. 通过 `ResourcePatternResolver` 获得指定包路径下的所有 `.class` 文件（Spring 将 `.class` 文件包装成 Resource 对象）
-3. 遍历每个 Resource 对象
+3. 遍历每个 `Resource` 对象
 
 ## 筛选并生成 BeanDefinition
 1. 利用 `MetadataReaderFactory` 解析 `Resource` 对象得到 `MetadataReader`（在 Spring 源码中 MetadataReaderFactory 具体的实现类为 CachingMetadataReaderFactory，MetadataReader 的具体实现类为 SimpleMetadataReader）
@@ -29,7 +29,7 @@ Spring 启动的时候会调用
    2. 再进行 `includeFilters` 判定，
        1. 如果不匹配，返回 false，表示不为 Bean
        2. 如果匹配，再进行 `@Conditional` 匹配
-3. 筛选通过后，基于 `metadataReader` 生成 `ScannedGenericBeanDefinition`（`ClassPathScanningCandidateComponentProvider.java // line 438`）
+3. 筛选通过后，基于 `metadataReader` 生成 `ScannedGenericBeanDefinition`（`ClassPathScanningCandidateComponentProvider.java`）
 4. 判断类是不是接口或抽象类，能否视作 Bean（`ClassPathScanningCandidateComponentProvider.isCandidateComponent(AnnotatedBeanDefinition)`）
    - 根据 `ClassMetadata.isIndependent()` 判断是否是顶级类或者静态内部类
        - 如果不是顶级类或者静态内部类，则不为 Bean，直接返回
