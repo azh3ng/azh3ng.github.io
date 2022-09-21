@@ -6,7 +6,6 @@ date: 2022-08-17 23:15
 tags: []
 extends:
 ---
-extends:: [[Spring]]
 
 # 【理解Spring】Spring启动
 
