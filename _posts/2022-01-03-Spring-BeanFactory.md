@@ -1,7 +1,7 @@
 ---
 layout: article  
 title: BeanFactory  
-date: 2022-01-08 23:19  
+date: 2022-01-03 00:00
 category:  
 tags: []  
 ---

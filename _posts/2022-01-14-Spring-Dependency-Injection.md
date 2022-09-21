@@ -2,9 +2,8 @@
 layout: article  
 alias: 依赖注入
 title: 【理解Spring】依赖注入
-date: 2021-12-15 23:27   
+date: 2022-01-14 00:00
 tags: [Spring]
-extends: "[[Spring]]"
 ---
 
 # 【理解Spring】依赖注入

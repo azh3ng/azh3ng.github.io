@@ -1,7 +1,7 @@
 ---
 layout: article  
 title: 【理解Spring】自动注入对 static 字段不支持的原因  
-date: 2022-01-08 23:17  
+date: 2022-01-14 00:00
 category:
 tags: [Spring]
 ---

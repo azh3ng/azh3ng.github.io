@@ -2,7 +2,7 @@
 layout: article  
 alias: 解决循环依赖
 title: 【理解Spring】解决循环依赖
-date: 2021-12-15 23:27   
+date: 2022-01-15 00:00
 tags: [Spring]
 extends: "[[Spring]]"
 ---

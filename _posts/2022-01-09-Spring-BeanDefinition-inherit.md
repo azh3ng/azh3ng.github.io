@@ -1,7 +1,7 @@
 ---
 layout: article  
 title: 【理解Spring】BeanDefinition 继承  
-date: 2022-01-08 23:17  
+date: 2022-01-09 00:00
 category:
 tags: [Spring]
 ---
