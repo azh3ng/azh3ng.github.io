@@ -12,11 +12,12 @@ Bean 的生命周期就是指：在 Spring 中，一个 Bean 是如何生成的�
 Bean 生命周期流程图
 ![Bean生命周期流程图](./attachments/Bean生命周期-1641711003210.png)
 
-## 生成 [[BeanDefinition]]
+## 生成 BeanDefinition
 
-![[Spring扫描|Spring扫描并生成 BeanDefinition]]
+[Spring扫描并生成 BeanDefinition](https://azh3ng.com/2022/01/07/Spring-scan.html)
 
 ## 合并 BeanDefinition
+
 
 ![[合并 BeanDefinition]]
 
