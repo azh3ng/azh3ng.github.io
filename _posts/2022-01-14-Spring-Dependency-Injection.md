@@ -41,13 +41,13 @@ Spring 依赖注入过程大致为：
 1. java 包下的对象，不需要找注入点
 2. 遍历当前类的所有的**属性**字段 Field
   1. 查看字段上是否存在 `@Autowired`、`@Value`、`@Inject` 中的其中任意一个，存在则认为该字段是一个注入点(`AutowiredAnnotationBeanPostProcessor.findAutowiredAnnotation(AccessibleObject)`)
-  2. 如果字段是 static 的，则跳过，不进行注入，[原因](https://azh3ng.com/2022/01/08/Spring%E5%AF%B9static%E5%AD%97%E6%AE%B5%E4%B8%8D%E6%94%AF%E6%8C%81%E8%87%AA%E5%8A%A8%E6%B3%A8%E5%85%A5%E7%9A%84%E5%8E%9F%E5%9B%A0.html)
+  2. 如果字段是 static 的，则跳过，不进行注入，[原因](https://azh3ng.com/2022/01/14/Spring-why-auto-injection-not-support-for-static-fields.html)
   3. 获取 `@Autowired` 中的 required 属性的值
   4. 将字段信息构造成一个 `AutowiredFieldElement` 对象，作为一个**注入点对象**，添加到 currElements 集合中。
 3. 遍历当前类的所有**方法** `Method`
   1. 判断当前 Method 是否是 [[桥接方法]]，如果是，找到原方法
   2. 查看方法上是否存在 `@Autowired`、`@Value`、`@Inject` 中的其中任意一个，存在则认为该方法是一个注入点
-  3. 如果方法是 static 的，则跳过，不进行注入，[原因](https://azh3ng.com/2022/01/08/Spring%E5%AF%B9static%E5%AD%97%E6%AE%B5%E4%B8%8D%E6%94%AF%E6%8C%81%E8%87%AA%E5%8A%A8%E6%B3%A8%E5%85%A5%E7%9A%84%E5%8E%9F%E5%9B%A0.html)
+  3. 如果方法是 static 的，则跳过，不进行注入，[原因](https://azh3ng.com/2022/01/14/Spring-why-auto-injection-not-support-for-static-fields.html)
   4. 获取 `@Autowired` 中的 `required` 属性的值
   5. 将方法信息构造成一个 `AutowiredMethodElement` 对象，作为一个**注入点对象**
      添加到 `currElements` 集合中。
@@ -72,13 +72,13 @@ Spring 依赖注入过程大致为：
 1. java 包下的对象，不需要找注入点
 2. 遍历当前类的所有的**属性**字段 Field
     1. 判断字段上是否存在 `@Resource` 注解，是则继续判断，否则继续遍历
-    2. 判断是否为 `static` 字段，如果字段是 `static` 的，抛出异常（[原因](https://azh3ng.com/2022/01/08/Spring%E5%AF%B9static%E5%AD%97%E6%AE%B5%E4%B8%8D%E6%94%AF%E6%8C%81%E8%87%AA%E5%8A%A8%E6%B3%A8%E5%85%A5%E7%9A%84%E5%8E%9F%E5%9B%A0.html)）
+    2. 判断是否为 `static` 字段，如果字段是 `static` 的，抛出异常
     3. 构造 `CommonAnnotationBeanPostProcessor.ResourceElement`，并将其添加到 `currElements` 集合中
 3. 遍历当前类的所有的**方法** `method`
     1. 判断**方法**上是否存在 `@Resource` 注解，是则继续判断，否则继续遍历
-    2. 判断是否为 `static` 方法，如果字段是 `static` 的，抛出异常（[原因](https://azh3ng.com/2022/01/08/Spring%E5%AF%B9static%E5%AD%97%E6%AE%B5%E4%B8%8D%E6%94%AF%E6%8C%81%E8%87%AA%E5%8A%A8%E6%B3%A8%E5%85%A5%E7%9A%84%E5%8E%9F%E5%9B%A0.html)）
+    2. 判断是否为 `static` 方法，如果字段是 `static` 的，抛出异常
     3. 判断方法参数有且仅有一个，否则报错
-    4. [构造](#CommonAnnotationBeanPostProcessor ResourceElement 构造方法) `CommonAnnotationBeanPostProcessor.ResourceElement`，并将其添加到 `currElements` 集合中
+    4. 构造 `CommonAnnotationBeanPostProcessor.ResourceElement`，并将其添加到 `currElements` 集合中
 4. 最后将 `currElements` 集合封装成一个 `InjectionMetadata` 对象，作为当前 Bean 对于的注入点集合对象，并缓存。
 
 #### `CommonAnnotationBeanPostProcessor.ResourceElement` 构造方法
@@ -180,11 +180,11 @@ Object doResolveDependency(DependencyDescriptor descriptor, @Nullable String bea
    3. 根据 beanName 确定 bean
       1. 如果找到一个 bean：
          1. 结果为 bean，直接返回；
-         2. 结果为 class 对象，则调用 [BeanFactory.getBean()](Bean生命周期.md#getbean--bean) 生成 bean 对象并返回
+         2. 结果为 class 对象，则调用 [BeanFactory.getBean()](https://azh3ng.com/2022/01/10/Spring-BeanFactory-getBean.html) 生成 bean 对象并返回
       3. 否则：判断依赖是否必须，是则报错，否则返回 null
 8. 如果找到一个 bean
    1. 结果为 bean，直接返回；
-   2. 结果为 class 对象，则调用 [BeanFactory.getBean()](https://azh3ng.com/2022/01/08/%E7%90%86%E8%A7%A3AbstractBeanFactory.getBean().html) 生成 bean 对象并返回
+   2. 结果为 class 对象，则调用 [BeanFactory.getBean()](https://azh3ng.com/2022/01/10/Spring-BeanFactory-getBean.html) 生成 bean 对象并返回
 
 ### findAutowireCandidates()
 ![流程图](./attachments/依赖注入-1657431124248.png)
@@ -212,7 +212,7 @@ Map<String, Object> findAutowireCandidates(@Nullable String beanName, Class<?> r
 4. 判断 Bean 是否可以被用来注入
    1. 先判断 beanName 对应的 BeanDefinition 中的 `autowireCandidate` 属性（默认为 true），如果为 false，表示不能用来进行自动注入，直接返回，如果为 true 则继续进行判断
    2. [泛型注入](#依赖注入中泛型注入的实现) ：判断当前 `requiredType` 是不是泛型，如果是泛型，则把容器中所有的 beanName 找出来的，并获取到泛型的真正类型，然后进行匹配，如果当前 beanName 和当前泛型对应的真实类型匹配，那么则继续判断
-   3. [Qualifier判断](#Qualifier判断) ：如果当前 DependencyDescriptor 上存在 `@Qualifier` 注解，那么则要判断当前 beanName 上是否定义了 `@Qualifier`，并且是否和当前 DependencyDescriptor 上的 `@Qualifier` 的值相等，相等则匹配
+   3. [Qualifier 判断](#Qualifier 判断) ：如果当前 DependencyDescriptor 上存在 `@Qualifier` 注解，那么则要判断当前 beanName 上是否定义了 `@Qualifier`，并且是否和当前 DependencyDescriptor 上的 `@Qualifier` 的值相等，相等则匹配
 5. 经过上述验证之后，当前 beanName 才能成为一个可注入的，添加到 result 中
 
 ### 依赖注入中泛型注入的实现
@@ -364,7 +364,7 @@ public class BaseService<O, S> {
 7. 调用 `oField.getGenericType()` 就知道当前 field 使用的是哪个泛型，就能知道具体类型了
 
 ### Qualifier 判断
-相关文章：[@Qualifier使用](https://azh3ng.com/2021/12/18/Qualifier%E6%B3%A8%E8%A7%A3%E7%9A%84%E4%BD%BF%E7%94%A8.html)  
+相关文章：[@Qualifier使用](https://azh3ng.com/2022/01/30/Spring-use-of-@Qualifier.html)  
 `QualifierAnnotationAutowireCandidateResolver.isAutowireCandidate()` 中当父类的判断处理完成后，进行 `@Qualifier` 注解的判断：  
 1. 获取当前注入点上的所有注解
 2. 进入 `QualifierAnnotationAutowireCandidateResolver.checkQualifiers()` 方法
