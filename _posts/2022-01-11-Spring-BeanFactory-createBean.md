@@ -6,9 +6,9 @@ category:
 tags: [Spring]
 ---
 
-在 [AbstractBeanFactory.getBean()](https://azh3ng.com/2022/01/08/%E7%90%86%E8%A7%A3AbstractBeanFactory.getBean().html) 中，如果从单例池没有获取到 Bean，则创建 Bean
+在 [AbstractBeanFactory.getBean()](https://azh3ng.com/2022/01/10/Spring-BeanFactory-getBean.html) 中，如果从单例池没有获取到 Bean，则创建 Bean
 
-代码入口：
+代码入口：  
 `AbstractAutowireCapableBeanFactory.createBean(String beanName, RootBeanDefinition, Object[] args)`
 
 > Central method of this class: creates a bean instance,  populates the bean instance, applies post-processors, etc.
@@ -17,21 +17,22 @@ tags: [Spring]
 
 ## 概览
 1. Spring扫描并生成BeanDefinition
-2. [合并 BeanDefinition](#合并-BeanDefinition)
+2. [合并 BeanDefinition](https://azh3ng.com/2022/01/08/Spring-merge-BeanDefinition.html)
 3. [加载类](#加载类)
-4. [实例化前 InstantiationAwareBeanPostProcessor](#实例化前(InstantiationAwareBeanPostProcessor))
-5. [实例化 new出对象](#实例化-new出对象)
-   1. [Supplier 创建对象](#Supplier-创建对象)
+4. [实例化前 InstantiationAwareBeanPostProcessor](#实例化前instantiationawarebeanpostprocessor)
+5. [实例化 new出对象](#实例化new-出对象)
+   1. [Supplier 创建对象](#supplier-创建对象)
    2. [工厂方法创建对象](#工厂方法创建对象)
    3. [推断构造方法](#推断构造方法)
-6. [BeanDefinition 的后置处理](#BeanDefinition-的后置处理)
+6. [BeanDefinition 的后置处理](#beandefinition-的后置处理)
 7. [实例化后](#实例化后)
 8. [自动注入](#自动注入)
-9. [处理属性](#处理属性)
-10. [执行 Aware](#执行-Aware)
+9. [处理属性](#处理属性instantiationawarebeanpostprocessorpostprocessproperties)
+10. [执行 Aware](#执行-aware)
 11. [初始化前](#初始化前)
-12. [初始化(Initializing)](#初始化)
+12. [初始化(Initializing)](#初始化initializing)
 13. [初始化后](#初始化后)
+14. [BeanPostProcessor 小结](#beanpostprocessor-小结)
 
 ## 加载类
 
@@ -42,8 +43,8 @@ tags: [Spring]
 Class<?> resolvedClass = resolveBeanClass(mbd, beanName);
 ```
 
-去加载类，如果 beanClass 属性的类型是 Class，那么就直接返回；
-如果不是，则会根据类名进行加载（doResolveBeanClass()），代码如下：
+去加载类，如果 beanClass 属性的类型是 Class，那么就直接返回；  
+如果不是，则会根据类名进行加载（doResolveBeanClass()），代码如下：  
 
 ```java
 if(mbd.hasBeanClass()){
@@ -170,7 +171,7 @@ Spring 发现当前 BeanDefinition 设置了工厂方法后，就会区分这两
 
 ### 推断构造方法
 
-[Spring推断构造方法](https://azh3ng.com/2021/12/15/理解Spring推断构造方法.html)
+[Spring推断构造方法](https://azh3ng.com/2022/01/13/Spring-infer-constructor.html)
 
 #### @Lookup
 
@@ -242,9 +243,9 @@ public class DemoInstantiationAwareBeanPostProcessor implements InstantiationAwa
 
 上述代码就是对 userService 所实例化出来的对象进行处理。
 
-## 自动注入
+## 依赖注入
 
-[理解 Spring 依赖注入](https://azh3ng.com/2021/12/15/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5.html)
+[依赖注入](https://azh3ng.com/2022/01/14/Spring-Dependency-Injection.html)
 
 ## 处理属性(InstantiationAwareBeanPostProcessor.postProcessProperties())
 

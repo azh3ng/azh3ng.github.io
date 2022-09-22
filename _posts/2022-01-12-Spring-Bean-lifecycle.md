@@ -54,7 +54,7 @@ userService.test();
 会调用 doClose() 方法，执行 Bean 销毁
 
 
-在 Bean 创建过程的最后（初始化之后），会判断当前创建的 Bean 是不是 DisposableBean，如果是则将其 [适配](#使用适配器模式对 Bean 进行适配) 成 `DisposableBeanAdapter` 对象，并存入 `disposableBeans` 中（一个 LinkedHashMap），在 Spring 容器关闭时，遍历调用 `destroy()` 方法执行 Bean 销毁。
+在 Bean 创建过程的最后（初始化之后），会判断当前创建的 Bean 是不是 DisposableBean，如果是则将其 [适配](#使用适配器模式对-Bean-进行适配) 成 `DisposableBeanAdapter` 对象，并存入 `disposableBeans` 中（一个 LinkedHashMap），在 Spring 容器关闭时，遍历调用 `destroy()` 方法执行 Bean 销毁。
 
 判断 Bean 是否为 DisposableBean：
 - 是否实现了 `DisposableBean` 接口
