@@ -11,7 +11,7 @@ tags: [Spring]
 ## 核心原理
 目前计划先学习 Spring 核心概念，再在此基础上不断扩充 
 - Spring核心接口
-  - [BeanDefinition]
+  - [BeanDefinition](https://azh3ng.com/2022/01/02/Spring-BeanDefinition.html)
   - [BeanFactory]
   - [ApplicationContext]
   - [BeanPostProcessor]

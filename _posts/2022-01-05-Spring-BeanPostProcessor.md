@@ -3,7 +3,7 @@ layout: article
 title: 【理解Spring】BeanPostProcessor  
 date: 2022-01-05 00:00
 category:  
-tags: []  
+tags: [Spring]  
 ---
 
 `BeanPostProcess`表示 Bean 的后置处理器

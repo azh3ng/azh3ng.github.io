@@ -3,7 +3,6 @@ layout: article
 title: 【理解Spring】Spring启动
 date: 2022-01-06 00:00
 tags: [Spring]
-extends:
 ---
 
 ## 概览

@@ -1,9 +1,9 @@
 ---
 layout: article  
-title: BeanFactory  
+title: 【理解Spring】BeanFactory  
 date: 2022-01-03 00:00
 category:  
-tags: []  
+tags: [Spring]  
 ---
 
 BeanFactory 顾名思义负责创建 Bean，并且提供获取 Bean 的 API。

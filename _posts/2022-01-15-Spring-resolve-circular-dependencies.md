@@ -4,7 +4,6 @@ alias: 解决循环依赖
 title: 【理解Spring】解决循环依赖
 date: 2022-01-15 00:00
 tags: [Spring]
-extends: "[[Spring]]"
 ---
 
 ## 什么是循环依赖？
