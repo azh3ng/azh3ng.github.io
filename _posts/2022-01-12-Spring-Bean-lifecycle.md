@@ -18,17 +18,16 @@ Bean 生命周期流程图
 
 ## 合并 BeanDefinition
 
-
-![[合并 BeanDefinition]]
+[合并 BeanDefinition](https://azh3ng.com/2022/01/08/Spring-merge-BeanDefinition.html)
 
 ## getBean() 获取 Bean
-![[AbstractBeanFactory.getBean()|getBean()]]
+[BeanFactory.getBean()](https://azh3ng.com/2022/01/10/Spring-BeanFactory-getBean.html)
 
 ## 创建 Bean
-![[Bean 创建]]
+[Bean 创建](https://azh3ng.com/2022/01/11/Spring-BeanFactory-createBean.html)
 
 ## 执行 SmartInitializingSingleton.afterSingletonsInstantiated()
-`DefaultListableBeanFactory.preInstantiateSingletons() // line 987`
+`DefaultListableBeanFactory.preInstantiateSingletons()`
 加载了所有的非懒加载单例 Bean之后，找出继承 SmartInitializingSingleton 的Bean，并执行 afterSingletonsInstantiated() 方法
 
 ## Bean 销毁
@@ -55,7 +54,7 @@ userService.test();
 会调用 doClose() 方法，执行 Bean 销毁
 
 
-在 Bean 创建过程的最后（初始化之后），会判断当前创建的 Bean 是不是 DisposableBean，如果是则将其 [[#使用适配器模式对 Bean 进行适配|适配]] 成 `DisposableBeanAdapter` 对象，并存入 `disposableBeans` 中（一个 LinkedHashMap），在 Spring 容器关闭时，遍历调用 `destroy()` 方法执行 Bean 销毁。
+在 Bean 创建过程的最后（初始化之后），会判断当前创建的 Bean 是不是 DisposableBean，如果是则将其 [适配](#使用适配器模式对 Bean 进行适配) 成 `DisposableBeanAdapter` 对象，并存入 `disposableBeans` 中（一个 LinkedHashMap），在 Spring 容器关闭时，遍历调用 `destroy()` 方法执行 Bean 销毁。
 
 判断 Bean 是否为 DisposableBean：
 - 是否实现了 `DisposableBean` 接口
@@ -67,7 +66,7 @@ userService.test();
 
 Spring 容器关闭过程时：
 1. 发布 ContextClosedEvent 事件
-2. 调用 lifecycleProcessor 的 onCloese()方法
+2. 调用 lifecycleProcessor 的 onClose()方法
 3. 销毁单例 Bean
 4. 遍历 disposableBeans
 5. 把每个 disposableBean 从单例池中移除
@@ -80,10 +79,8 @@ Spring 容器关闭过程时：
 
 ### 使用适配器模式对 Bean 进行适配
 
-在销毁时，Spring 会找出实现了 DisposableBean 接口的 Bean。
+在销毁时，Spring 会找出实现了 `DisposableBean` 接口的 Bean。
 
-但是我们在定义一个 Bean 时，如果这个 Bean 实现了 DisposableBean 接口，或者实现了 AutoCloseable 接口，或者在 BeanDefinition 中指定了 destroyMethodName，那么这个 Bean 都属于“DisposableBean”，这些 Bean 在容器关闭时都要调用相应的销毁方法。
+但是在定义一个 Bean 时，如果这个 Bean 实现了 `DisposableBean` 接口，或者实现了 `AutoCloseable` 接口，或者在 BeanDefinition 中指定了 `destroyMethodName`，则此 Bean 属于`DisposableBean`，这类 Bean 在容器关闭时会调用相应的销毁方法。
 
-所以，这里就需要进行适配，将实现了 DisposableBean 接口、或者 AutoCloseable 接口等适配成实现了 DisposableBean 接口，所以就用到了 DisposableBeanAdapter。
-
-会把实现了 AutoCloseable 接口的类封装成 DisposableBeanAdapter，而 DisposableBeanAdapter 实现了 DisposableBean 接口。
+所以需要进行适配，将实现了 `AutoCloseable` 接口的类，适配成实现了 `DisposableBean` 接口，这里用到了 `DisposableBeanAdapter` 把实现了 `AutoCloseable` 接口的类封装成 `DisposableBeanAdapter`，而 `DisposableBeanAdapter` 实现了 `DisposableBean` 接口。
