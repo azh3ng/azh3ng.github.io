@@ -22,7 +22,7 @@ System.out.println(context.getBean("user"));
 
 ## XmlBeanDefinitionReader
 
-可以解析 <bean/> 标签
+可以解析 `<bean/>` 标签
 ```java
 AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 XmlBeanDefinitionReader xmlBeanDefinitionReader = new XmlBeanDefinitionReader(context);

@@ -13,7 +13,7 @@ BeanFactory 顾名思义负责创建 Bean，并且提供获取 Bean 的 API。
 `DefaultListableBeanFactory`的类继承实现结构：
 ![DefaultListableBeanFactory的类继承实现结构](https://github.com/azh3ng/azh3ng.github.io/blob/master/_posts/attachments/Spring%E6%A0%B8%E5%BF%83%E6%8E%A5%E5%8F%A3-1639834096763.png)
 
-它实现了很多接口，表示它拥有很多功能：
+它实现了很多接口，也即它拥有很多功能：
 - `AliasRegistry` ：支持别名功能，一个名字可以对应多个别名
 - `BeanDefinitionRegistry` ：可以注册、保存、移除、获取某个 BeanDefinition
 - `BeanFactory` ：Bean 工厂，可以根据某个 bean 的名字、或类型、或别名获取某个 Bean 对象
