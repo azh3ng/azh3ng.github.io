@@ -189,7 +189,7 @@ context.refresh();
 - 同一对象的方法不会重复执行
 
 #### 代码流程
-1. 获取 ApplicationContext 中的 `beanFactoryPostProcessors`（除非在 [[#ApplicationContext refresh]] 之前向容器中添加了 BeanFactoryPostProcessor，否则一般情况下为空）
+1. 获取 ApplicationContext 中的 `beanFactoryPostProcessors`（除非在 [ApplicationContext.refresh()](#applicationcontextrefresh) 之前向容器中添加了 BeanFactoryPostProcessor，否则一般情况下为空）
     1. 遍历获取到的 `beanFactoryPostProcessors` 
         1. 如果是 `BeanDefinitionRegistryPostProcessor` 则执行 `postProcessBeanDefinitionRegistry()`，并添加到缓存
         2. 否则添加到缓存
@@ -199,7 +199,7 @@ context.refresh();
 3. 排序并执行 `PostProcessorRegistrationDelegate#invokeBeanDefinitionRegistryPostProcessors` 
     1. 执行 `BeanDefinitionRegistryPostProcessor#postProcessBeanDefinitionRegistry`
         1. 执行 `ConfigurationClassPostProcessor#postProcessBeanDefinitionRegistry`
-            1. 执行 `org.springframework.context.annotation.`[ConfigurationClassPostProcessor.processConfigBeanDefinitions](#※ConfigurationClassPostProcessor processConfigBeanDefinitions)（**Spring扫描**）
+            1. 执行 `org.springframework.context.annotation.`[ConfigurationClassPostProcessor.processConfigBeanDefinitions](#configurationclasspostprocessorprocessconfigbeandefinitions)（**Spring扫描**）
 4. 清除缓存 `currentRegistryProcessors`
 5. 从 beanFactory 中获取 `BeanDefinitionRegistryPostProcessor` 类型的、实现了 `Ordered` 接口、**并且未执行过的**  `postProcessorNames`
     1. 遍历 `postProcessorNames`
@@ -213,7 +213,7 @@ context.refresh();
     5. 清除缓存
 8. 执行 `org.springframework.context.support.PostProcessorRegistrationDelegate#invokeBeanFactoryPostProcessors` 传入 所有 `BeanDefinitionRegistryPostProcessor`
     1. 循环执行所有 `BeanDefinitionRegistryPostProcessor` 的 `postProcessBeanFactory` 方法
-        1. 执行 [ConfigurationClassPostProcessor.processConfigBeanDefinitions](#※ConfigurationClassPostProcessor processConfigBeanDefinitions)
+        1. 执行 [ConfigurationClassPostProcessor.processConfigBeanDefinitions](#configurationclasspostprocessorprocessconfigbeandefinitions)
 9. 执行 `org.springframework.context.support.PostProcessorRegistrationDelegate#invokeBeanFactoryPostProcessors` 传入 **手动添加的** `BeanFactoryPostProcessor`
     1. 循环执行所有 ``BeanFactoryPostProcessor`` 的 `postProcessBeanFactory` 方法
 10. 从 beanFactory 中获取扫描得到的 `BeanFactoryPostProcessor`
@@ -231,8 +231,8 @@ context.refresh();
 
 代码流程：
 1. 获取所有 BeanDefinition 遍历判断是否为配置类（`org.springframework.context.annotation.ConfigurationClassUtils#checkConfigurationClassCandidate`），是则添加到临时变量（判断 [AppConfig.class](#appconfigclass) 是否为配置类）
-    1. 如果类上有 `@Configuration` 注解，并且 `proxyBeanMethods` 属性为 true（默认），则为 `CONFIGURATION_CLASS_FULL`（Full 配置类）
-    2. 如果类上有`@Configuration` 注解，并且 `proxyBeanMethods` 属性为 false，则为 `CONFIGURATION_CLASS_LITE` （Lite 配置类）
+    1. 如果类上有 `@Configuration` 注解，并且 `proxyBeanMethods` 属性为 true（默认），则为 `CONFIGURATION_CLASS_FULL`（[Full 配置类](#配置类的定义)）
+    2. 如果类上有`@Configuration` 注解，并且 `proxyBeanMethods` 属性为 false，则为 `CONFIGURATION_CLASS_LITE` （[Lite 配置类](#配置类的定义)）
     3. 如果类不是接口类，类上标注有 `@Component`、`@ComponentScan`、`@Import`、`@ImportResource` 其中任意一个，或者类中有 `@Bean` 注解的方法，则为 `CONFIGURATION_CLASS_LITE` （Lite 配置类）
 2. 将临时变量通过 `@Order` 注解排序
 3. 实例化 `ConfigurationClassParser`
@@ -284,7 +284,7 @@ context.refresh();
     1. 找到并 [增强 Full 配置类]()
 
 ### registerBeanPostProcessors(beanFactory)
-前面的步骤完成了扫描，这一步就会把 BeanFactory 中所有的 BeanPostProcessor 找出来（包括自定义的 BeanPostProcessor）实例化，并添加到 BeanFactory 中去（属性**beanPostProcessors**），最后再重新添加一个 ApplicationListenerDetector 对象（其实添加了，这里是为了把 ApplicationListenerDetector 移动到最后）
+前面的步骤完成了扫描，这一步就会把 BeanFactory 中所有的 BeanPostProcessor 找出来（包括自定义的 BeanPostProcessor）实例化，并添加到 BeanFactory 中去（属性**beanPostProcessors**），最后再重新添加一个 ApplicationListenerDetector 对象（为了把 ApplicationListenerDetector 移动到最后）
 
 ### initMessageSource()
 如果 BeanFactory 中存在一个叫做"**messageSource**"的 BeanDefinition，那么就会把这个 Bean 对象创建出来并赋值给 ApplicationContext 的 messageSource 属性，让 ApplicationContext 拥有**国际化**的功能，否则将创建 `DelegatingMessageSource` 作为默认值。
@@ -296,7 +296,7 @@ context.refresh();
 提供给 AbstractApplicationContext 的子类进行扩展
 
 ### registerListeners()
-- 从 BeanFactory 中获取 ApplicationListener （事件监听器）类型的 beanName，添加到 ApplicationContext 中的事件广播器 `applicationEventMulticaster` 中，并将所有还未被调用 [getBean()](https://azh3ng.com/2022/01/10/Spring-BeanFactory-getBean.html) 方法创建 Bean 对象的 beanName 添加到 `ApplicationEventMulticaster` 中，后续在 `ApplicationEventMulticaster` 调用 `getApplicationListeners()` 方法时再根据 beanName 创建 Bean
+- 从 BeanFactory 中获取 ApplicationListener （事件监听器）类型的 beanName，添加到 ApplicationContext 中的事件广播器 `applicationEventMulticaster` 中，并将所有还未被调用 [getBean()](https://azh3ng.com/2022/01/10/Spring-BeanFactory-getBean.html) 方法创建 Bean 对象的 beanName 添加到 `ApplicationEventMulticaster` 中，后续在 `ApplicationEventMulticaster` 调用 `getApplicationListeners()` 方法时再根据 beanName 创建 Bean（懒加载）
 - 判断是否有 `earlyApplicationEvents`，如果有就使用事件广播器发布 （`earlyApplicationEvents` 表示在事件广播器还没生成之前 ApplicationContext 所发布的事件）
 
 ### finishBeanFactoryInitialization(beanFactory)
@@ -365,7 +365,7 @@ GenericApplicationContext extends AbstractApplicationContext
 `AnnotationConfigWebApplicationContext` 继承 `AbstractRefreshableWebApplicationContext`，所以它**允许重复刷新**
 
 
-### BeanFactoryPostProcessor 的执行顺序简述
+### BeanFactoryPostProcessor 的执行顺序整理
 
 1.  执行**通过 ApplicationContext 添加进来的** BeanDefinitionRegistryPostProcessor 的 postProcessBeanDefinitionRegistry() 方法
 2.  执行 BeanFactory 中**实现了 PriorityOrdered 接口的** BeanDefinitionRegistryPostProcessor 的 postProcessBeanDefinitionRegistry()方法
@@ -407,9 +407,9 @@ public class Azh3ngLifecycle implements SmartLifecycle {
 ```
 
 ## 参考
-- https://www.cnblogs.com/summerday152/p/13639896.html
-- https://zhuanlan.zhihu.com/p/367076177
-- https://blog.csdn.net/qq_35190492/article/details/110383213
-- https://blog.csdn.net/a745233700/article/details/113761271
+- <https://www.cnblogs.com/summerday152/p/13639896.html>
+- <https://zhuanlan.zhihu.com/p/367076177>
+- <https://blog.csdn.net/qq_35190492/article/details/110383213>
+- <https://blog.csdn.net/a745233700/article/details/113761271>
 
 
