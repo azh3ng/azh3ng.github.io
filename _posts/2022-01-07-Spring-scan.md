@@ -9,7 +9,7 @@ Spring 启动的时候会调用
 - `ClassPathBeanDefinitionScanner.scan(String... basePackages)`
     - `ClassPathBeanDefinitionScanner.doScan(String... basePackages)`
         - `ClassPathScanningCandidateComponentProvider.findCandidateComponents()`
-            - `ClassPathScanningCandidateComponentProvider.scanCandidateComponents()`
+            - `ClassPathScanningCandidateComponentProvider.scanCandidateComponents()`  
 扫描某个包路径，筛选 `.class` 并得到 BeanDefinition 的 Set 集合。
 
 ## 扫描
@@ -20,12 +20,12 @@ Spring 启动的时候会调用
 3. 遍历每个 `Resource` 对象
 
 ## 筛选并生成 BeanDefinition
-1. 利用 `MetadataReaderFactory` 解析 `Resource` 对象得到 `MetadataReader`（在 Spring 源码中 MetadataReaderFactory 具体的实现类为 CachingMetadataReaderFactory，MetadataReader 的具体实现类为 SimpleMetadataReader）
-2. 利用 `MetadataReader` 进行 `excludeFilters` 、`includeFilters` 和条件注解 `@Conditional` 的筛选（条件注解：某个类上是否存在 `@Conditional` 注解，如果存在则调用注解中所指定的类的 match 方法进行匹配，匹配成功则通过筛选，匹配失败则 pass 掉。）（`ClassPathScanningCandidateComponentProvider.isCandidateComponent(MetadataReader)`）
+1. 利用 `MetadataReaderFactory` 解析 `Resource` 对象得到 `MetadataReader`（MetadataReaderFactory 具体的实现类为 CachingMetadataReaderFactory，MetadataReader 的具体实现类为 SimpleMetadataReader）
+2. 利用 `MetadataReader` 进行 `excludeFilters` 、`includeFilters` 和条件注解 `@Conditional` 的筛选（`ClassPathScanningCandidateComponentProvider.isCandidateComponent(MetadataReader)`）
    1. 先进行 `excludeFilters` 判定，如果匹配直接返回 false，表示不为 Bean
    2. 再进行 `includeFilters` 判定，
        1. 如果不匹配，返回 false，表示不为 Bean
-       2. 如果匹配，再进行 `@Conditional` 匹配
+       2. 如果匹配，再进行 `@Conditional` 匹配（条件注解：某个类上是否存在 `@Conditional` 注解，如果存在则调用注解中所指定的类的 match 方法进行匹配，匹配成功则通过筛选，匹配失败则 pass 掉。）
 3. 筛选通过后，基于 `metadataReader` 生成 `ScannedGenericBeanDefinition`（`ClassPathScanningCandidateComponentProvider.java`）
 4. 判断类是不是接口或抽象类，能否视作 Bean（`ClassPathScanningCandidateComponentProvider.isCandidateComponent(AnnotatedBeanDefinition)`）
    - 根据 `ClassMetadata.isIndependent()` 判断是否是顶级类或者静态内部类
@@ -47,7 +47,8 @@ Spring 启动的时候会调用
    4. 解析 Bean 的 `@Lazy`、`@Primary`、`DependsOn`、`@Role`、`@Description` 注解，给 BeanDefinition 赋值（`AnnotationConfigUtils.processCommonDefinitionAnnotations(AnnotatedBeanDefinition, AnnotatedTypeMetadata)`）
    5. 检查 Spring 容器中是否已经存在相同 beanName 的 Bean（`ClassPathBeanDefinitionScanner.checkCandidate()`）
       1. 如果不存在，**将当前 BeanDefinition 加入 BeanDefinitionMap 中**
-      2. 判断当前 BeanDefinition 是否被多次扫描，是则略过此 Bean
-      3. 否则表示存在相同 beanName 的 Bean，抛出异常
+      2. 如果存在，判断当前 BeanDefinition 是否被多次扫描
+         1. 是则略过此 Bean
+         2. 否则表示存在相同 beanName 的 Bean，抛出异常
       
     
