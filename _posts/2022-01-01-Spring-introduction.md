@@ -5,7 +5,7 @@ date: 2022-01-01 00:00
 tags: [Spring]
 ---
 
-在开发中，Spring 算是我接触最多的框架了，故而想对它进行更深入的学习，可以更快的实现想要的功能，同时写出更优雅的实现。
+在开发中，Spring 算是我接触最多的框架了，故而想对它进行更深入的学习，可以更快的实现想要的功能，同时写出更优雅的实现。  
 后续所有的内容都基于 [Spring Framework 5.3.10-SNAPSHOT](https://github.com/spring-projects/spring-framework/tree/v5.3.10)。
 
 ## 核心原理
@@ -25,15 +25,9 @@ tags: [Spring]
 - [Spring推断构造方法](https://azh3ng.com/2022/01/13/Spring-infer-constructor.html)
 - [依赖注入](https://azh3ng.com/2022/01/14/Spring-Dependency-Injection.html)
 - [解决循环依赖](https://azh3ng.com/2022/01/15/Spring-resolve-circular-dependencies.html)
-- [Spring AOP]()
-  - [代理模式]()
-  - [JDK动态代理]()
-  - [CGLIB代理]()
-- [Spring事务]()
+- [Spring AOP]() TODO
+  - [代理模式]() TODO
+  - [JDK动态代理]() TODO
+  - [CGLIB代理]() TODO
+- [Spring事务]() TODO
 
-
-
-## Children
-```dataview
-LIST WHERE contains(extends, [[]])
-```
