@@ -97,7 +97,7 @@ context.refresh();
 ```
 上面两段代码作用相同，都是进行 Spring 启动，以第二段代码说明，分为三个步骤：
 1. 实例化 `AnnotationConfigApplicationContext`
-2. 注册 [AppConfig.class](#AppConfig.class)
+2. 注册 [AppConfig.class](#appconfigclass)
 3. context 调用 `refresh()` 方法
 
 ## 实例化 AnnotationConfigApplicationContext
@@ -117,8 +117,8 @@ context.refresh();
     1. 添加默认的扫描 Filter 到 `includeFilters`（`@Component`）
 
 ## 注册 Config 类
-`context.register(`[AppConfig.class](#AppConfig.class)`);`
-使用 `beanFactory.reader` 解析传入的 [AppConfig.class](#AppConfig.class)生成 BeanDefinition
+`context.register(`[AppConfig.class](#appconfigclass)`);`
+使用 `beanFactory.reader` 解析传入的 [AppConfig.class](#appconfigclass)生成 BeanDefinition
 
 ## ApplicationContext.refresh()
 `org.springframework.context.support.AbstractApplicationContext#refresh`
@@ -230,7 +230,7 @@ context.refresh();
 简述：
 
 代码流程：
-1. 获取所有 BeanDefinition 遍历判断是否为配置类（`org.springframework.context.annotation.ConfigurationClassUtils#checkConfigurationClassCandidate`），是则添加到临时变量（判断 [AppConfig.class](#AppConfig.class) 是否为配置类）
+1. 获取所有 BeanDefinition 遍历判断是否为配置类（`org.springframework.context.annotation.ConfigurationClassUtils#checkConfigurationClassCandidate`），是则添加到临时变量（判断 [AppConfig.class](#appconfigclass) 是否为配置类）
     1. 如果类上有 `@Configuration` 注解，并且 `proxyBeanMethods` 属性为 true（默认），则为 `CONFIGURATION_CLASS_FULL`（Full 配置类）
     2. 如果类上有`@Configuration` 注解，并且 `proxyBeanMethods` 属性为 false，则为 `CONFIGURATION_CLASS_LITE` （Lite 配置类）
     3. 如果类不是接口类，类上标注有 `@Component`、`@ComponentScan`、`@Import`、`@ImportResource` 其中任意一个，或者类中有 `@Bean` 注解的方法，则为 `CONFIGURATION_CLASS_LITE` （Lite 配置类）
@@ -254,7 +254,7 @@ context.refresh();
 1. `org.springframework.context.annotation.ConfigurationClassParser#processConfigurationClass`
 2. 判断如果某个 Bean 被多次 `@Import` 导入，则合并 `importedBy` 属性
 3. 调用 `doProcessConfigurationClass`，如果返回父类，则递归解析父类（`do {} while()`）
-4. 解析配置类（`org.springframework.context.annotation.ConfigurationClassParser#doProcessConfigurationClass`）（解析 [AppConfig.class](#AppConfig.class)）
+4. 解析配置类（`org.springframework.context.annotation.ConfigurationClassParser#doProcessConfigurationClass`）（解析 [AppConfig.class](#appconfigclass)）
     1. 判断类是否有 `@Component` 注解，有则解析类的内部类，判断是否是配置类，是则进一步解析（递归调用 `processConfigurationClass()`）
     2. 判断类是否有 `@PropertySources` 注解，有则解析指定的配置文件，并设置到 `environment` 中
     3. 判断类是否有 `@ComponentScans` 注解，有则进行 [Spring扫描](https://azh3ng.com/2022/01/07/Spring-scan.html)，得到 `BeanDefinition`，并注册到 BeanFactory 中；遍历得到的 `BeanDefinition` 判断是否为配置类，如果是继续解析配置类（递归调用 `ConfigurationClassParser.parse()`）
@@ -323,7 +323,7 @@ BeanFactory 初始化已经完成，这是 Spring 启动的最后一步
 
 ## 其他
 
-# AppConfig.class
+### AppConfig.class
 示例中的配置类  
 ```java
 @Configuration
