@@ -19,7 +19,7 @@ ApplicationContext 有两个比较重要的实现类：
 - [ClassPathXmlApplicationContext](#ClassPathXmlApplicationContext)
 
 ### AnnotationConfigApplicationContext
-![ApplicationContext类继承结构](./attachments/Spring核心接口-1639837290449.png)
+![ApplicationContext类继承结构](https://github.com/azh3ng/azh3ng.github.io/blob/master/_posts/attachments/Spring%E6%A0%B8%E5%BF%83%E6%8E%A5%E5%8F%A3-1639834096763.png?raw=true)
 - `ConfigurableApplicationContext` ：继承了 ApplicationContext 接口，增加了，添加事件监听器、添加 BeanFactoryPostProcessor、设置 Environment，获取 ConfigurableListableBeanFactory 等功能
 - `AbstractApplicationContext` ：实现了 `ConfigurableApplicationContext` 接口
 - `GenericApplicationContext` ：继承了 `AbstractApplicationContext`，实现了 `BeanDefinitionRegistry` 接口，拥有了所有 `ApplicationContext` 的功能，并且可以注册 `BeanDefinition`，注意这个类中有一个属性(DefaultListableBeanFactory beanFactory)
@@ -100,7 +100,7 @@ System.out.println("=======");
 // 快捷获取环境变量的值
 System.out.println(context.getEnvironment().getProperty("NO_PROXY"));
 System.out.println(context.getEnvironment().getProperty("sun.jnu.encoding"));
-System.out.println(context.getEnvironment().getProperty("zhouyu"));
+System.out.println(context.getEnvironment().getProperty("azh3ng"));
 ```
 
 **注意**: 可以利用

@@ -11,7 +11,7 @@ BeanFactory 顾名思义负责创建 Bean，并且提供获取 Bean 的 API。
 ### DefaultListableBeanFactory
 `DefaultListableBeanFactory` 继承 `BeanFactory`，支持很多功能，`DefaultListableBeanFactory` 在 Spring 中发挥非常重要的作用。
 `DefaultListableBeanFactory`的类继承实现结构：
-![DefaultListableBeanFactory的类继承实现结构](./attachments/Spring核心接口-1639834096763.png)
+![DefaultListableBeanFactory的类继承实现结构](https://github.com/azh3ng/azh3ng.github.io/blob/master/_posts/attachments/Spring%E6%A0%B8%E5%BF%83%E6%8E%A5%E5%8F%A3-1639834096763.png)
 
 它实现了很多接口，表示它拥有很多功能：
 - `AliasRegistry` ：支持别名功能，一个名字可以对应多个别名
