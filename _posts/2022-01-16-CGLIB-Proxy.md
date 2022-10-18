@@ -2,7 +2,7 @@
 layout: article  
 alias: CGLIB动态代理
 title: 理解 CGLIB 动态代理
-date: 2022-09-15 18:38
+date: 2022-01-16 01:01
 tags: []
 ---
 
@@ -11,10 +11,10 @@ CGLIB 被广泛的运用在许多 AOP 的框架中，例如 Spring AOP 和 dynao
 
 CGLIB 作为一个开源项目，其代码托管在 github，地址为：[https://github.com/cglib/cglib](https://github.com/cglib/cglib)
 
-**CGLIB 的原理**是动态生成一个被代理类的子类，子类重写被代理的类的所有**非** `final` 的方法。在子类中采用方法拦截的技术拦截所有父类方法的调用，织入横切逻辑。
-**CGLIB 底层**使用字节码处理框架 ASM，来转换字节码并生成新的类。不鼓励直接使用 ASM，因为它要求必须对 JVM 内部结构包括 class 文件的格式和指令集都很熟悉。
-**CGLIB 优点**：比 JDK 动态代理效率更高
-**CGLIB 缺点**：对于 `final` 类和方法，无法进行代理。
+**CGLIB 的原理**是动态生成一个被代理类的子类，子类重写被代理的类的所有**非** `final` 的方法。在子类中采用方法拦截的技术拦截所有父类方法的调用，织入横切逻辑。  
+**CGLIB 底层**使用字节码处理框架 ASM，来转换字节码并生成新的类。不鼓励直接使用 ASM，因为它要求必须对 JVM 内部结构包括 class 文件的格式和指令集都很熟悉。  
+**CGLIB 优点**：比 JDK 动态代理效率更高  
+**CGLIB 缺点**：对于 `final` 类和方法，无法进行代理。  
 
 ## 代码示例
 有一个原始类，没有实现任何接口
@@ -33,7 +33,7 @@ public class Azh3ngService {
 ```
 
 ### 拦截器
-定义一个拦截器，在调用目标方法时，CGLib 会回调 `MethodInterceptor` 接口方法拦截，来实现自定义的代理逻辑，类似于 JDK 中的 `InvocationHandler` 接口
+定义一个拦截器，在调用目标方法时，CGLib 会回调 `MethodInterceptor` 接口方法拦截，来实现自定义的代理逻辑，类似于 [JDK](https://azh3ng.com/2022/01/16/JDK-Proxy.html) 中的 `InvocationHandler` 接口
 ```java
 import java.lang.reflect.Method;
 import net.sf.cglib.proxy.MethodInterceptor;
@@ -59,8 +59,8 @@ public class Azh3ngInterceptor implements MethodInterceptor{
     }
 }
 ```
-参数：`Object obj` 为由 CGLib 动态生成的代理类实例；`Method method` 为上文中实体类所调用的被代理的方法引用；`Object[] params` 是参数值列表；`MethodProxy proxy` 是生成的代理类对方法的代理引用。
-返回：从代理实例的方法调用返回的值。
+参数：`Object obj` 为由 CGLib 动态生成的代理类实例；`Method method` 为上文中实体类所调用的被代理的方法引用；`Object[] params` 是参数值列表；`MethodProxy proxy` 是生成的代理类对方法的代理引用。  
+返回：从代理实例的方法调用返回的值。  
 其中，`proxy.invokeSuper(obj,arg)` 表示调用代理类实例的父类的方法（即实体类 `Azh3ngService` 中对应的方法）
 
 ### 生成代理类
@@ -89,13 +89,13 @@ public class TestCglibProxy {
 }
 ```
 `Enhancer` 类是 CGLib 中的一个字节码增强器。  
-首先将被代理类 Azh3ngService 设置成父类，然后设置拦截器 Azh3ngInterceptor，最后执行 `enhancer.create()` 动态生成一个代理类，并强制转型成父类 Azh3ngService，最后，在代理类上调用方法
+首先将被代理类 `Azh3ngService` 设置成父类，然后设置拦截器 `Azh3ngInterceptor`，最后执行 `enhancer.create()` 动态生成一个代理类，并强制转型成父类 `Azh3ngService`，最后，在代理类上调用方法
 
 ### 回调过滤器CallbackFilter
-#### 作用
-在 CGLib 回调时可以设置对不同方法执行不同的回调逻辑，或者不执行回调。
-在 JDK 动态代理中没有类似的功能，对 InvocationHandler 接口方法的调用对代理类内的所以方法都有效。
-定义实现过滤器 CallbackFilter 接口的类：
+CallbackFilter 的作用：在 CGLib 回调时可以设置对不同方法执行不同的回调逻辑，或者不执行回调。  
+在 JDK 动态代理中没有类似的功能，对 InvocationHandler 接口方法的调用对代理类内的所以方法都有效。  
+**代码示例**：  
+定义实现过滤器 `CallbackFilter` 接口的类：  
 ```java
 import java.lang.reflect.Method;
 import net.sf.cglib.proxy.CallbackFilter;
@@ -126,8 +126,9 @@ public class TargetMethodCallbackFilter implements CallbackFilter {
     }
 }
 ```
-其中 return 值为被代理类的各个方法在回调数组 Callback[] 中的位置索引
+其中 return 值为被代理类的各个方法在回调数组 `Callback[]` 中的位置索引
 
+使用 `main` 方法测试  
 ```java
 import net.sf.cglib.proxy.Callback;
 import net.sf.cglib.proxy.CallbackFilter;
