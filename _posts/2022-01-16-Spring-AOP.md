@@ -7,8 +7,8 @@ tags: []
 extends:
 ---
 
-Spring AOP 是对 [[AOP]]（面向切面编程）思想的一种实现，使开发者可以更便捷的使用各类工具完成 AOP 编程。    
-AOP 中的概念并不直观，如果 Spring 重新定义一次可能更加混乱，所以 Spring 为了让开发者更加方便的做到面向切面编程，提供了一套机制，可以称之为 Spring AOP，其本质在 [[Bean 创建]] 过程的最后，判断当前 Bean 是否需要进行 AOP，如果需要则会进行 [[代理模式#动态代理]]，生成代理对象，由 Spring 管理代理对象，并在自动注入时注入代理对象，交由代理对象执行切面逻辑，完成 AOP。
+Spring AOP 是对 [AOP](https://azh3ng.com/2022/01/16/AOP.html)（面向切面编程）思想的一种实现，使开发者可以更便捷的使用各类工具完成 AOP 编程。    
+AOP 中的概念并不直观，如果 Spring 重新定义一次可能更加混乱，所以 Spring 为了让开发者更加方便的做到面向切面编程，提供了一套机制，可以称之为 Spring AOP，其本质在 [Bean 创建](https://azh3ng.com/2022/01/11/Spring-BeanFactory-createBean.html) 过程的最后，判断当前 Bean 是否需要进行 AOP，如果需要则会进行 [代理模式#动态代理](https://azh3ng.com/2022/01/16/Proxy-Pattern.html#%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86)，生成代理对象，由 Spring 管理代理对象，并在自动注入时注入代理对象，交由代理对象执行切面逻辑，完成 AOP。
 
 **注意**：通过注解的方式定义 Pointcut 和 Advice，并不是 Spring 首创，而是 AspectJ，而且也不仅仅只有 Spring 提供了一套机制来支持 AOP，JBoss 4.0、AspectWerkz 等技术都提供了对于 AOP 的支持。Spring 使用了 AspectJ 中所定义的注解，没有再重复定义，但也仅仅只是使用了注解的定义，具体解析和处理由 Spring 实现，所以在用 Spring 时，如果想用 `@Before`、`@Around` 等 AspectJ 的注解，需要单独引入 AspectJ 相关的依赖。
 ```
@@ -16,15 +16,11 @@ compile group: 'org.aspectj', name: 'aspectjrt', version: '1.9.5'
 compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.5'
 ```
 
-## Spring AOP 流程原理图
-
-![Spring AOP 流程原理图](./attachments/Spring-AOP-1663492369655.png)
-
 ## 核心接口/类/注解
 
 ### Advice
 `org.aopalliance.aop.Advice`  
-Advice 接口对应着 AOP 概念中的 [[AOP#Advice]]，表示对一段代码逻辑的增强逻辑
+Advice 接口对应着 AOP 概念中的 [AOP#Advice](https://azh3ng.com/2022/01/16/AOP.html#advice)，表示对一段代码逻辑的增强逻辑
 
 常见的子类有
 - `org.aopalliance.intercept.MethodInterceptor`：
@@ -46,7 +42,7 @@ AspectJ 中的注解，有五个用来定义 Advice，表示代理逻辑，以�
 
 ### Pointcut
 `org.springframework.aop.Pointcut`  
-Pointcut 接口对应着 AOP 概念中的 [[AOP#Pointcut]]，中文译为切点，可以理解为**通过一些过滤条件，筛选出需要被代理的方法**。
+Pointcut 接口对应着 AOP 概念中的 [AOP#Pointcut](https://azh3ng.com/2022/01/16/AOP.html#pointcut)，中文译为切点，可以理解为**通过一些过滤条件，筛选出需要被代理的方法**。
 
 接口 Pointcut 中包含两个方法
 - `ClassFilter getClassFilter();`
@@ -89,24 +85,24 @@ Spring 会将 Advice 的各种其他子类 [[适配器模式|适配]] 为 Method
 `MethodInvocation.proceed()`，可以视作：调用切面逻辑和被代理的方法，其中切面逻辑可能有多个，会以链的形式逐个调用
 
 MethodInvocation 的常见子类有：
-- [[#ReflectiveMethodInvocation]]
-- [[#CglibMethodInvocation]]
+- [ReflectiveMethodInvocation](#ReflectiveMethodInvocation)
+- [CglibMethodInvocation](#CglibMethodInvocation)
 
 #### ReflectiveMethodInvocation
 `org.springframework.aop.framework.ReflectiveMethodInvocation`  
-`ReflectiveMethodInvocation` 被用在 Spring 以 JDK 动态代理方式创建的代理类中，当代理类的代理方法被调用时，会通过 Pointcut 筛选出若干 Advise，将 Advise 适配成 `MethodInterceptor`，组装成链，后将被代理对象、被代理方法及代理逻辑链等打包传入并构造 `ReflectiveMethodInvocation`，通过 `ReflectiveMethodInvocation` 按顺序执行代理逻辑和被代理逻辑，详见 [[#JDK 动态代理执行流程]]
+`ReflectiveMethodInvocation` 被用在 Spring 以 JDK 动态代理方式创建的代理类中，当代理类的代理方法被调用时，会通过 Pointcut 筛选出若干 Advise，将 Advise 适配成 `MethodInterceptor`，组装成链，后将被代理对象、被代理方法及代理逻辑链等打包传入并构造 `ReflectiveMethodInvocation`，通过 `ReflectiveMethodInvocation` 按顺序执行代理逻辑和被代理逻辑，详见 [#JDK 动态代理执行流程](#jdk-%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B)
 
 #### CglibMethodInvocation
 `org.springframework.aop.framework.CglibAopProxy.CglibMethodInvocation`  
-`CglibMethodInvocation` 继承 [[#ReflectiveMethodInvocation]]，主要被用在 Spring 以 CGLIB 方法创建的代理类中，其核心执行逻辑与 `ReflectiveMethodInvocation` 基本相同。
+`CglibMethodInvocation` 继承 [ReflectiveMethodInvocation](#reflectivemethodinvocation)，主要被用在 Spring 以 CGLIB 方法创建的代理类中，其核心执行逻辑与 `ReflectiveMethodInvocation` 基本相同。
 
 ### AbstractAdvisorAutoProxyCreator
 `org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator`  
 `AbstractAdvisorAutoProxyCreator` 继承 `AbstractAutoProxyCreator` 继承 `SmartInstantiationAwareBeanPostProcessor`。  
-`AbstractAutoProxyCreator` 重写了 `postProcessAfterInitialization()` 方法，在 [[Bean 创建#初始化后]] 时会调用 `wrapIfNecessary()`方法，找到所有的 Advisor 类型的 bean，通过 Advisor 中 Pointcut 判断当前 Bean 是否匹配 ，如果匹配表示当前 Bean 有对应的切面逻辑，需要进行 AOP，则创建代理对象返回。  
+`AbstractAutoProxyCreator` 重写了 `postProcessAfterInitialization()` 方法，在 [Bean 创建#初始化后](https://azh3ng.com/2022/01/11/Spring-BeanFactory-createBean.html#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%90%8E) 时会调用 `wrapIfNecessary()`方法，找到所有的 Advisor 类型的 bean，通过 Advisor 中 Pointcut 判断当前 Bean 是否匹配 ，如果匹配表示当前 Bean 有对应的切面逻辑，需要进行 AOP，则创建代理对象返回。  
 可以理解为：如果 Spring 容器中存在这个类型的 Bean，就相当于开启了 AOP
 
-`AbstractAdvisorAutoProxyCreator` 的常见子类包括 `DefaultAdvisorAutoProxyCreator`、[[#AnnotationAwareAspectJAutoProxyCreator]]。
+`AbstractAdvisorAutoProxyCreator` 的常见子类包括 `DefaultAdvisorAutoProxyCreator`、[AnnotationAwareAspectJAutoProxyCreator](#annotationawareaspectjautoproxycreator)。
 
 ### @EnableAspectJAutoProxy
 ```java
@@ -120,7 +116,7 @@ public @interface EnableAspectJAutoProxy {
 }
 ```
 
-`@Import(AspectJAutoProxyRegistrar.class)` 表示 `@EnableAspectJAutoProxy` 注解向 Spring 容器中添加一个 [[#AnnotationAwareAspectJAutoProxyCreator]] 类型的 Bean
+`@Import(AspectJAutoProxyRegistrar.class)` 表示 `@EnableAspectJAutoProxy` 注解向 Spring 容器中添加一个 [AnnotationAwareAspectJAutoProxyCreator](#annotationawareaspectjautoproxycreator) 类型的 Bean
 
 ### AnnotationAwareAspectJAutoProxyCreator
 `org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator`
@@ -136,10 +132,9 @@ classDiagram
     SmartInstantiationAwareBeanPostProcessor <|.. AbstractAutoProxyCreator
     BeanFactoryAware <|.. AbstractAutoProxyCreator
     BeanPostProcessor <|-- SmartInstantiationAwareBeanPostProcessor
-    
 ```
 
-`AnnotationAwareAspectJAutoProxyCreator` 继承 [[#AbstractAdvisorAutoProxyCreator]] 并重写了 `findCandidateAdvisors()` 方法；  
+`AnnotationAwareAspectJAutoProxyCreator` 继承 [#AbstractAdvisorAutoProxyCreator](#abstractadvisorautoproxycreator) 并重写了 `findCandidateAdvisors()` 方法；  
 `AbstractAdvisorAutoProxyCreator` 能找到所有 Advisor 类型的 Bean 对象，在此基础上 `AspectJAwareAdvisorAutoProxyCreator` 还能把 被 `@Aspect` 注解所标注的 Bean 中的 `@Before` 等注解及方法进行解析，生成对应的 Advisor 类型的 Bean 加入 Spring 中。
 
 **小结**：如果 Spring 容器中存在这个类型的 Bean，就相当于开启了 AOP，同时还会自动解析 `@Before` 等 AspectJ 相关注解，并生成 Advisor 类型的 Bean。
@@ -147,16 +142,29 @@ classDiagram
 ### TargetSource
 [[TargetSource]]
 
+### AdvisorAdapter
+`org.springframework.aop.framework.adapter.AdvisorAdapter`  
+AdvisorAdapter 有三个子类  
+- `AfterReturningAdviceAdapter`
+- `MethodBeforeAdviceAdapter`
+- `ThrowsAdviceAdapter`
+  分别将  
+- `AfterReturningAdvice`
+- `MethodBeforeAdvice`
+- `ThrowsAdvice`
+
+适配（转换）成 `MethodBeforeAdviceInterceptor`(继承 `MethodInterceptor`)
+
 ## Spring 与 AOP 整合
 Spring 与 AOP 整合通常有两种方式：
 1. 配置文件
 2. 注解
 
-通过注解方式开始 AOP 通常会使用 [[#@EnableAspectJAutoProxy开启AOP]]
+通过注解方式开始 AOP 通常会使用 [@EnableAspectJAutoProxy开启AOP](#enableaspectjautoproxy开启aop)
 
 ### @EnableAspectJAutoProxy开启AOP
 `@EnableAspectJAutoProxy` 注解会向 Spring 中注册 `AnnotationAwareAspectJAutoProxyCreator` 类型的 Bean，它实现了 `SmartInstantiationAwareBeanPostProcessor`，实际是向 Spring 中添加了一个 BeanPostProcessor。  
-`AnnotationAwareAspectJAutoProxyCreator` 的父类 `AbstractAutoProxyCreator` 实现了 `postProcessAfterInitialization()` 方法，在 [[Bean 创建#初始化后]] 时，会调用到此方法。  
+`AnnotationAwareAspectJAutoProxyCreator` 的父类 `AbstractAutoProxyCreator` 实现了 `postProcessAfterInitialization()` 方法，在 [Bean 创建#初始化后](https://azh3ng.com/2022/01/11/Spring-BeanFactory-createBean.html#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%90%8E) 时，会调用到此方法。  
 `postProcessAfterInitialization()` 方法中，会调用 `AbstractAutoProxyCreator.wrapIfNecessary()` 判断 Bean 是否需要 AOP，需要则生成代理 Bean：
 **Spring 判断 Bean 是否需要 AOP 简述**：  
 Spring 判断 Bean 是否需要进行 AOP 流程：
@@ -195,12 +203,12 @@ AspectJ 相关注解的方法，会转化成 `InstantiationModelAwarePointcutAdv
 - `@AfterThrowing` : AspectJAfterThrowingAdvice
 
 ## 代理对象创建流程
-在 [[#Spring 与 AOP 整合]] 中会创建 [[ProxyFactory]]，ProxyFactory 判断并选择 CGLIB 或 JDK 动态代理，创建 AopProxy（JDK 动态代理对应 `JdkDynamicAopProxy`，CGLIB 代理对应 `ObjenesisCglibAopProxy`），通过 AopProxy 创建代理对象
+在 [Spring 与 AOP 整合](#spring-与-aop-整合) 中会创建 [[ProxyFactory]]，ProxyFactory 判断并选择 CGLIB 或 JDK 动态代理，创建 AopProxy（JDK 动态代理对应 `JdkDynamicAopProxy`，CGLIB 代理对应 `ObjenesisCglibAopProxy`），通过 AopProxy 创建代理对象
 
 ### JdkDynamicAopProxy
 1. 构造 JdkDynamicAopProxy 对象时，会先拿到被代理对象所实现的接口，并额外增加 SpringProxy、Advised、DecoratingProxy 三个接口，组合成一个 Class 数组，并赋值给 `proxiedInterfaces` 属性
 2. 检查 `proxiedInterfaces` 接口中如果定义了 `equals()` 或 `hashcode()` 方法，也将进行代理
-3. 执行 `Proxy.newProxyInstance(classLoader, this.proxiedInterfaces, this)` ，得到代理对象，JdkDynamicAopProxy 作为 InvocationHandler，代理对象在执行某个方法时，会进到 JdkDynamicAopProxy 的 [invoke()](#JDK 动态代理执行流程) 方法中
+3. 执行 `Proxy.newProxyInstance(classLoader, this.proxiedInterfaces, this)` ，得到代理对象，JdkDynamicAopProxy 作为 InvocationHandler，代理对象在执行某个方法时，会进到 JdkDynamicAopProxy 的 [invoke()](#jdk-动态代理执行流程) 方法中
 
 ### ObjenesisCglibAopProxy
 1. 创建 Enhancer 对象
@@ -222,8 +230,8 @@ AspectJ 相关注解的方法，会转化成 `InstantiationModelAwarePointcutAdv
    2. 再根据 Pointcut 定义的 `MethodMatcher.matches(Method method, Class<?> targetClass)` 方法判断，被调用的方法是否匹配
    3. 如果匹配
     1. 如果 `MethodMatcher.isRuntime()` 为 ture
-    1. 如果是，将 `advisor` 转换([适配](./AdvisorAdapter.md))成 `InterceptorAndDynamicMethodMatcher`（在被代理的方法执行前，会根据 `MethodMatcher.matches(Method method, Class<?> targetClass, Object... args)` 方法，更细粒度的控制并判断，被调用的方法是否匹配，如果匹配成功才执行代理逻辑，详见 `org.springframework.aop.framework.ReflectiveMethodInvocation#proceed`）
-    2. 否则将 `advisor` 转换([适配](./AdvisorAdapter.md))成 `MethodInterceptor`
+    1. 如果是，将 `advisor` 转换([适配](#AdvisorAdapter))成 `InterceptorAndDynamicMethodMatcher`（在被代理的方法执行前，会根据 `MethodMatcher.matches(Method method, Class<?> targetClass, Object... args)` 方法，更细粒度的控制并判断，被调用的方法是否匹配，如果匹配成功才执行代理逻辑，详见 `org.springframework.aop.framework.ReflectiveMethodInvocation#proceed`）
+    2. 否则将 `advisor` 转换([适配](AdvisorAdapter))成 `MethodInterceptor`
 3. 把匹配的 MethodInterceptor 链、被代理对象、代理对象、代理类、当前 Method 对象、方法参数封装为 `ReflectiveMethodInvocation` 对象
 4. `ReflectiveMethodInvocation.proceed()`：执行各个 MethodInterceptor 及被代理对象的方法
     1. 判断所有 MethodInterceptor 都执行完成，调用 `invokeJoinpoint()` 方法，执行被代理对象的方法并返回
@@ -239,10 +247,10 @@ AspectJ 相关注解的方法，会转化成 `InstantiationModelAwarePointcutAdv
 ### CGLIB 代理方式
 `org.springframework.aop.framework.CglibAopProxy.DynamicAdvisedInterceptor#intercept`
 1. 判断配置中的 exposeProxy 如果为 true，则将当前代理对象设置到 ThreadLocal 中
-2. 获取所有 Advisor 中的 Pointcut，通过 Pointcut 中的 MethodMatcher 和 ClassFilter 对目标对象的方法进行匹配筛选，匹配成功则将 Advisor 适配成 MethodInterceptor（详见 [[#JDK 动态代理执行流程]] 内步骤2）
+2. 获取所有 Advisor 中的 Pointcut，通过 Pointcut 中的 MethodMatcher 和 ClassFilter 对目标对象的方法进行匹配筛选，匹配成功则将 Advisor 适配成 MethodInterceptor（详见 [JDK 动态代理执行流程](#jdk-动态代理执行流程) 内步骤2）
 3. 把匹配的 MethodInterceptor 链、被代理对象、代理对象、代理类、当前 Method 对象、方法参数封装为 `CglibMethodInvocation` 对象
 4. `CglibMethodInvocation.proceed()`：执行各个 MethodInterceptor 及被代理对象的方法
-    1. `CglibMethodInvocation` 继承 `ReflectiveMethodInvocation`，`proceed()` 内实际直接调用的父类逻辑，故流程详见 [[#JDK 动态代理执行流程]] 内步骤4
+    1. `CglibMethodInvocation` 继承 `ReflectiveMethodInvocation`，`proceed()` 内实际直接调用的父类逻辑，故流程详见 [JDK 动态代理执行流程](#jdk-动态代理执行流程) 内步骤4
 
 ## 实战
 理解了 Spring AOP 的原理之后，在开发中可以使用 Spring 提供的接口更优雅快捷的完成开发
@@ -329,7 +337,7 @@ public class TestBeanNameAutoProxyCreator {
 ```
 
 ### DefaultAdvisorAutoProxyCreator
-DefaultAdvisorAutoProxyCreator 继承 [[#AbstractAdvisorAutoProxyCreator]]，会到 Spring 容器中寻找所有 Advisor 类型的 Bean，根据 Advisor 中的 PointCut 和 Advice 信息，确定要代理的 Bean 以及代理逻辑。
+DefaultAdvisorAutoProxyCreator 继承 [AbstractAdvisorAutoProxyCreator](#abstractadvisorautoproxycreator)，会到 Spring 容器中寻找所有 Advisor 类型的 Bean，根据 Advisor 中的 PointCut 和 Advice 信息，确定要代理的 Bean 以及代理逻辑。
 **代码示例：**
 ```java
 public class TestDefaultAdvisorAutoProxyCreator {
