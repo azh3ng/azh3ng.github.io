@@ -5,6 +5,7 @@ title: 【理解Spring】AOP
 date: 2022-01-16 00:00
 tags: []
 extends:
+mermaid: true
 ---
 
 Spring AOP 是对 [AOP](https://azh3ng.com/2022/01/16/AOP.html)（面向切面编程）思想的一种实现，使开发者可以更便捷的使用各类工具完成 AOP 编程。    
@@ -52,12 +53,12 @@ Spring AOP 通过 `ClassFilter` 和 `MethodMatcher` 判断类是否需要被代�
 
 ### Advisor
 `org.springframework.aop.Advisor`  
-Advisor 是 [Pointcut](#Pointcut) 和 [Advice](#Advice) 的组合，通过 `Pointcut` 指定（筛选）被代理的类和方法，通过 Advice 自定义代理的逻辑。  
+Advisor 是 [Pointcut](#pointcut) 和 [Advice](#advice) 的组合，通过 `Pointcut` 指定（筛选）被代理的类和方法，通过 Advice 自定义代理的逻辑。  
 在使用 Spring 时会指定许多不同的类和方法（`Pointcut`）各自对应一段代理逻辑（`Advice`），Spring 使用 `Advisor` 持有这两者，并统一管理。
 
 ### MethodInterceptor
 `org.aopalliance.intercept.MethodInterceptor`  
-继承 [Advice](#Advice)，可以视作比 Advice 更具象、更接近代码实现的接口，在 Spring 中大量使用。  
+继承 [Advice](#advice)，可以视作比 Advice 更具象、更接近代码实现的接口，在 Spring 中大量使用。  
 Spring 会将 Advice 的各种其他子类 [[适配器模式|适配]] 为 MethodInterceptor，以用于统一调用和管理。
 
 ##### 各注解对应的 MethodInterceptor
@@ -85,8 +86,8 @@ Spring 会将 Advice 的各种其他子类 [[适配器模式|适配]] 为 Method
 `MethodInvocation.proceed()`，可以视作：调用切面逻辑和被代理的方法，其中切面逻辑可能有多个，会以链的形式逐个调用
 
 MethodInvocation 的常见子类有：
-- [ReflectiveMethodInvocation](#ReflectiveMethodInvocation)
-- [CglibMethodInvocation](#CglibMethodInvocation)
+- [ReflectiveMethodInvocation](#reflectivemethodinvocation)
+- [CglibMethodInvocation](#cglibmethodinvocation)
 
 #### ReflectiveMethodInvocation
 `org.springframework.aop.framework.ReflectiveMethodInvocation`  
