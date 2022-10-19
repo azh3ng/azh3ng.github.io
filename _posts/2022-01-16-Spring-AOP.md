@@ -232,7 +232,7 @@ AspectJ 相关注解的方法，会转化成 `InstantiationModelAwarePointcutAdv
    3. 如果匹配
     1. 如果 `MethodMatcher.isRuntime()` 为 ture
     1. 如果是，将 `advisor` 转换([适配](#advisoradapter))成 `InterceptorAndDynamicMethodMatcher`（在被代理的方法执行前，会根据 `MethodMatcher.matches(Method method, Class<?> targetClass, Object... args)` 方法，更细粒度的控制并判断，被调用的方法是否匹配，如果匹配成功才执行代理逻辑，详见 `org.springframework.aop.framework.ReflectiveMethodInvocation#proceed`）
-    2. 否则将 `advisor` 转换([适配](advisoradapter))成 `MethodInterceptor`
+    2. 否则将 `advisor` 转换([适配](#advisoradapter))成 `MethodInterceptor`
 3. 把匹配的 MethodInterceptor 链、被代理对象、代理对象、代理类、当前 Method 对象、方法参数封装为 `ReflectiveMethodInvocation` 对象
 4. `ReflectiveMethodInvocation.proceed()`：执行各个 MethodInterceptor 及被代理对象的方法
     1. 判断所有 MethodInterceptor 都执行完成，调用 `invokeJoinpoint()` 方法，执行被代理对象的方法并返回

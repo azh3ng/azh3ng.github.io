@@ -98,9 +98,9 @@ Java 动态代理本质上是通过动态生成类的字节码，然后加载到
 - ...
 
 Java 中动态代理的实现方式：
-- [[JDK动态代理]]：实现接口
-- [[CGLIB动态代理]]：继承类
-- [[ProxyFactory]]：[[Spring]] 对上述两种代理实现进行了一定程度的封装
+- [JDK动态代理](https://azh3ng.com/2022/01/16/JDK-Proxy.html)：实现接口
+- [CGLIB动态代理](https://azh3ng.com/2022/01/16/CGLIB-Proxy.html)：继承类
+- [ProxyFactory](https://azh3ng.com/2022/01/16/ProxyFactory.html)：Spring 对上述两种代理实现进行了一定程度的封装
 
 
 ## 参考
