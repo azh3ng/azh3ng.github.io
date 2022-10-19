@@ -6,6 +6,7 @@ date: 2022-01-16 02:00
 tags: []
 ---
 
+`org.springframework.aop.framework.ProxyFactory`  
 Spring 对 [JDK动态代理](https://azh3ng.com/2022/01/16/JDK-Proxy.html) 和 [CGLIB动态代理](https://azh3ng.com/2022/01/16/CGLIB-Proxy.html) 进行了一定程度的封装，提供一个类 ProxyFactory，更加方便的创建代理对象。
 
 ## 创建代理对象
@@ -46,7 +47,7 @@ public class TestProxyFactory {
     }
 }
 ```
-通过使用 ProxyFactory，可以不再关心用 CGlib 还是 jdk 动态代理，ProxyFactory 会自动判断，如果 Azh3ngInterfaceImpl 实现了接口，那么 ProxyFactory 底层就会用 JDK 动态代理，如果没有实现接口，就会用 CGlib 技术，上面的代码，就是由于 Azh3ngInterfaceImpl 实现了 Azh3ngInterface 接口，所以最后产生的代理对象是 Azh3ngInterface 类型
+通过使用 ProxyFactory，可以不再关心用 CGlib 还是 jdk 动态代理，ProxyFactory 会自动判断，如果 `Azh3ngInterfaceImpl` 实现了接口，那么 ProxyFactory 底层就会用 JDK 动态代理，如果没有实现接口，就会用 CGlib 技术，上面的代码，就是由于 `Azh3ngInterfaceImpl` 实现了 `Azh3ngInterface` 接口，所以最后产生的代理对象是 `Azh3ngInterface` 类型
 
 ## Advice
 Advice 可以理解为自定义的代理逻辑。
@@ -63,9 +64,9 @@ Advice 可以理解为自定义的代理逻辑。
 Pointcut 中文译为切点，可以理解为通过一些过滤条件，筛选出需要被代理的方法
 
 ## Advisor
-Advisor 是 [Pointcut](#Pointcut) 和 [Advice](#Advice) 的组合，通过 Pointcut 指定（筛选）被代理的方法，通过 Advice 自定义代理逻辑  
+Advisor 是 [Pointcut](#pointcut) 和 [Advice](#advice) 的组合，通过 Pointcut 指定（筛选）被代理的方法，通过 Advice 自定义代理逻辑  
 在单独使用 Advice 时无法细粒度的控制不同方法执行不同的逻辑，Advisor 可以做到。  
-假设一个 Azh3ngInterfaceImpl 类中有两个方法，按上面的例子，这两个方法都会被代理和增强，通过使用 Advisor，可以控制到具体代理某个或某些方法，比如：
+假设一个 `Azh3ngInterfaceImpl` 类中有两个方法，按上面的例子，这两个方法都会被代理和增强，通过使用 Advisor，可以控制到具体代理某个或某些方法，比如：
 ```java
 
 public class Azh3ngInterfaceImpl {
@@ -132,6 +133,7 @@ ProxyFactory 在生成代理对象之前需要决定使用 JDK 动态代理还�
     - `org.springframework.aop.framework.ProxyCreatorSupport#createAopProxy`
         - `org.springframework.aop.framework.AopProxyFactory#createAopProxy`
             - `org.springframework.aop.framework.DefaultAopProxyFactory#createAopProxy`
+
 ```java
 // config就是ProxyFactory对象
 // optimize为true,或proxyTargetClass为true,或用户没有给ProxyFactory对象添加interface
@@ -151,6 +153,7 @@ if (config.isOptimize() || config.isProxyTargetClass() || hasNoUserSuppliedProxy
     return new JdkDynamicAopProxy(config);
 }
 ```
+
 `createAopProxy(AdvisedSupport config)` 方法接受的参数类型为 `AdvisedSupport extends ProxyConfig`，同时 `ProxyFactory extends ProxyCreatorSupport extends AdvisedSupport`，实际传入的也是 ProxyFactory。  
 
 **1. 选择 CGLIB：**
