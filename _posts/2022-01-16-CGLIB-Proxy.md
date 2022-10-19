@@ -6,10 +6,10 @@ date: 2022-01-16 01:01
 tags: []
 ---
 
-CGLIB 是一个功能强大，高性能的代码生成包。它为没有实现接口的类提供代理，为 JDK 的动态代理提供了很好的补充。通常可以使用 Java 的动态代理创建代理，但当要代理的类没有实现接口或者为了更好的性能，CGLIB 是一个好的选择。
-CGLIB 被广泛的运用在许多 AOP 的框架中，例如 Spring AOP 和 dynaop。Hibernate 使用 CGLIB 来代理单端 single-ended(多对一和一对一)关联。
+CGLIB 是一个功能强大，高性能的代码生成包。它为没有实现接口的类提供代理，为 JDK 的动态代理提供了很好的补充。通常可以使用 Java 的动态代理创建代理，但当要代理的类没有实现接口或者为了更好的性能，CGLIB 是一个好的选择。  
+CGLIB 被广泛的运用在许多 AOP 的框架中，例如 Spring AOP 和 dynaop。Hibernate 使用 CGLIB 来代理单端 single-ended(多对一和一对一)关联。  
 
-CGLIB 作为一个开源项目，其代码托管在 github，地址为：[https://github.com/cglib/cglib](https://github.com/cglib/cglib)
+CGLIB 作为一个开源项目，其代码托管在 github，地址为：[https://github.com/cglib/cglib](https://github.com/cglib/cglib)  
 
 **CGLIB 的原理**是动态生成一个被代理类的子类，子类重写被代理的类的所有**非** `final` 的方法。在子类中采用方法拦截的技术拦截所有父类方法的调用，织入横切逻辑。  
 **CGLIB 底层**使用字节码处理框架 ASM，来转换字节码并生成新的类。不鼓励直接使用 ASM，因为它要求必须对 JVM 内部结构包括 class 文件的格式和指令集都很熟悉。  
@@ -191,4 +191,4 @@ public class TestCglib {
 ```
 
 ## 参考
-- [CGLIB(Code Generation Library) 介绍与原理 | 菜鸟教程 (runoob.com)](https://www.runoob.com/w3cnote/cglibcode-generation-library-intro.html)
+- [CGLIB(Code Generation Library) 介绍与原理 - 菜鸟教程 (runoob.com)](https://www.runoob.com/w3cnote/cglibcode-generation-library-intro.html)
