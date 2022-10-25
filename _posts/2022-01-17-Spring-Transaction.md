@@ -68,16 +68,16 @@ public class TestTransactional {
 ## 核心接口/类
 
 ### TransactionAttributeSource
-TransactionAttributeSource 接口用于判断类是否被事务管理，常见实现类为 AnnotationTransactionAttributeSource，解析 `@Transactional` 注解得到相应的事务属性。
+`TransactionAttributeSource` 接口用于判断类是否被事务管理，常见实现类为 `AnnotationTransactionAttributeSource`，解析 `@Transactional` 注解得到相应的事务属性。
 
 ### TransactionManager
-TransactionManager 是 Spring 事务事务管理的主要接口，常见子类包括 PlatformTransactionManager 和 ReactiveTransactionManager。  
-PlatformTransactionManager 的常见实现类为 DataSourceTransactionManager，提供了获取 DataSource、获取事务、开启、挂起、恢复、提交、回滚等各类事务操作的具体实现。
+`TransactionManager` 是 Spring 事务事务管理的主要接口，常见子类包括 `PlatformTransactionManager` 和 `ReactiveTransactionManager`。  
+`PlatformTransactionManager` 的常见实现类为 `DataSourceTransactionManager`，提供了获取 DataSource、获取事务、开启、挂起、恢复、提交、回滚等各类事务操作的具体实现。
 
 ### TransactionSynchronizationManager
-TransactionSynchronizationManager 是一个事务管理的核心类，通过 `TransactionSynchronizationManager` 可以管理当前线程的事务，可以获取当前事务的信息，包括事务名，事务传播机制等。    
-还可以在事务结束或者开始之前实现自定义逻辑（[[#TransactionSynchronization]]）  
-代码示例：
+`TransactionSynchronizationManager` 是一个事务管理的核心类，通过 `TransactionSynchronizationManager` 可以管理当前线程的事务，可以获取当前事务的信息，包括事务名，事务传播机制等。    
+还可以在事务结束或者开始之前实现自定义逻辑（[TransactionSynchronization](#transactionsynchronization)）  
+代码示例：  
 ```java
 // Return the name of the current transaction, or {@code null} if none set.
 TransactionSynchronizationManager.getCurrentTransactionName();
@@ -86,8 +86,8 @@ TransactionSynchronizationManager.getCurrentTransactionIsolationLevel();
 ```
 
 ### TransactionSynchronization
-TransactionSynchronization 可以监听当前 Spring 事务所处于的状态，在事务提交，回滚、挂起、恢复时执行自定义逻辑
-代码示例：
+TransactionSynchronization 可以监听当前 Spring 事务所处于的状态，在事务提交，回滚、挂起、恢复时执行自定义逻辑  
+代码示例：  
 ```java
 @Component
 public class UserService {
@@ -178,7 +178,7 @@ public class UserService {
 ## 事务传播机制
 
 在 Spring 中对于事务的传播行为定义了七种类型分别是：REQUIRED、SUPPORTS、MANDATORY、REQUIRES_NEW、NOT_SUPPORTED、NEVER、NESTED  
-Spring 源码中这七种类型的枚举定义在 `org.springframework.transaction.annotation.Propagation`
+Spring 源码中这七种类型的枚举定义在 `org.springframework.transaction.annotation.Propagation`  
 
 ### REQUIRED
 Propagation.REQUIRED 是 Spring 默认的事务传播机制；如果当前存在事务，则加入当前事务，如果不存在则创建新事务。  
