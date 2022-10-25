@@ -32,5 +32,5 @@ tags: [Spring]
   - [CGLIB代理](https://azh3ng.com/2022/01/16/CGLIB-Proxy.html)
   - [ProxyFactory](https://azh3ng.com/2022/01/16/ProxyFactory.html)
   - [TargetSource](https://azh3ng.com/2022/01/16/TargetSource.html)
-- [Spring事务]() TODO
+- [Spring事务](https://azh3ng.com/2022/01/17/Spring-Transaction.html)
 
