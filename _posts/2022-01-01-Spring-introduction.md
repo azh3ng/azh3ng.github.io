@@ -5,8 +5,8 @@ date: 2022-01-01 00:00
 tags: [Spring]
 ---
 
-在开发中，Spring 算是我接触最多的框架了，故而想对它进行更深入的学习，可以更快的实现想要的功能，同时写出更优雅的实现。  
-后续所有的内容都基于 [Spring Framework 5.3.10-SNAPSHOT](https://github.com/spring-projects/spring-framework/tree/v5.3.10)。
+在开发中，Spring 算是我接触最多的框架了，故而想对它进行更深入的学习，可以更快的实现想要的功能，同时写出更优雅的代码。  
+基于 [Spring Framework 5.3.10-SNAPSHOT](https://github.com/spring-projects/spring-framework/tree/v5.3.10) 学习，所以后续博文内容都已此版本对应
 
 ## 核心原理
 目前计划先学习 Spring 核心概念，再在此基础上不断扩充 
@@ -25,9 +25,12 @@ tags: [Spring]
 - [Spring推断构造方法](https://azh3ng.com/2022/01/13/Spring-infer-constructor.html)
 - [依赖注入](https://azh3ng.com/2022/01/14/Spring-Dependency-Injection.html)
 - [解决循环依赖](https://azh3ng.com/2022/01/15/Spring-resolve-circular-dependencies.html)
-- [Spring AOP]() TODO
-  - [代理模式]() TODO
-  - [JDK动态代理]() TODO
-  - [CGLIB代理]() TODO
+- [Spring AOP](https://azh3ng.com/2022/01/16/Spring-AOP.html)
+  - [AOP](https://azh3ng.com/2022/01/16/AOP.html)
+  - [代理模式](https://azh3ng.com/2022/01/16/Proxy-Pattern.html)
+  - [JDK动态代理](https://azh3ng.com/2022/01/16/JDK-Proxy.html)
+  - [CGLIB代理](https://azh3ng.com/2022/01/16/CGLIB-Proxy.html)
+  - [ProxyFactory](https://azh3ng.com/2022/01/16/ProxyFactory.html)
+  - [TargetSource](https://azh3ng.com/2022/01/16/TargetSource.html)
 - [Spring事务]() TODO
 
