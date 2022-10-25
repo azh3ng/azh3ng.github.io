@@ -246,7 +246,8 @@ ProxyTransactionManagementConfiguration 是一个配置类，内部定义了三�
 - `TransactionAspectSupport.createTransactionIfNecessary()`
   - `AbstractPlatformTransactionManager.getTransaction()`
     - `AbstractPlatformTransactionManager.startTransaction()`
-  - `TransactionAspectSupport.prepareTransactionInfo()`
+  - `TransactionAspectSupport.prepareTransactionInfo()`  
+
 **简述**：  
 - 判断当前是否存在事务  
   - 是则根据事务传播机制做出相应处理；  
@@ -257,7 +258,7 @@ ProxyTransactionManagementConfiguration 是一个配置类，内部定义了三�
 1. 调用 `TransactionManager.getTransaction()`
    1. 尝试获取当前线程的事务（`DataSourceTransactionManager.doGetTransaction()`）
    2. 判断当前线程是否存在事务(`DataSourceTransactionManager.isExistingTransaction()`)
-      1. 如果有，判断当前事务的传播机制（`AbstractPlatformTransactionManager#handleExistingTransaction`）做出相应处理，并返回结果
+      1. 如果有，判断当前事务的传播机制（`AbstractPlatformTransactionManager.handleExistingTransaction()`）做出相应处理，并返回结果
       2. 否则继续执行
    3. 判断事务传播机制
       1. 如果是 [[#MANDATORY]]，抛出异常
@@ -281,34 +282,35 @@ ProxyTransactionManagementConfiguration 是一个配置类，内部定义了三�
       2. 将新建的 TransactionInfo 设置到当前线程中
 
 ### 挂起事务
-- `org.springframework.transaction.support.AbstractPlatformTransactionManager#suspend`  
+`org.springframework.transaction.support.AbstractPlatformTransactionManager#suspend`  
 **简述**：  
 如果存在 TransactionSynchronization（代表存在事务），则执行其 `suspend()` 方法，并挂起当前事务，将被挂起的事务信息打包并返回  
+
 **详述**：  
 1. 判断 TransactionSynchronization 是否处于激活状态，如果是：
-   1. 执行所有事务同步器的 `suspend()` 方法（`AbstractPlatformTransactionManager.doSuspendSynchronization()`）
-      1. **获取**并**清空**线程中的 `List<TransactionSynchronization>`
-      2. 返回 `List<TransactionSynchronization>`
-   2. 挂起事务（`DataSourceTransactionManager.doSuspend()`）
-      1. 移除并返回线程中（TransactionSynchronizationManager）中的数据库连接
-   3. **获取**并**清空**当前线程中（TransactionSynchronizationManager）的设置(当前事务名、readOnly、隔离级别、wasActive)
-   4. 将被挂起的事务属性打包成 SuspendedResourcesHolder 
-   5. 返回
-2. 如果不存在事务同步器，但存在事务
-   1. 挂起当前事务（`DataSourceTransactionManager.doSuspend()`）
+    1. 执行所有事务同步器的 `suspend()` 方法（`AbstractPlatformTransactionManager.doSuspendSynchronization()`）
+       1. **获取**并**清空**线程中的 `List<TransactionSynchronization>`
+       2. 返回 `List<TransactionSynchronization>`
+    2. 挂起事务（`DataSourceTransactionManager.doSuspend()`）
        1. 移除并返回线程中（TransactionSynchronizationManager）中的数据库连接
-   2. 将被挂起的事务属性打包成 SuspendedResourcesHolder
-   3. 返回
+    3. **获取**并**清空**当前线程中（TransactionSynchronizationManager）的设置(当前事务名、readOnly、隔离级别、wasActive)
+    4. 将被挂起的事务属性打包成 SuspendedResourcesHolder 
+    5. 返回
+2. 如果不存在事务同步器，但存在事务
+    1. 挂起当前事务（`DataSourceTransactionManager.doSuspend()`）
+        1. 移除并返回线程中（TransactionSynchronizationManager）中的数据库连接
+    2. 将被挂起的事务属性打包成 SuspendedResourcesHolder
+    3. 返回
 3. 如果即不存在事务同步器，又不存在事务
-   1. 返回空
+    1. 返回空
 
 ### 提交事务
 `org.springframework.transaction.interceptor.TransactionAspectSupport#commitTransactionAfterReturning`  
-**简述**：判断事务是否需要回滚，如果是，则执行 [[#回滚事务]]，根据事务状态执行事务提交、关闭数据库连接、将被挂起的事务恢复  
+**简述**：判断事务是否需要回滚，如果是，则执行 [回滚事务](#回滚事务)，根据事务状态执行事务提交、关闭数据库连接、将被挂起的事务恢复  
 
 **详述**：  
-- 判断事务是否被设置为强制回滚，是则执行 [[#回滚事务]]，返回
-- 判断事务是否被标记为需要回滚，是则执行 [[#回滚事务]]，返回
+- 判断事务是否被设置为强制回滚，是则执行 [回滚事务](#回滚事务)，返回
+- 判断事务是否被标记为需要回滚，是则执行 [回滚事务](#回滚事务)，返回
 - 判断如果存在 TransactionSynchronization，执行其 `beforeCommit()` 和 `beforeCompletion()` 方法
 - 判断事务是否有 savepoint，如果有则释放 savepoint
 - 否则判断是否为新事务
@@ -332,5 +334,5 @@ ProxyTransactionManagementConfiguration 是一个配置类，内部定义了三�
 ## Spring 事务强制回滚
 代码示例：  
 如果在方法中增加这一行代码：  
-`TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();`
+`TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();`  
 在提交事务时会做判断，如果为 true，则会执行事务回滚操作  
