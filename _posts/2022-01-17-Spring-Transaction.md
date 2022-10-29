@@ -216,27 +216,27 @@ Propagation.REQUIRED 是 Spring 默认的事务传播机制；如果当前存在
 ### AutoProxyRegistrar
 `org.springframework.context.annotation.AutoProxyRegistrar`  
 `AutoProxyRegistrar` 向 Spring 容器中注册了 `InfrastructureAdvisorAutoProxyCreator` 类型的 Bean。  
-`InfrastructureAdvisorAutoProxyCreator` 继承 [[Spring AOP#AbstractAdvisorAutoProxyCreator]]，也即它是个 BeanPostProcessor，并且相当于开启了 Spring AOP。  
+`InfrastructureAdvisorAutoProxyCreator` 继承 [Spring AOP#AbstractAdvisorAutoProxyCreator](https://azh3ng.com/2022/01/16/Spring-AOP.html#abstractadvisorautoproxycreator)，也即它是个 BeanPostProcessor，并且相当于开启了 Spring AOP。  
 
 ### ProxyTransactionManagementConfiguration
 `org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration`  
-ProxyTransactionManagementConfiguration 是一个配置类，内部定义了三个 Bean：  
-1. BeanFactoryTransactionAttributeSourceAdvisor：一个 Advisor  
-2. AnnotationTransactionAttributeSource：相当于 BeanFactoryTransactionAttributeSourceAdvisor 中的 Pointcut  
-3. TransactionInterceptor：相当于 BeanFactoryTransactionAttributeSourceAdvisor 中的 Advice
+`ProxyTransactionManagementConfiguration` 是一个配置类，内部定义了三个 Bean：  
+1. `BeanFactoryTransactionAttributeSourceAdvisor`：一个 [Advisor](https://azh3ng.com/2022/01/16/Spring-AOP.html#advisor)  
+2. `AnnotationTransactionAttributeSource`：相当于 `BeanFactoryTransactionAttributeSourceAdvisor` 中的 `Pointcut`  
+3. `TransactionInterceptor`：相当于 `BeanFactoryTransactionAttributeSourceAdvisor` 中的 `Advice`  
 
 ### AnnotationTransactionAttributeSource  
 `AnnotationTransactionAttributeSource` 可以判断类或者方法上是否存在 `@Transactional` 注解
 
 ### TransactionInterceptor 
-`TransactionInterceptor` 就是代理逻辑  
+`TransactionInterceptor` 是 Spring 定义的事务方法拦截器，也就是事务的代理逻辑  
 当某个类中存在 `@Transactional` 注解时，会产生创建代理对象作为 Bean，代理对象在执行某个方法时，会进入到 `TransactionInterceptor.invoke()` 方法  
 
 ## Spring 事务详细执行流程
 - `org.springframework.transaction.interceptor.TransactionInterceptor#invoke`
   - （事务执行详细）`org.springframework.transaction.interceptor.TransactionAspectSupport#invokeWithinTransaction`
-    - `org.springframework.transaction.interceptor.TransactionAspectSupport#determineTransactionManager`
-    - (开启事务)`org.springframework.transaction.interceptor.TransactionAspectSupport#createTransactionIfNecessary`
+    - （获取 TransactionManager）`org.springframework.transaction.interceptor.TransactionAspectSupport#determineTransactionManager`
+    - （开启事务）`org.springframework.transaction.interceptor.TransactionAspectSupport#createTransactionIfNecessary`
     - 执行目标对象的方法
     - （回滚事务）`org.springframework.transaction.interceptor.TransactionAspectSupport#completeTransactionAfterThrowing`
     - （清除事务信息）`org.springframework.transaction.interceptor.TransactionAspectSupport#cleanupTransactionInfo`
@@ -261,8 +261,8 @@ ProxyTransactionManagementConfiguration 是一个配置类，内部定义了三�
       1. 如果有，判断当前事务的传播机制（`AbstractPlatformTransactionManager.handleExistingTransaction()`）做出相应处理，并返回结果
       2. 否则继续执行
    3. 判断事务传播机制
-      1. 如果是 [[#MANDATORY]]，抛出异常
-      2. 如果是 [[#REQUIRED]] 或 [[#REQUIRES_NEW]] 或 [[#NESTED]]
+      1. 如果是 [MANDATORY](#mandatory)，抛出异常
+      2. 如果是 [REQUIRED](#required) 或 [REQUIRES_NEW](#requires_new) 或 [NESTED](#nested)
          1. [挂起空事务](#挂起事务)
          2. 开启事务（ `TransactionManager.startTransaction()`）
             1. 缓存事务的状态信息（当前事务信息、挂起的事务信息等)
@@ -273,7 +273,7 @@ ProxyTransactionManagementConfiguration 是一个配置类，内部定义了三�
                5. 设置 AutoCommit 为 false
                6. 设置数据库连接的过期时间
                7. 把**新建**的数据库连接缓存到 TreadLocal （TransactionSynchronizationManager）中
-            3. 将**新建的**数据库连接信息（当前事务名、readOnly、隔离级别、wasActive）缓存到 TreadLocal（TransactionSynchronizationManager）中（AbstractPlatformTransactionManager#prepareSynchronization）
+            3. 将**新建的**数据库连接信息（当前事务名、readOnly、隔离级别、wasActive）缓存到 TreadLocal（`TransactionSynchronizationManager`）中（`AbstractPlatformTransactionManager.prepareSynchronization()`）
 2. 构建 TransactionInfo 并返回（`TransactionAspectSupport.prepareTransactionInfo()`）
    1. 新建 TransactionInfo（包含事务管理器、事务属性、连接点信息(方法名)）
    2. TransactionInfo 设值 transactionStatus
@@ -284,17 +284,17 @@ ProxyTransactionManagementConfiguration 是一个配置类，内部定义了三�
 ### 挂起事务
 `org.springframework.transaction.support.AbstractPlatformTransactionManager#suspend`  
 **简述**：  
-如果存在 TransactionSynchronization（代表存在事务），则执行其 `suspend()` 方法，并挂起当前事务，将被挂起的事务信息打包并返回  
+如果存在 `TransactionSynchronization`（代表存在事务），则执行其 `suspend()` 方法，并挂起当前事务，将被挂起的事务信息打包并返回  
 
 **详述**：  
-1. 判断 TransactionSynchronization 是否处于激活状态，如果是：
+1. 判断 `TransactionSynchronization` 是否处于激活状态，如果是：
     1. 执行所有事务同步器的 `suspend()` 方法（`AbstractPlatformTransactionManager.doSuspendSynchronization()`）
        1. **获取**并**清空**线程中的 `List<TransactionSynchronization>`
        2. 返回 `List<TransactionSynchronization>`
     2. 挂起事务（`DataSourceTransactionManager.doSuspend()`）
        1. 移除并返回线程中（TransactionSynchronizationManager）中的数据库连接
     3. **获取**并**清空**当前线程中（TransactionSynchronizationManager）的设置(当前事务名、readOnly、隔离级别、wasActive)
-    4. 将被挂起的事务属性打包成 SuspendedResourcesHolder 
+    4. 将被挂起的事务属性打包成 `SuspendedResourcesHolder` 
     5. 返回
 2. 如果不存在事务同步器，但存在事务
     1. 挂起当前事务（`DataSourceTransactionManager.doSuspend()`）
@@ -328,11 +328,10 @@ ProxyTransactionManagementConfiguration 是一个配置类，内部定义了三�
       - 存在 savepoint，则回滚至 savepoint
       - 是新事务，则执行回滚
       - 否则将事务标记为需要回滚，在事务提交时执行回滚
-    - 如果存在 TransactionSynchronization，执行其 `afterCompletion()` 方法
+    - 如果存在 `TransactionSynchronization`，执行其 `afterCompletion()` 方法
   - 否则执行提交（`AbstractPlatformTransactionManager.commit()`）
 
 ## Spring 事务强制回滚
-代码示例：  
 如果在方法中增加这一行代码：  
 `TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();`  
 在提交事务时会做判断，如果为 true，则会执行事务回滚操作  
