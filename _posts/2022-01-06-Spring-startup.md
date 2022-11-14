@@ -172,7 +172,7 @@ context.refresh();
     2.  `systemProperties` ：System.getProperties() 返回的 Map 对象
     3.  `systemEnvironment` ：System.getenv() 返回的 Map 对象
  
-### AbstractApplicationContext.postProcessBeanFactory(beanFactory)
+### postProcessBeanFactory(beanFactory)
 使用*模板方法*的设计模式，提供给 AbstractApplicationContext 的子类进行扩展，调用子类的 `refreshBeanFactory()` 方法，具体实现由子类完成，子类可以继续向 BeanFactory 中再添加一些自定义的类，例如 `GenericWebApplicationContext` 中执行了
 - `beanFactory.addBeanPostProcessor(new ServletContextAwareProcessor(this.servletContext));`
 - `beanFactory.ignoreDependencyInterface(ServletContextAware.class);`

@@ -12,23 +12,25 @@ public interface ApplicationContext extends EnvironmentCapable, ListableBeanFact
         MessageSource, ApplicationEventPublisher, ResourcePatternResolver {
 }
 ```
-不过 `ApplicationContext` 比 `BeanFactory` 更加强大，`ApplicationContext` 还基础了其他接口，比如 `MessageSource` 表示国际化，`ApplicationEventPublisher` 表示事件发布，`EnvironmentCapable` 表示获取环境变量，等等
+不过 `ApplicationContext` 比 `BeanFactory` 更加强大，`ApplicationContext` 还继承了其他接口，比如 `MessageSource`（国际化）、`ApplicationEventPublisher`（事件发布），`EnvironmentCapable`（获取环境变量）等等
 
 ApplicationContext 有两个比较重要的实现类：
 - [AnnotationConfigApplicationContext](#AnnotationConfigApplicationContext)
 - [ClassPathXmlApplicationContext](#ClassPathXmlApplicationContext)
 
-### AnnotationConfigApplicationContext
+## AnnotationConfigApplicationContext
 ![AnnotationConfigApplicationContext类继承结构](https://github.com/azh3ng/azh3ng.github.io/blob/master/_posts/attachments/AnnotationConfigApplicationContext-hierarchy.png?raw=true)
-- `ConfigurableApplicationContext` ：继承了 ApplicationContext 接口，增加了，添加事件监听器、添加 BeanFactoryPostProcessor、设置 Environment，获取 ConfigurableListableBeanFactory 等功能
+- `ConfigurableApplicationContext` ：继承了 ApplicationContext 接口，增加了**添加事件监听器**、**添加 `BeanFactoryPostProcessor`**、**设置 `Environment`**，**获取 `ConfigurableListableBeanFactory`** 等功能
 - `AbstractApplicationContext` ：实现了 `ConfigurableApplicationContext` 接口
 - `GenericApplicationContext` ：继承了 `AbstractApplicationContext`，实现了 `BeanDefinitionRegistry` 接口，拥有了所有 `ApplicationContext` 的功能，并且可以注册 `BeanDefinition`，注意这个类中有一个属性(DefaultListableBeanFactory beanFactory)
-- `AnnotationConfigRegistry` ：可以单独注册某个为类为 BeanDefinition（可以处理该类上的 `@Configuration` 注解、 `@Bean` 注解），同时可以扫描
-- `AnnotationConfigApplicationContext` ：继承了 GenericApplicationContext，实现了 `AnnotationConfigRegistry` 接口，拥有了以上所有的功能
+- `AnnotationConfigRegistry` ：可以单独注册某个为类为 BeanDefinition（可以处理该类上的 `@Configuration` 注解、 `@Bean` 注解），还可以[扫描](/2022/01/07/Spring-scan.html)
 
-### ClassPathXmlApplicationContext
+`AnnotationConfigApplicationContext` ：继承了 `GenericApplicationContext`，实现了 `AnnotationConfigRegistry` 接口，拥有了以上所有的功能
+
+## ClassPathXmlApplicationContext
 ![ClassPathXmlApplicationContext类继承结构](https://github.com/azh3ng/azh3ng.github.io/blob/master/_posts/attachments/ClassPathXmlApplicationContext-hierarchy.png?raw=true)
-它也是继承了 `AbstractApplicationContext`，但是不如 `AnnotationConfigApplicationContext` 强大，比如不能注册 BeanDefinition
+
+`ClassPathXmlApplicationContext` 继承 `AbstractApplicationContext`，但是功能比 `AnnotationConfigApplicationContext` 少，比如不能注册 BeanDefinition
 
 ### MessageSource 国际化
 
@@ -43,7 +45,7 @@ public MessageSource messageSource(){
 }
 ```
 
-有了这个 Bean，你可以在你任意想要进行国际化的地方使用该 MessageSource。 同时，因为 ApplicationContext 也拥有国际化的功能，所以可以直接这么用：
+有了这个 Bean，就可以在需要进行国际化的地方使用 MessageSource。 同时，因为 ApplicationContext 也拥有国际化的功能，所以也可以直接这么用：
 
 ```java
 context.getMessage("test", null, new Locale("en_CN"))
@@ -51,7 +53,7 @@ context.getMessage("test", null, new Locale("en_CN"))
 
 ### ResourceLoader 资源加载
 
-ApplicationContext 的子类 `GenericApplicationContext` 持有 `ResourceLoader` 的成员变量, 拥有资源加载的功能，比如可以直接利用 ApplicationContext 获取某个文件的内容：
+ApplicationContext 的子类 `GenericApplicationContext` 持有 `ResourceLoader` 的成员变量，拥有资源加载的功能，所以可以直接利用 ApplicationContext 获取某个文件的内容：
 
 ```java
 public static void main(String[] args) {
@@ -80,6 +82,7 @@ public static void main(String[] args) {
 
 ### 获取运行时环境
 
+代码示例：  
 ```java
 AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 // 获取操作系统层面环境变量

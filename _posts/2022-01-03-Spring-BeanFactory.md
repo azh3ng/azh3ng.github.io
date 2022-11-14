@@ -6,15 +6,15 @@ category:
 tags: [Spring]  
 ---
 
-BeanFactory 顾名思义负责创建 Bean，并且提供获取 Bean 的 API。
+BeanFactory 顾名思义负责创建 Bean，并且提供了获取 Bean 的 API。
 
 ### DefaultListableBeanFactory
-`DefaultListableBeanFactory` 继承 `BeanFactory`，支持很多功能，`DefaultListableBeanFactory` 在 Spring 中发挥非常重要的作用。
+`DefaultListableBeanFactory` 继承 `BeanFactory`，同时支持很多其他功能，`DefaultListableBeanFactory` 在 Spring 中发挥非常重要的作用。  
 `DefaultListableBeanFactory`的类继承实现结构：
 
-![DefaultListableBeanFactory的类继承实现结构](https://github.com/azh3ng/azh3ng.github.io/blob/master/_posts/attachments/DefaultListableBeanFactory-hierarchy.png)
+![DefaultListableBeanFactory的类继承实现结构](https://github.com/azh3ng/azh3ng.github.io/blob/master/_posts/attachments/DefaultListableBeanFactory-hierarchy.png?raw=true)
 
-它实现了很多接口，也即它拥有很多功能：
+`DefaultListableBeanFactory` 实现了很多接口，也即拥有很多功能：
 - `AliasRegistry` ：支持别名功能，一个名字可以对应多个别名
 - `BeanDefinitionRegistry` ：可以注册、保存、移除、获取某个 BeanDefinition
 - `BeanFactory` ：Bean 工厂，可以根据某个 bean 的名字、或类型、或别名获取某个 Bean 对象
@@ -28,5 +28,6 @@ BeanFactory 顾名思义负责创建 Bean，并且提供获取 Bean 的 API。
 - `AutowireCapableBeanFactory` ：是直接继承了 BeanFactory，在 BeanFactory 的基础上，支持在创建 Bean 的过程中能对 Bean 进行自动装配
 - `AbstractBeanFactory` ：实现了 `ConfigurableBeanFactory` 接口，继承了 `FactoryBeanRegistrySupport`，这个 BeanFactory 的功能已经很全面了，但是不能自动装配和获取 beanNames
 - `ConfigurableListableBeanFactory` ：继承了 `ListableBeanFactory`、`AutowireCapableBeanFactory`、`ConfigurableBeanFactory`
-- `AbstractAutowireCapableBeanFactory` ：继承了 `AbstractBeanFactory`，实现了 `AutowireCapableBeanFactory`，拥有了自动装配的功能
-- `DefaultListableBeanFactory` ：继承了 `AbstractAutowireCapableBeanFactory`，实现了 `ConfigurableListableBeanFactory` 接口和 `BeanDefinitionRegistry` 接口，所以 DefaultListableBeanFactory 的功能很强大
+- `AbstractAutowireCapableBeanFactory` ：继承了 `AbstractBeanFactory`，实现了 `AutowireCapableBeanFactory`，拥有自动装配的功能
+
+`DefaultListableBeanFactory` ：继承了 `AbstractAutowireCapableBeanFactory`，实现了 `ConfigurableListableBeanFactory` 接口和 `BeanDefinitionRegistry` 接口，所以 DefaultListableBeanFactory 可以**完成 BeanDefinition 的注册**（`BeanDefinitionRegistry.registerBeanDefinition()`）、**实例化所有非懒加载的单例** Bean（`ConfigurableListableBeanFactory.preInstantiateSingletons()`）和**自动装配**（`AbstractAutowireCapableBeanFactory.autowireByType()`）等功能。

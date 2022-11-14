@@ -19,12 +19,14 @@ BeanDefinition 用于保存 Bean 的相关信息，包括
 
 BeanDefinition 的常用子类包括：[RootBeanDefinition](#rootbeandefinition)、[GenericBeanDefinition](#genericbeandefinition)
 
-在 Spring 中，我们经常会通过以下几种方式来定义 Bean, 也叫**声明式定义 Bean**：
+在 Spring 中，经常会通过以下几种方式来定义 Bean, 也叫**声明式定义 Bean**：
 - Spring.Xml 的 `<bean/>`
 - `@Bean`
 - `@Component` (包括 `@Service`, `@Controller` 等)
 
-还可以**编程式定义 Bean**，那就是直接通过 BeanDefinition，比如：
+通过 `<bean/>`，`@Bean`，`@Component` 等申明式方式所定义的 Bean，最终都会被 Spring 解析为对应的 BeanDefinition 对象，并放入 Spring 容器中。  
+
+也可以**编程式定义 Bean**，也即直接向 Spring 中添加 BeanDefinition，比如：
 ```java
 AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
@@ -35,14 +37,13 @@ context.registerBeanDefinition("user", beanDefinition);
 
 System.out.println(context.getBean("user"));
 ```
-还可以通过 BeanDefinition 设置一个 Bean 的其他属性
+BeanDefinition 可以设置 Bean 的其他属性
 ```java
 BeanDefinition.SetScope("prototype"); // 设置作用域
 BeanDefinition.SetInitMethodName("init"); // 设置初始化方法
 BeanDefinition.SetLazyInit(true); // 设置懒加载
 ```
 
-和声明式事务、编程式事务类似，通过 `<bean/>`，`@Bean`，`@Component` 等申明式方式所定义的 Bean，最终都会被 Spring 解析为对应的 BeanDefinition 对象，并放入 Spring 容器中。
 
 ## RootBeanDefinition
 
