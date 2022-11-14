@@ -1,6 +1,6 @@
 ---
 layout: article
-title: 【理解Spring】前言
+title: 【理解Spring】系列前言
 date: 2022-01-01 00:00
 tags: [Spring]
 ---
