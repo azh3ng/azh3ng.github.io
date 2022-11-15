@@ -6,11 +6,11 @@ category:
 tags: []  
 ---
 
-环境: Spring MVC/Spring-Boot
-项目开发统一规定, 前后端交互所有参数名的单词间需要使用下划线连接, 例如: user_id  
-在 POST 请求交互时, 可以在实体类的字段上添加 JSON 注解, 使请求体中的 JSON 字符串直接映射为实体类, 转换步骤自动完成, 
-如: `@JsonProperty("user_id") private String userId;`
-但是在 GET 请求时, 对于下划线连接的参数无法直接映射封装为实体类(java 编程规范参数使用驼峰命名法), 需要编码接收参数并转换封装为实体对象, 过于繁琐, 如:  
+环境: Spring MVC/Spring-Boot  
+项目开发统一规定, 前后端交互所有参数名的单词间需要使用下划线连接, 例如: user_id    
+在 POST 请求交互时, 可以在实体类的字段上添加 JSON 注解, 使请求体中的 JSON 字符串直接映射为实体类, 转换步骤自动完成   
+如: `@JsonProperty("user_id") private String userId;`  
+但是在 GET 请求时, 对于下划线连接的参数无法直接映射封装为实体类(java 编程规范参数使用驼峰命名法), 需要编码接收参数并转换封装为实体对象, 过于繁琐, 如:   
 
 ```java
 @Controller
@@ -32,6 +32,7 @@ public class UserController {
 继承 `ServletModelAttributeMethodProcessor`, 将下划线参数转换成驼峰形式, 放入请求参数中, 使框架可以自动将参数映射到实体类上  
 将上述逻辑注册到 WebConfig 中  
 
+定义注解  
 ParameterModel.java  
 ```java
 import java.lang.annotation.ElementType;
@@ -49,6 +50,7 @@ public @interface ParameterModel {
 }
 ```
 
+转换逻辑  
 UnderlineToCamelArgumentResolver.java  
 ```java
 import org.springframework.beans.MutablePropertyValues;
@@ -108,6 +110,7 @@ public class UnderlineToCamelArgumentResolver extends ServletModelAttributeMetho
 }
 ```
 
+配置转换逻辑生效
 WebConfig.java
 ```java
 import org.springframework.context.annotation.Configuration;
@@ -126,6 +129,7 @@ public class WebConfig implements WebMvcConfigurer {
 }
 ```
 
+使用实例  
 Controller.java
 ```java
 @RestController
