@@ -6,8 +6,6 @@ category:
 tags: []  
 ---
 
-# Spring MVC-单元测试示例
-
 记录 Spring Boot 中 Spring MVC 的单体测试样例, 方便以后写单体测试直接复制粘贴
 包括:
 - GET 请求
@@ -20,7 +18,8 @@ tags: []
 - Maven 3.5.4
 
 ## 设置（Configuration）
-- Maven 依赖
+Maven 依赖  
+
 ```xml
 <dependency>
     <groupId>org.springframework.boot</groupId>
@@ -44,7 +43,8 @@ tags: []
 ```
 
 ## 实例详解
-单元测试执行过程:
+
+单元测试执行过程:  
 1. 准备测试环境
 2. 通过MockMvc执行请求
 3.1. 添加验证断言
@@ -53,6 +53,7 @@ tags: []
 3. 卸载测试环境
 
 ### 被测试类示例
+
 ```java
 @RestController
 @RequestMapping("/foo")
@@ -97,6 +98,7 @@ public class FooController {
 ```
 
 ### Spring MVC 单元测试类示例
+
 ```java
 @RunWith(SpringRunner.class)
 @SpringBootTest
