@@ -6,13 +6,12 @@ category:
 tags: []  
 ---
 
-# Spring MVC-GET请求参数下划线转驼峰映射实体类
-
 环境: Spring MVC/Spring-Boot
 项目开发统一规定, 前后端交互所有参数名的单词间需要使用下划线连接, 例如: user_id  
 在 POST 请求交互时, 可以在实体类的字段上添加 JSON 注解, 使请求体中的 JSON 字符串直接映射为实体类, 转换步骤自动完成, 
 如: `@JsonProperty("user_id") private String userId;`
-但是在 GET 请求时, 对于下划线连接的参数无法直接映射封装为实体类(java 编程规范参数使用驼峰命名法), 需要编码接收参数并转换封装为实体对象, 过于繁琐, 如:
+但是在 GET 请求时, 对于下划线连接的参数无法直接映射封装为实体类(java 编程规范参数使用驼峰命名法), 需要编码接收参数并转换封装为实体对象, 过于繁琐, 如:  
+
 ```java
 @Controller
 @RequestMapping("/user")
@@ -25,14 +24,15 @@ public class UserController {
     }
 }
 ```
+
 于是希望可以将此步骤自动完成  
 
 思路: 
 创建注解, 标注在需要处理的参数前
-继承 ServletModelAttributeMethodProcessor, 将下划线参数转换成驼峰形式, 放入请求参数中, 使框架可以自动将参数映射到实体类上
-将上述逻辑注册到 WebConfig 中
+继承 `ServletModelAttributeMethodProcessor`, 将下划线参数转换成驼峰形式, 放入请求参数中, 使框架可以自动将参数映射到实体类上  
+将上述逻辑注册到 WebConfig 中  
 
-@interface ParameterModel
+ParameterModel.java  
 ```java
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -49,7 +49,7 @@ public @interface ParameterModel {
 }
 ```
 
-class UnderlineToCamelArgumentResolver
+UnderlineToCamelArgumentResolver.java  
 ```java
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.PropertyValues;
@@ -108,7 +108,7 @@ public class UnderlineToCamelArgumentResolver extends ServletModelAttributeMetho
 }
 ```
 
-class WebConfig
+WebConfig.java
 ```java
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -126,7 +126,7 @@ public class WebConfig implements WebMvcConfigurer {
 }
 ```
 
-class Controller
+Controller.java
 ```java
 @RestController
 @RequestMapping("/api")

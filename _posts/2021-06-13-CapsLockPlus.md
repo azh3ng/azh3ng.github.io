@@ -5,8 +5,6 @@ date: 2021-06-13
 tags: [Windows]  
 ---
 
-# CapsLockPlus | 魔改 CapsLock 键
-
 CapsLock，也就是键盘最左边一列中间那个大写锁定键，跟 shift 功能重复，需要输入大写字母的时候，一般都直接通过 Shift 输入了。  
 在换了 Anne-pro2 键盘之后, 发现 CapsLock 键和其他按键组合使用十分方便， 然而这是键盘的驱动软件的效果, 于是希望找到一个通用的解决方案。    
 试用过 [CapsLock+](https://cjkis.me/capslock+/) , 但是终究不如自定义来的顺心  

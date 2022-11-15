@@ -5,8 +5,6 @@ date: 2019-01-12 10:27
 tags: [UnitTest, Spring-Boot, DBUnit]
 ---
 
-# Spring-Boot 整合 DBUnit 单元测试    
-
 Spring-Boot 整合 DBUnit 对 Dao 层进行单元测试  
 Dao 层查询方法的单元测试相对简单，将数据查询出来，再在代码中用 `assert` 方法进行测试即可  
 但是 Dao 层的插入/更新/删除 方法的单元测试相对难写  

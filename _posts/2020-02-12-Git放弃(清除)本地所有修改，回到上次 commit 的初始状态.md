@@ -5,8 +5,6 @@ date: 2020-02-12 10:27
 tags: [Git]
 ---
 
-# Git放弃(清除)本地所有修改，回到上次 commit 的初始状态
-
 若想要放弃(清除)本地所有修改，回到上次 commit 的初始状态，可以执行
 ```shell
 git reset --hard

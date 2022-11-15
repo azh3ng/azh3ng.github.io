@@ -6,8 +6,6 @@ category:
 tags: []  
 ---
 
-# shell 重启 Spring Boot
-
 ```shell
 # 通过端口号获取旧线程的 pid
 pid=`lsof -i:8080 | grep -v COMMAND | awk '{print $2}'`

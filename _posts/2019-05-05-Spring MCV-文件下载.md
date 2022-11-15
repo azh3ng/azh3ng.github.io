@@ -6,7 +6,6 @@ category:
 tags: []  
 ---
 
-# Spring MCV-文件下载
 在 springmvc 应用程序中下载文件有几种方法:
 1. `HttpServletRespone`: 使用 HttpServletResponse 将文件直接写入 ServletOutputStream
 2. `ResponseEntity<InputStreamResource>`: 返回包装在 ResponseEntity 中的 InputStreamResource 文件

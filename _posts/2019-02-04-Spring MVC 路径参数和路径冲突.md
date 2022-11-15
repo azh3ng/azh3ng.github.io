@@ -6,8 +6,6 @@ category:
 tags: []  
 ---
 
-# Spring MVC 路径参数和路径冲突
-
 SpringMVC可以对 `@RequestMapping` 中的URL进行匹配, 转发到相应的`Controller`方法
 
 也可以获取 `URL` 中的值作为参数
