@@ -15,6 +15,33 @@ tags: [Spring]
 
 此方法主要目的：创建 Bean 实例，填充 Bean 实例，应用/执行 Post-Processor 等
 
+代码调用：
+- `AbstractAutowireCapableBeanFactory.createBean(String beanName, RootBeanDefinition, Object[] args)`
+  - [加载类](#加载类)：`AbstractBeanFactory.resolveBeanClass()`
+  - [实例化前](#实例化前instantiationawarebeanpostprocessor)：`AbstractAutowireCapableBeanFactoryresolveBeforeInstantiation()`
+    - 如果返回结果不为空，则直接返回，结束 `createBean()`方法
+  - 创建Bean：`AbstractAutowireCapableBeanFactory.doCreateBean()`
+    - 实例化Bean：`AbstractAutowireCapableBeanFactory.createBeanInstance()`
+    - BeanDefinition 的后置处理：`AbstractAutowireCapableBeanFactory.applyMergedBeanDefinitionPostProcessors()`
+    - 添加到三级缓存（解决循环依赖）：`DefaultSingletonBeanRegistry.addSingletonFactory()`
+    - 属性填充：`AbstractAutowireCapableBeanFactory.populateBean()`
+      - [实例化后](#实例化后)
+      - 自动注入（BY_NAME 或 BY_TYPE）
+      - 自动注入
+        - AutowiredAnnotationBeanPostProcessor：`@Autowire`,`@Value`、`@Inject`
+        - CommonAnnotationBeanPostProcessor：`@Resource`
+      - 设置 PropertyValues：如果当前 Bean 的 BeanDefinition 中设置了 PropertyValues，最终将是 PropertyValues 中的值覆盖自动注入的值
+    - 初始化：`AbstractAutowireCapableBeanFactory.initializeBean(String beanName, Object bean, RootBeanDefinition)`
+      - 执行 Aware 方法：`AbstractAutowireCapableBeanFactory.invokeAwareMethods()`
+        - BeanNameAware
+        - BeanClassLoaderAware
+        - BeanFactoryAware
+      - 初始化前：`AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInitialization()`
+      - 初始化：`AbstractAutowireCapableBeanFactory.invokeInitMethods()`
+      - 初始化后：`AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsAfterInitialization()`
+    - 检查循环依赖是否正确
+  - 返回创建的 Bean
+
 ## 概览
 1. Spring扫描并生成BeanDefinition
 2. [合并 BeanDefinition](https://azh3ng.com/2022/01/08/Spring-merge-BeanDefinition.html)
