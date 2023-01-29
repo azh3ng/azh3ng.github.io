@@ -2,9 +2,12 @@
 layout: article  
 title: 【理解Spring】BeanDefinition
 date: 2022-01-02 00:00
+titleEn: Spring-BeanDefinition
 category:  
 tags: [Spring]
+originFileName: BeanDefinition.md
 ---
+
 
 > A BeanDefinition describes a bean instance, which has property values, constructor argument values, and further information supplied by concrete implementations.
 

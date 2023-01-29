@@ -2,9 +2,13 @@
 layout: article  
 title: 【理解Spring】BeanFactory  
 date: 2022-01-03 00:00
+titleEn: Spring-BeanFactory
 category:  
 tags: [Spring]  
+originFileName: BeanFactory.md
 ---
+
+
 
 BeanFactory 顾名思义负责创建 Bean，并且提供了获取 Bean 的 API。
 

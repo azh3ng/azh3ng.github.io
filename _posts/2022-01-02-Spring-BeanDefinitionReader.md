@@ -2,15 +2,18 @@
 layout: article  
 title: 【理解Spring】BeanDefinitionReader  
 date: 2022-01-02 00:00
+titleEn: Spring-BeanDefinitionReader
 category:  
 tags: [Spring]  
+originFileName: BeanDefinitionReader.md
 ---
+
 
 Spring 提供的 BeanDefinition 读取器（`BeanDefinitionReader`），在使用 Spring 开发时用得少，但在 Spring 源码中很常见，相当于 Spring 基础设施
 
 ## AnnotatedBeanDefinitionReader
 
-可以直接把某个类转换为 BeanDefinition，并且会解析该类上的注解，比如
+可以直接把某个类转换为 [BeanDefinition](/2022/01/02/Spring-BeanDefinition.html)，并且会解析该类上的注解，比如
 ```java
 AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 AnnotatedBeanDefinitionReader annotatedBeanDefinitionReader = new AnnotatedBeanDefinitionReader(context);
