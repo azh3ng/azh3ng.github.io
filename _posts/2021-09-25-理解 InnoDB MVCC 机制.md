@@ -1,4 +1,5 @@
 ---
+aliases: MVCC 多版本并发控制
 layout: article  
 title: 理解 InnoDB MVCC 机制  
 date: 2021-09-25  
@@ -47,9 +48,10 @@ Undo log中存储的是老版本数据。当一个事务需要读取记录行时
 ## 隐藏字段
 InnoDB存储引擎在每行数据的后面添加了三个隐藏字段：
 1. `DB_TRX_ID`(6字节)：表示最后一次对本记录行作修改（insert、update）的事务标识符（事务ID）。此外 delete 操作被 InnoDB 认作一种update 操作，行中的一个特殊的位（a special bit）用来标记该行被删除，并非真正物理删除。
-2. `DB_ROLL_PTR`(7字节)：回滚指针，指向当前记录行的 undo log 信息。
+2. `DB_ROLL_PTR`(7字节)：回滚指针，指向当前记录行的 undo log 信息。  
 3. `DB_ROW_ID`(6字节)：随着新行插入而单调递增的行ID。当表**没有**`主键`或`唯一非空索引`时，InnoDB 就会使用这个`DB_ROW_ID`自动生成索引。否则`DB_ROW_ID`列不会出现在任何索引中，`DB_ROW_ID`跟 MVCC 关系不大。
-   官方文档：[14.3 InnoDB Multi-Versioning](https://dev.mysql.com/doc/refman/5.7/en/innodb-multi-versioning.html)
+
+官方文档：[14.3 InnoDB Multi-Versioning](https://dev.mysql.com/doc/refman/5.7/en/innodb-multi-versioning.html)
 
 ### 示例
 假设有一张表`t_table`，表里有两个字段`id`和`name`，其中`id`为主键
@@ -73,7 +75,7 @@ CREATE TABLE t_table(
 3. 修改数据`name`字段为“bob”，修改`DB_TRX_ID`为 101，DB_ROLL_PTR(回滚指针)指向步骤2的 Undo log 旧版本数据
 4. 事务提交，释放排它锁
 
-此时数据如下：
+此时数据如下：  
 
 | 说明             | id  | name     | DB_TRX_ID | DB_ROLL_PTR(回滚指针) | Undo log 地址 |
 | ---------------- | --- | -------- | --------- | --------------------- | ------------- |
@@ -139,7 +141,7 @@ Read View （视图）记录了**当前事务ID**、**当前事务不可见的�
 其中主要的变量有[low_limit_id](#low_limit_id)、[up_limit_id](#up_limit_id)、[trx_ids](#trx_ids)、[creator_trx_id](#creator_trx_id)
 ### low_limit_id
 也被称作高水位（high water mark）  
-其表示下一个将要被分配到的事务ID，也就是目前出现过最大的事务ID + 1。也即：如果查到的数据的`DB_TRX_ID`大于等于`low_limit_id`，表示这条数据对于这个事务来说不可见。
+其表示下一个将要被分配到的事务ID，也就是目前出现过最大的事务ID + 1。也即：如果查到的数据的`DB_TRX_ID`大于等于`low_limit_id`，表示这条数据对于这个事务来说不可见。  
 ### up_limit_id
 也被称作低水位（low water mark）  
 其表示活跃事务列表（`trx_ids`）中最小的事务 ID，如果`trx_ids`为空，则`up_limit_id = low_limit_id`。
@@ -147,7 +149,7 @@ Read View （视图）记录了**当前事务ID**、**当前事务不可见的�
 其记录了 Read View 创建时，所有未提交的活跃的事务列表。故而这些事务中对数据的插入、修改、删除操作对于当前事务应当都是不可见的。  
 其中**不**包括当前事务ID 和 已提交的事务ID，并且`trx_ids`一定在高水位和低水位之间。
 ### creator_trx_id
-当前事务的ID，数据库强制使分配的事务ID递增。
+当前事务的ID，数据库强制使分配的事务ID递增。  
 
 ## 可见性比较算法
 在 InnoDB 中，创建一个新事务后，执行第一个 select 语句的时候，InnoDB 会创建一个快照（Read View），当当前事务读取某行记录的时候，InnoDB 会拿这记录行的`DB_TRX_ID`与Read View 中的变量进行比较，判断是否满足可见性条件。
@@ -162,9 +164,9 @@ Read View 中的
 1. 如果数据的`trx_id`= `creator_trx_id`，表示这条数据是自己插入或修改的，可以读到，返回数据，结束。
 2. 如果数据的`trx_id` < `min_trx_id`，表示这个版本的数据是在当前所有活跃事务之前修改的，并且已经提交，可以读到，返回数据，结束。
 3. 如果数据的`trx_id` >= `low_limit_id`，表示数据在当前事务生成 Read View后才开启，所以该版本不可以被读出来，转到步骤 5。
-4. 如果数据的`up_limit_id` <= `trx_id` < `low_limit_id`之间，表示这条数据在创建 Read View 的时候可能处于“未提交事务”或者“已提交事务”，所以继续通过二分法查找`trx_id`在不在`trx_ids`（有序）中：
+4. 如果数据的`up_limit_id` <= `trx_id` < `low_limit_id`之间，表示这条数据在创建 Read View 的时候可能处于“未提交事务”或者“已提交事务”，所以继续通过二分法查找`trx_id`在不在`trx_ids`（有序）中：  
     1. 如果在，说明创建 Read View 的时候，生成该版本的事务还是活跃的（没有被提交），该版本不可以被读出来，转到步骤 5；
-    2. 如果不在，说明创建 Read View 的时候，生成该版本的事务已经被提交了，该版本可以被读出来，返回数据，结束；
+    2. 如果不在，说明创建 Read View 的时候，生成该版本的事务已经被提交了，该版本可以被读出来，返回数据，结束；  
 5. 根据这行数据的`DB_ROLL_PTR`，找到 undo log 修改链中这行数据的上一个版本，拿到这行数据上个版本的 `DB_TRX_ID`，赋值给`trx_id`，转到步骤 1 重新开始判断。  
    
 总之根据这行数据的`DB_TRX_ID`和 Read View 中记录的事务ID做比较，如果结果可见，则返回数据，如果结果不可见，则顺`DB_ROLL_PTR`找到上一个版本的数据，继续做上述判断。如果找到版本链最末尾的的数据判断还是不可见，则表示该数据对当前事务完全不可见，查询结果就不应该包含这条记录了。
@@ -281,7 +283,7 @@ sequenceDiagram
 6. `trx_id`被赋值为新的`DB_TRX_ID`，即为 100
 7. 100（`trx_id`）**不**等于 999（`creator_trx_id`），数据不为当前线程创建，继续判断；
 8. 100（`trx_id`）**小于** 101（`up_limit_id`），表示数据在 Read View 中是已提交状态，表示数据对于当前 Read View 可见，即返回数据
-9. 最终查到的数据为：
+9. 最终查到的数据为：  
 
 | id  | name |
 | --- | ---- |
@@ -375,7 +377,7 @@ sequenceDiagram
 12. `trx_id`被赋值为新的`DB_TRX_ID`，即为 100
 13. 100（`trx_id`）**不**等于 999（`creator_trx_id`），数据不为当前线程创建，继续判断；
 14. 100（`trx_id`）**小于** 101（`up_limit_id`），表示数据在 Read View 中是已提交状态，表示数据对于当前 Read View 可见，即返回数据
-15. 最终查到的数据为：
+15. 最终查到的数据为：  
 
 | id  | name |
 | --- | ---- |

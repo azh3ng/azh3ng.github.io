@@ -128,7 +128,8 @@ Changes not staged for commit:
 - not_add_new.txt    -> untracked file 不变
 - not_add_modify.txt -> 还原
 - not_add_delete.txt -> 还原
-  即：
+
+即：
 ```shell
 $ git reset --hard
 HEAD is now at f46c8a2 commit

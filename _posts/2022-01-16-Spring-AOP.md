@@ -21,9 +21,9 @@ compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.5'
 
 ### Advice
 `org.aopalliance.aop.Advice`  
-Advice 接口对应着 AOP 概念中的 [AOP#Advice](https://azh3ng.com/2022/01/16/AOP.html#advice)，表示对一段代码逻辑的增强逻辑
+Advice 接口对应着 AOP 概念中的 [AOP#Advice](https://azh3ng.com/2022/01/16/AOP.html#advice)，表示对一段代码逻辑的增强逻辑  
 
-常见的子类有
+常见的子类有  
 - `org.aopalliance.intercept.MethodInterceptor`：
     - `org.springframework.transaction.interceptor.TransactionInterceptor`
 - `org.springframework.aop.aspectj.AbstractAspectJAdvice`
@@ -43,9 +43,9 @@ AspectJ 中的注解，有五个用来定义 Advice，表示代理逻辑，以�
 
 ### Pointcut
 `org.springframework.aop.Pointcut`  
-Pointcut 接口对应着 AOP 概念中的 [AOP#Pointcut](https://azh3ng.com/2022/01/16/AOP.html#pointcut)，中文译为切点，可以理解为**通过一些过滤条件，筛选出需要被代理的方法**。
+Pointcut 接口对应着 AOP 概念中的 [AOP#Pointcut](https://azh3ng.com/2022/01/16/AOP.html#pointcut)，中文译为切点，可以理解为**通过一些过滤条件，筛选出需要被代理的方法**。  
 
-接口 Pointcut 中包含两个方法
+接口 Pointcut 中包含两个方法  
 - `ClassFilter getClassFilter();`
 - `MethodMatcher getMethodMatcher();`
 
@@ -120,7 +120,7 @@ public @interface EnableAspectJAutoProxy {
 `@Import(AspectJAutoProxyRegistrar.class)` 表示 `@EnableAspectJAutoProxy` 注解向 Spring 容器中添加一个 [AnnotationAwareAspectJAutoProxyCreator](#annotationawareaspectjautoproxycreator) 类型的 Bean
 
 ### AnnotationAwareAspectJAutoProxyCreator
-`org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator`
+`org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator`  
 
 ```mermaid
 classDiagram 
@@ -157,7 +157,7 @@ AdvisorAdapter 有三个子类
 适配（转换）成 `MethodBeforeAdviceInterceptor`(继承 `MethodInterceptor`)
 
 ## Spring 与 AOP 整合
-Spring 与 AOP 整合通常有两种方式：
+Spring 与 AOP 整合通常有两种方式：  
 1. 配置文件
 2. 注解
 
@@ -172,9 +172,9 @@ Spring 判断 Bean 是否需要进行 AOP 流程：
 1. 找出所有的切面 Bean
 2. 遍历切面中的每个方法，看是否写了 `@Before`、`@After` 等注解
 3. 如果写了，则判断所对应的 Pointcut 和当前 Bean 的类型是否匹配
-4. 如果当前 Bean 匹配 Pointcut，表示需要进行 AOP
+4. 如果当前 Bean 匹配 Pointcut，表示需要进行 AOP  
 
-**详述**：
+**详述**：  
 1. 判断如果当前 Bean 是 Spring AOP 相关的类，则不用进行代理，包括：
     1. `org.aopalliance.aop.Advice`
     2. `org.springframework.aop.Advisor`
@@ -227,12 +227,12 @@ AspectJ 相关注解的方法，会转化成 `InstantiationModelAwarePointcutAdv
 1. 判断配置中的 exposeProxy 如果为 true，则将当前代理对象设置到 ThreadLocal 中
 2. 获取所有 Advisor 中的 Pointcut，通过 Pointcut 中的 `MethodMatcher` 和 `ClassFilter` 对目标对象的方法进行匹配筛选，匹配成功则将 Advisor 适配成 MethodInterceptor（`AdvisedSupport.getInterceptorsAndDynamicInterceptionAdvice()` -> `DefaultAdvisorChainFactory.getInterceptorsAndDynamicInterceptionAdvice()`）
 1. 如果 `advisor instanceof PointcutAdvisor`，则
-   1. 先根据 Pointcut 定义的 `ClassFilter.matches()` 方法判断，被代理的类是否匹配
-   2. 再根据 Pointcut 定义的 `MethodMatcher.matches(Method method, Class<?> targetClass)` 方法判断，被调用的方法是否匹配
-   3. 如果匹配
-    1. 如果 `MethodMatcher.isRuntime()` 为 ture
-    1. 如果是，将 `advisor` 转换([适配](#advisoradapter))成 `InterceptorAndDynamicMethodMatcher`（在被代理的方法执行前，会根据 `MethodMatcher.matches(Method method, Class<?> targetClass, Object... args)` 方法，更细粒度的控制并判断，被调用的方法是否匹配，如果匹配成功才执行代理逻辑，详见 `org.springframework.aop.framework.ReflectiveMethodInvocation#proceed`）
-    2. 否则将 `advisor` 转换([适配](#advisoradapter))成 `MethodInterceptor`
+    1. 先根据 Pointcut 定义的 `ClassFilter.matches()` 方法判断，被代理的类是否匹配
+    2. 再根据 Pointcut 定义的 `MethodMatcher.matches(Method method, Class<?> targetClass)` 方法判断，被调用的方法是否匹配
+    3. 如果匹配
+        1. 如果 `MethodMatcher.isRuntime()` 为 ture
+            1. 如果是，将 `advisor` 转换([适配](#advisoradapter))成 `InterceptorAndDynamicMethodMatcher`（在被代理的方法执行前，会根据 `MethodMatcher.matches(Method method, Class<?> targetClass, Object... args)` 方法，更细粒度的控制并判断，被调用的方法是否匹配，如果匹配成功才执行代理逻辑，详见 `org.springframework.aop.framework.ReflectiveMethodInvocation#proceed`）
+        2. 否则将 `advisor` 转换([适配](#advisoradapter))成 `MethodInterceptor`
 3. 把匹配的 MethodInterceptor 链、被代理对象、代理对象、代理类、当前 Method 对象、方法参数封装为 `ReflectiveMethodInvocation` 对象
 4. `ReflectiveMethodInvocation.proceed()`：执行各个 MethodInterceptor 及被代理对象的方法
     1. 判断所有 MethodInterceptor 都执行完成，调用 `invokeJoinpoint()` 方法，执行被代理对象的方法并返回

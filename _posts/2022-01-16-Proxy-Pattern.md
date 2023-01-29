@@ -4,7 +4,6 @@ alias: Proxy Pattern
 title: 【理解设计模式】代理模式
 date: 2022-01-16 00:00
 tags: []
-extends:
 ---
 
 ![[Pasted image 20220911133612.png]]

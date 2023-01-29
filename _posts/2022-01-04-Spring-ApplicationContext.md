@@ -20,6 +20,7 @@ ApplicationContext 有两个比较重要的实现类：
 
 ## AnnotationConfigApplicationContext
 ![AnnotationConfigApplicationContext类继承结构](https://github.com/azh3ng/azh3ng.github.io/blob/master/_posts/attachments/AnnotationConfigApplicationContext-hierarchy.png?raw=true)
+
 - `ConfigurableApplicationContext` ：继承了 ApplicationContext 接口，增加了**添加事件监听器**、**添加 `BeanFactoryPostProcessor`**、**设置 `Environment`**，**获取 `ConfigurableListableBeanFactory`** 等功能
 - `AbstractApplicationContext` ：实现了 `ConfigurableApplicationContext` 接口
 - `GenericApplicationContext` ：继承了 `AbstractApplicationContext`，实现了 `BeanDefinitionRegistry` 接口，拥有了所有 `ApplicationContext` 的功能，并且可以注册 `BeanDefinition`，注意这个类中有一个属性(DefaultListableBeanFactory beanFactory)

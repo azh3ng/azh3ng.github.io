@@ -55,7 +55,7 @@ public ResponseEntity<Resource> download(String param) throws IOException {
     ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
 
     return ResponseEntity.ok()
-            .headers(headers)
+            .headers(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getName())
             .contentLength(file.length())
             .contentType(MediaType.APPLICATION_OCTET_STREAM)
             .body(resource);

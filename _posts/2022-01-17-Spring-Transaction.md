@@ -234,13 +234,13 @@ Propagation.REQUIRED 是 Spring 默认的事务传播机制；如果当前存在
 
 ## Spring 事务详细执行流程
 - `org.springframework.transaction.interceptor.TransactionInterceptor#invoke`
-  - （事务执行详细）`org.springframework.transaction.interceptor.TransactionAspectSupport#invokeWithinTransaction`
-    - （获取 TransactionManager）`org.springframework.transaction.interceptor.TransactionAspectSupport#determineTransactionManager`
-    - （开启事务）`org.springframework.transaction.interceptor.TransactionAspectSupport#createTransactionIfNecessary`
-    - 执行目标对象的方法
-    - （回滚事务）`org.springframework.transaction.interceptor.TransactionAspectSupport#completeTransactionAfterThrowing`
-    - （清除事务信息）`org.springframework.transaction.interceptor.TransactionAspectSupport#cleanupTransactionInfo`
-    - （提交事务）`org.springframework.transaction.interceptor.TransactionAspectSupport#commitTransactionAfterReturning`
+    - （事务执行详细）`org.springframework.transaction.interceptor.TransactionAspectSupport#invokeWithinTransaction`
+        - （获取 TransactionManager）`org.springframework.transaction.interceptor.TransactionAspectSupport#determineTransactionManager`
+        - （开启事务）`org.springframework.transaction.interceptor.TransactionAspectSupport#createTransactionIfNecessary`
+        - 执行目标对象的方法
+        - （回滚事务）`org.springframework.transaction.interceptor.TransactionAspectSupport#completeTransactionAfterThrowing`
+        - （清除事务信息）`org.springframework.transaction.interceptor.TransactionAspectSupport#cleanupTransactionInfo`
+        - （提交事务）`org.springframework.transaction.interceptor.TransactionAspectSupport#commitTransactionAfterReturning`
 
 ### 开启事务
 - `TransactionAspectSupport.createTransactionIfNecessary()`

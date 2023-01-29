@@ -368,7 +368,7 @@ public class Azh3ngBeanPostProcessor implements BeanPostProcessor {
 }
 ```
 
-可以在这个步骤中，对 Bean 最终进行处理，Spring 中的 [[AOP]] 就是基于初始化后实现的，**初始化后返回的对象才是最终的 Bean 对象**。
+可以在这个步骤中，对 Bean 最终进行处理，[[Spring AOP]] 就是基于初始化后实现的，**初始化后返回的对象才是最终的 Bean 对象**。
 
 ## BeanPostProcessor 小结
 
