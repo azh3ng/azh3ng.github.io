@@ -52,6 +52,7 @@ aside:
 #### Linux
 - [x] [快乐的Linux命令行](https://billie66.github.io/TLCL/)
 - [ ] 鸟哥的 Linux 私房菜
+- [ ] [Effective Shell](https://effective-shell.com/)
 
 ### 设计模式
 - [ ] 大话设计模式
