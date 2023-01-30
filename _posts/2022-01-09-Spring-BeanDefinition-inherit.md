@@ -2,8 +2,9 @@
 layout: article  
 title: 【理解Spring】BeanDefinition 继承  
 date: 2022-01-09 00:00
-category:
+titleEn: Spring-BeanDefinition-inherit
 tags: [Spring]
+originFileName: BeanDefinition继承.md
 ---
 
 BeanDefinition 可以通过继承获得父 BeanDefinition 的属性，开发中实际运用的比较少。
@@ -26,4 +27,4 @@ BeanDefinition 可以通过继承获得父 BeanDefinition 的属性，开发中�
 
 上述情况下，child 继承了 parent 的 `scope`，继承后，child 是原型 Bean。
 
-child Bean 在生成 Bean 对象之前，需要进行[合并 BeanDefinition](https://azh3ng.com/2022/01/08/Spring-merge-BeanDefinition.html)，得到完整的 child 的 BeanDefinition。
+child Bean 在生成 Bean 对象之前，需要进行 [合并 BeanDefinition](/2022/01/08/Spring-merge-BeanDefinition.html)，得到完整的 child 的 BeanDefinition。
