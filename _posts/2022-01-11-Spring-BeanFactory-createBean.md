@@ -2,11 +2,12 @@
 layout: article  
 title: 【理解Spring】Bean 创建  
 date: 2022-01-11 00:00
-category:  
+titleEn: Spring-BeanFactory-createBean
 tags: [Spring]
+originFileName: Bean 创建.md
 ---
 
-在 [AbstractBeanFactory.getBean()](https://azh3ng.com/2022/01/10/Spring-BeanFactory-getBean.html) 中，如果从单例池没有获取到 Bean，则创建 Bean
+在 [BeanFactory.getBean()](/2022/01/10/Spring-BeanFactory-getBean.html) 中，如果从单例池没有获取到 Bean，则创建 Bean
 
 代码入口：  
 `AbstractAutowireCapableBeanFactory.createBean(String beanName, RootBeanDefinition, Object[] args)`
@@ -43,8 +44,8 @@ tags: [Spring]
   - 返回创建的 Bean
 
 ## 概览
-1. Spring扫描并生成BeanDefinition
-2. [合并 BeanDefinition](https://azh3ng.com/2022/01/08/Spring-merge-BeanDefinition.html)
+1. [Spring扫描并生成BeanDefinition](/2022/01/07/Spring-scan.html)
+2. [合并 BeanDefinition](/2022/01/08/Spring-merge-BeanDefinition.html)
 3. [加载类](#加载类)
 4. [实例化前 InstantiationAwareBeanPostProcessor](#实例化前instantiationawarebeanpostprocessor)
 5. [实例化 new出对象](#实例化new-出对象)
@@ -126,7 +127,7 @@ public class Azh3ngBeanPostProcessor implements InstantiationAwareBeanPostProces
 `AbstractAutowireCapableBeanFactory.doCreateBean` ->
 `AbstractAutowireCapableBeanFactory.createBeanInstance()` 
 
-根据 `BeanDefinition` 创建对象
+根据 [BeanDefinition](/2022/01/02/Spring-BeanDefinition.html) 创建对象
 
 ### Supplier 创建对象
 
@@ -198,7 +199,7 @@ Spring 发现当前 BeanDefinition 设置了工厂方法后，就会区分这两
 
 ### 推断构造方法
 
-[Spring推断构造方法](https://azh3ng.com/2022/01/13/Spring-infer-constructor.html)
+[Spring推断构造方法](/2022/01/13/Spring-infer-constructor.html)
 
 #### @Lookup
 
@@ -269,10 +270,11 @@ public class DemoInstantiationAwareBeanPostProcessor implements InstantiationAwa
 ```
 
 上述代码就是对 userService 所实例化出来的对象进行处理。
+这个扩展点在 Spring 源码中很少见。
 
 ## 依赖注入
 
-[依赖注入](https://azh3ng.com/2022/01/14/Spring-Dependency-Injection.html)
+[依赖注入](/2022/01/14/Spring-Dependency-Injection.html)
 
 ## 处理属性(InstantiationAwareBeanPostProcessor.postProcessProperties())
 
@@ -368,7 +370,7 @@ public class Azh3ngBeanPostProcessor implements BeanPostProcessor {
 }
 ```
 
-可以在这个步骤中，对 Bean 最终进行处理，[[Spring AOP]] 就是基于初始化后实现的，**初始化后返回的对象才是最终的 Bean 对象**。
+可以在这个步骤中，对 Bean 最终进行处理，[Spring AOP](/2022/01/16/Spring-AOP.html) 就是基于初始化后实现的，**初始化后返回的对象才是最终的 Bean 对象**。
 
 ## BeanPostProcessor 小结
 
@@ -382,7 +384,7 @@ public class Azh3ngBeanPostProcessor implements BeanPostProcessor {
         - ==TODO==
     - 修改BeanDefinition（`AbstractAutowireCapableBeanFactory.applyMergedBeanDefinitionPostProcessors`）
         - `MergedBeanDefinitionPostProcessor.postProcessMergedBeanDefinition()`
-          - 寻找[[依赖注入#自动注入]]的注入点（[[依赖注入#寻找注入点]]），并缓存 
+          - 寻找[依赖注入#自动注入](/2022/01/14/Spring-Dependency-Injection.html#自动注入)的注入点（[依赖注入#寻找注入点](/2022/01/14/Spring-Dependency-Injection.html#寻找注入点)），并缓存 
           - 可以自定义 PostProcessor 继承`MergedBeanDefinitionPostProcessor`，在方法`postProcessMergedBeanDefinition()`中修改 BeanDefinition，执行`addPropertyValue()`等操作
     - 属性填充（`AbstractAutowireCapableBeanFactory.populateBean()`）
         - 实例化后（`InstantiationAwareBeanPostProcessor.postProcessAfterInstantiation()`）

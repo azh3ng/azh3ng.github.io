@@ -2,8 +2,11 @@
 layout: article  
 title: 【理解Spring】Bean生命周期
 date: 2022-01-12 00:00
+titleEn: Spring-Bean-lifecycle
 tags: [Spring]
+originFileName: Bean生命周期.md
 ---
+
 
 Spring 最重要的功能就是帮助程序员创建对象（也就是 IOC），而启动 Spring 就是为创建 Bean 对象做准备，所以我们先明白 Spring 到底是怎么去创建 Bean 的，也就是先弄明白 Bean 的生命周期。
 
@@ -12,19 +15,19 @@ Bean 的生命周期就是指：在 Spring 中，一个 Bean 是如何生成的�
 Bean 生命周期流程图
 ![Bean生命周期流程图](./attachments/Bean生命周期-1641711003210.png)
 
-## 生成 BeanDefinition
+## 生成 [BeanDefinition](/2022/01/02/Spring-BeanDefinition.html)
 
-[Spring扫描并生成 BeanDefinition](https://azh3ng.com/2022/01/07/Spring-scan.html)
+[Spring扫描并生成 BeanDefinition](/2022/01/07/Spring-scan.html)
 
 ## 合并 BeanDefinition
 
-[合并 BeanDefinition](https://azh3ng.com/2022/01/08/Spring-merge-BeanDefinition.html)
+[合并 BeanDefinition](/2022/01/08/Spring-merge-BeanDefinition.html)
 
 ## getBean() 获取 Bean
-[BeanFactory.getBean()](https://azh3ng.com/2022/01/10/Spring-BeanFactory-getBean.html)
+[getBean()](/2022/01/10/Spring-BeanFactory-getBean.html)
 
 ## 创建 Bean
-[Bean 创建](https://azh3ng.com/2022/01/11/Spring-BeanFactory-createBean.html)
+[Bean 创建](/2022/01/11/Spring-BeanFactory-createBean.html)
 
 ## 执行 SmartInitializingSingleton.afterSingletonsInstantiated()
 `DefaultListableBeanFactory.preInstantiateSingletons()`
