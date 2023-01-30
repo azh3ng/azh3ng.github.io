@@ -3,9 +3,8 @@ layout: article
 title: 【理解Spring】BeanDefinitionReader  
 date: 2022-01-02 00:00
 titleEn: Spring-BeanDefinitionReader
-category:  
 tags: [Spring]  
-originFileName: BeanDefinitionReader.md
+originFileName: "BeanDefinitionReader.md"
 ---
 
 

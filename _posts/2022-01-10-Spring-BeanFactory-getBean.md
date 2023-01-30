@@ -8,7 +8,7 @@ alias:
     - getBean()
     - getBean(beanName)
     - getBean(FACTORY_BEAN_PREFIX +beanName)
-originFileName: BeanFactory.getBean().md
+originFileName: "BeanFactory.getBean().md"
 ---
 
 代码入口：`DefaultListableBeanFactory.preInstantiateSingletons()`  

@@ -4,7 +4,7 @@ title: 【理解Spring】Spring初始化所有非懒加载单例Bean
 date: 2022-01-08 00:00
 titleEn: Spring-initializes-non-lazy-singleton-beans
 tags: [Spring]
-originFileName: Spring初始化所有非懒加载单例Bean.md
+originFileName: "Spring初始化所有非懒加载单例Bean.md"
 ---
 
 

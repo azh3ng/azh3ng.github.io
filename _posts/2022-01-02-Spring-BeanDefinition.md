@@ -3,9 +3,8 @@ layout: article
 title: 【理解Spring】BeanDefinition
 date: 2022-01-02 00:00
 titleEn: Spring-BeanDefinition
-category:  
 tags: [Spring]
-originFileName: BeanDefinition.md
+originFileName: "BeanDefinition.md"
 ---
 
 

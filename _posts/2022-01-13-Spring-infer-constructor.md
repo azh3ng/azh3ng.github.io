@@ -4,7 +4,7 @@ title: 【理解Spring】推断构造方法
 date: 2022-01-13 00:00
 titleEn: Spring-infer-constructor
 tags: [Spring]
-originFileName: Spring推断构造方法.md
+originFileName: "Spring推断构造方法.md"
 ---
 
 

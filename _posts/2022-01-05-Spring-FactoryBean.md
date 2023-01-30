@@ -5,7 +5,7 @@ date: 2022-01-05 00:00
 titleEn: Spring-FactoryBean
 category:  
 tags: [Spring]
-originFileName: FactoryBean.md
+originFileName: "FactoryBean.md"
 ---
 
 

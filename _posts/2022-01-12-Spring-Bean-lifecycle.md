@@ -4,7 +4,7 @@ title: 【理解Spring】Bean生命周期
 date: 2022-01-12 00:00
 titleEn: Spring-Bean-lifecycle
 tags: [Spring]
-originFileName: Bean生命周期.md
+originFileName: "Bean生命周期.md"
 ---
 
 

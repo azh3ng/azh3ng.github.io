@@ -4,7 +4,7 @@ title: 【理解Spring】Bean 创建
 date: 2022-01-11 00:00
 titleEn: Spring-BeanFactory-createBean
 tags: [Spring]
-originFileName: Bean 创建.md
+originFileName: "Bean 创建.md"
 ---
 
 在 [BeanFactory.getBean()](/2022/01/10/Spring-BeanFactory-getBean.html) 中，如果从单例池没有获取到 Bean，则创建 Bean

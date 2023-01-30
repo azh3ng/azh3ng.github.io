@@ -4,7 +4,7 @@ title: 【理解Spring】BeanDefinition 继承
 date: 2022-01-09 00:00
 titleEn: Spring-BeanDefinition-inherit
 tags: [Spring]
-originFileName: BeanDefinition继承.md
+originFileName: "BeanDefinition继承.md"
 ---
 
 BeanDefinition 可以通过继承获得父 BeanDefinition 的属性，开发中实际运用的比较少。

@@ -5,7 +5,7 @@ date: 2022-01-04 00:00
 titleEn: Spring-ApplicationContext
 category:  
 tags: [Spring]
-originFileName: ApplicationContext.md
+originFileName: "ApplicationContext.md"
 ---
 
 

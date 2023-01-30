@@ -5,7 +5,7 @@ date: 2022-01-03 00:00
 titleEn: Spring-BeanFactory
 category:  
 tags: [Spring]  
-originFileName: BeanFactory.md
+originFileName: "BeanFactory.md"
 ---
 
 
