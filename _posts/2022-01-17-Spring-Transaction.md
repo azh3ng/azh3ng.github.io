@@ -3,9 +3,12 @@ layout: article
 alias: 
 title: 【理解Spring】事务
 date: 2022-01-17 00:00
+titleEn: Spring-Transaction
 tags: [Spring]
-extends: 
+originFileName: "Spring事务.md"
 ---
+
+
 
 在 Spring 中，事务有两种实现方式：
 1. **编程式事务管理**：编程式事务管理使用 TransactionTemplate 可实现细粒度的事务控制  
@@ -216,14 +219,14 @@ Propagation.REQUIRED 是 Spring 默认的事务传播机制；如果当前存在
 ### AutoProxyRegistrar
 `org.springframework.context.annotation.AutoProxyRegistrar`  
 `AutoProxyRegistrar` 向 Spring 容器中注册了 `InfrastructureAdvisorAutoProxyCreator` 类型的 Bean。  
-`InfrastructureAdvisorAutoProxyCreator` 继承 [Spring AOP#AbstractAdvisorAutoProxyCreator](https://azh3ng.com/2022/01/16/Spring-AOP.html#abstractadvisorautoproxycreator)，也即它是个 BeanPostProcessor，并且相当于开启了 Spring AOP。  
+`InfrastructureAdvisorAutoProxyCreator` 继承 [Spring AOP#AbstractAdvisorAutoProxyCreator](/2022/01/16/Spring-AOP.html#abstractadvisorautoproxycreator)，也即它是个 BeanPostProcessor，并且相当于开启了 Spring AOP。  
 
 ### ProxyTransactionManagementConfiguration
 `org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration`  
 `ProxyTransactionManagementConfiguration` 是一个配置类，内部定义了三个 Bean：  
-1. `BeanFactoryTransactionAttributeSourceAdvisor`：一个 [Advisor](https://azh3ng.com/2022/01/16/Spring-AOP.html#advisor)  
-2. `AnnotationTransactionAttributeSource`：相当于 `BeanFactoryTransactionAttributeSourceAdvisor` 中的 `Pointcut`  
-3. `TransactionInterceptor`：相当于 `BeanFactoryTransactionAttributeSourceAdvisor` 中的 `Advice`  
+1. `BeanFactoryTransactionAttributeSourceAdvisor` ：一个 [Spring AOP#Advisor](/2022/01/16/Spring-AOP.html#advisor)
+2. `AnnotationTransactionAttributeSource` ：相当于 `BeanFactoryTransactionAttributeSourceAdvisor` 中的 [Spring AOP#Pointcut](/2022/01/16/Spring-AOP.html#pointcut)  
+3. `TransactionInterceptor` ：相当于 `BeanFactoryTransactionAttributeSourceAdvisor` 中的 [Spring AOP#Advice](/2022/01/16/Spring-AOP.html#advice)
 
 ### AnnotationTransactionAttributeSource  
 `AnnotationTransactionAttributeSource` 可以判断类或者方法上是否存在 `@Transactional` 注解
