@@ -3,7 +3,9 @@ layout: article
 alias: 解决循环依赖
 title: 【理解Spring】解决循环依赖
 date: 2022-01-15 00:00
+titleEn: Spring-resolve-circular-dependencies
 tags: [Spring]
+originFileName: "解决循环依赖.md"
 ---
 
 ## 什么是循环依赖？
@@ -23,7 +25,7 @@ public class ObjectB {
 以上示例表示在 Spring 容器中定义了两个**单例** bean：ObjectA 和 ObjectB，这两个 bean 相互依赖对方，都需要对方的实例注入到自己的属性中，这就属于循环依赖。同理，当 ObjectA 依赖 ObjectB 依赖 ObjectC ... ObjectX 依赖 ObjectA 也属于循环依赖。
 
 ## 为什么要解决循环依赖
-Spring 启动时，在 [Bean 创建](https://azh3ng.com/2022/01/11/Spring-BeanFactory-createBean.html) 的过程中，`PostProcessor` 执行 `postProcessProperties()` 时，会进行自动注入，自动注入时会去寻找依赖的 Bean，当 Bean 不存在或者还没有被创建时，会尝试创建 Bean，当被依赖的 Bean 中又依赖了正在创建的 Bean，正在创建中的 Bean 还没有完成初始化，又由于是单例模式，无法再创建一个新的 Bean，所以可能导致 Bean 的创建无法继续下去  
+Spring 启动时，在 [Bean 创建](/2022/01/11/Spring-BeanFactory-createBean.html) 的过程中，`PostProcessor` 执行 `postProcessProperties()` 时，会进行自动注入，自动注入时会去寻找依赖的 Bean，当 Bean 不存在或者还没有被创建时，会尝试创建 Bean，当被依赖的 Bean 中又依赖了正在创建的 Bean，正在创建中的 Bean 还没有完成初始化，由于是单例模式，无法再创建一个新的 Bean，所以可能导致 Bean 的创建无法继续下去
 举个例子：
 1. ObjectA 依赖 ObjectB
 2. ObjectA 进行 Bean 创建

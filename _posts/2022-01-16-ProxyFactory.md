@@ -3,11 +3,12 @@ layout: article
 alias: ProxyFactory
 title: 【理解Spring】ProxyFactory
 date: 2022-01-16 02:00
+titleEn: ProxyFactory
 tags: []
+originFileName: "ProxyFactory.md"
 ---
 
-`org.springframework.aop.framework.ProxyFactory`  
-Spring 对 [JDK动态代理](https://azh3ng.com/2022/01/16/JDK-Proxy.html) 和 [CGLIB动态代理](https://azh3ng.com/2022/01/16/CGLIB-Proxy.html) 进行了一定程度的封装，提供一个类 ProxyFactory，更加方便的创建代理对象。
+[Spring](/2099/01/01/Spring-introduction.html) 对 [JDK动态代理](/2022/01/16/JDK-Proxy.html) 和 [CGLIB动态代理](/2022/01/16/CGLIB-Proxy.html) 进行了一定程度的封装，提供一个类 ProxyFactory，更加方便的创建代理对象。
 
 ## 创建代理对象
 代码示例：  

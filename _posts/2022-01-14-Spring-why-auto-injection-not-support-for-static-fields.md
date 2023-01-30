@@ -2,9 +2,11 @@
 layout: article  
 title: 【理解Spring】自动注入对 static 字段不支持的原因  
 date: 2022-01-14 00:00
-category:
+titleEn: Spring-why-auto-injection-not-support-for-static-fields
 tags: [Spring]
+originFileName: "Spring对static字段不支持自动注入的原因.md"
 ---
+
 
 举个例子：
 有一个原型类 `OrderService`

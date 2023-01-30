@@ -3,7 +3,9 @@ layout: article
 alias: CGLIB动态代理
 title: 理解 CGLIB 动态代理
 date: 2022-01-16 01:01
+titleEn: CGLIB-Proxy
 tags: []
+originFileName: "CGLIB动态代理.md"
 ---
 
 CGLIB 是一个功能强大，高性能的代码生成包。它为没有实现接口的类提供代理，为 JDK 的动态代理提供了很好的补充。通常可以使用 Java 的动态代理创建代理，但当要代理的类没有实现接口或者为了更好的性能，CGLIB 是一个好的选择。  
