@@ -2,11 +2,14 @@
 layout: article
 title: 【理解Spring】Spring启动
 date: 2022-01-06 00:00
+titleEn: Spring-startup
 tags: [Spring]
+originFileName: Spring启动.md
 ---
 
+
 ## 概览
-通常所说的 Spring 启动，就是构造 ApplicationContext 对象以及调用 `refresh()` 方法的过程，其中最核心的内容是 [调用BeanFactoryPostProcessors](https://azh3ng.com/2022/01/06/Spring-startup.html#invokebeanfactorypostprocessorsbeanfactory) 和 [解析配置类](https://azh3ng.com/2022/01/06/Spring-startup.html#configurationclasspostprocessorprocessconfigbeandefinitions)。  
+通常所说的 Spring 启动，就是构造 ApplicationContext 对象以及调用 `refresh()` 方法的过程，其中最核心的内容是 [调用BeanFactoryPostProcessors](#invokebeanfactorypostprocessorsbeanfactory) 和 [解析配置类](#configurationclasspostprocessorprocessconfigbeandefinitions)。  
 
 Spring 启动过程主要执行了：
 1.  构造一个 BeanFactory 对象
@@ -118,7 +121,7 @@ context.refresh();
 
 ## 注册 Config 类
 `context.register(`[AppConfig.class](#appconfigclass)`);`
-使用 `beanFactory.reader` 解析传入的 [AppConfig.class](#appconfigclass)生成 BeanDefinition
+使用 `beanFactory.reader` 解析传入的 [AppConfig.class](#appconfigclass) 生成 BeanDefinition
 
 ## ApplicationContext.refresh()
 `org.springframework.context.support.AbstractApplicationContext#refresh`
@@ -195,25 +198,25 @@ context.refresh();
         2. 否则添加到缓存
 2. 从 beanFactory 中获取 `BeanDefinitionRegistryPostProcessor` 类型、并且实现了 `PriorityOrdered` 接口的 `postProcessorNames`
     1. 遍历 `postProcessorNames`
-        1. 通过 beanFactory.[BeanFactory.getBean()](https://azh3ng.com/2022/01/10/Spring-BeanFactory-getBean.html) 实例化 `BeanDefinitionRegistryPostProcessor`，并添加到缓存 `currentRegistryProcessors`（除非手动添加，否则通常此时只有 `ConfigurationClassPostProcessor` ）
+        1. 通过 [BeanFactory.getBean()](/2022/01/10/Spring-BeanFactory-getBean.html) 实例化 `BeanDefinitionRegistryPostProcessor`，并添加到缓存 `currentRegistryProcessors`（除非手动添加，否则通常此时只有 `ConfigurationClassPostProcessor` ）
 3. 排序并执行 `PostProcessorRegistrationDelegate#invokeBeanDefinitionRegistryPostProcessors` 
     1. 执行 `BeanDefinitionRegistryPostProcessor#postProcessBeanDefinitionRegistry`
         1. 执行 `ConfigurationClassPostProcessor#postProcessBeanDefinitionRegistry`
-            1. 执行 `org.springframework.context.annotation.`[ConfigurationClassPostProcessor.processConfigBeanDefinitions](#configurationclasspostprocessorprocessconfigbeandefinitions)（**Spring扫描**）
+            1. 执行 `org.springframework.context.annotation.` [※ConfigurationClassPostProcessor.processConfigBeanDefinitions()](#configurationclasspostprocessorprocessconfigbeandefinitions)（**Spring 扫描**）
 4. 清除缓存 `currentRegistryProcessors`
 5. 从 beanFactory 中获取 `BeanDefinitionRegistryPostProcessor` 类型的、实现了 `Ordered` 接口、**并且未执行过的**  `postProcessorNames`
     1. 遍历 `postProcessorNames`
-        1. 通过 [BeanFactory.getBean()](https://azh3ng.com/2022/01/10/Spring-BeanFactory-getBean.html) 实例化 `BeanDefinitionRegistryPostProcessor`，并添加到缓存 `currentRegistryProcessors`
+        1. 通过 [BeanFactory.getBean()](/2022/01/10/Spring-BeanFactory-getBean.html) 实例化 `BeanDefinitionRegistryPostProcessor`，并添加到缓存 `currentRegistryProcessors`
 6. 排序、执行 `BeanDefinitionRegistryPostProcessor.postProcessBeanDefinitionRegistry()`、清除缓存 `currentRegistryProcessors`
 7. 循环判断 beanFactory 中是否还有**未执行**的 `BeanDefinitionRegistryPostProcessor`，如果有
     1. 从 beanFactory 中获取 `BeanDefinitionRegistryPostProcessor` 类型的 `postProcessorNames`
-    2. 实例化（[BeanFactory.getBean()](https://azh3ng.com/2022/01/10/Spring-BeanFactory-getBean.html)）
+    2. 实例化（[BeanFactory.getBean()](/2022/01/10/Spring-BeanFactory-getBean.html)）
     3. 排序
     4. 执行 `postProcessBeanDefinitionRegistry`（执行过程中可能会继续向 beanFactory 中添加 `BeanDefinitionRegistryPostProcessor`，则会继续循环找到并执行）
     5. 清除缓存
 8. 执行 `org.springframework.context.support.PostProcessorRegistrationDelegate#invokeBeanFactoryPostProcessors` 传入 所有 `BeanDefinitionRegistryPostProcessor`
     1. 循环执行所有 `BeanDefinitionRegistryPostProcessor` 的 `postProcessBeanFactory` 方法
-        1. 执行 [ConfigurationClassPostProcessor.processConfigBeanDefinitions](#configurationclasspostprocessorprocessconfigbeandefinitions)
+        1. 执行 [ConfigurationClassPostProcessor.postProcessBeanFactory()](#configurationclasspostprocessorpostprocessbeanfactory)
 9. 执行 `org.springframework.context.support.PostProcessorRegistrationDelegate#invokeBeanFactoryPostProcessors` 传入 **手动添加的** `BeanFactoryPostProcessor`
     1. 循环执行所有 ``BeanFactoryPostProcessor`` 的 `postProcessBeanFactory` 方法
 10. 从 beanFactory 中获取扫描得到的 `BeanFactoryPostProcessor`
@@ -257,7 +260,7 @@ context.refresh();
 4. 解析配置类（`org.springframework.context.annotation.ConfigurationClassParser#doProcessConfigurationClass`）（解析 [AppConfig.class](#appconfigclass)）
     1. 判断类是否有 `@Component` 注解，有则解析类的内部类，判断是否是配置类，是则进一步解析（递归调用 `processConfigurationClass()`）
     2. 判断类是否有 `@PropertySources` 注解，有则解析指定的配置文件，并设置到 `environment` 中
-    3. 判断类是否有 `@ComponentScans` 注解，有则进行 [Spring扫描](https://azh3ng.com/2022/01/07/Spring-scan.html)，得到 `BeanDefinition`，并注册到 BeanFactory 中；遍历得到的 `BeanDefinition` 判断是否为配置类，如果是继续解析配置类（递归调用 `ConfigurationClassParser.parse()`）
+    3. 判断类是否有 `@ComponentScans` 注解，有则进行 [Spring扫描](/2022/01/07/Spring-scan.html)，得到 `BeanDefinition`，并注册到 BeanFactory 中；遍历得到的 `BeanDefinition` 判断是否为配置类，如果是继续解析配置类（递归调用 `ConfigurationClassParser.parse()`）
     4. 调用方法 `processImports()`，判断类是否有 `@Import` 注解，有则解析获取 `@Import` 中指定的类
         1. 判断指定类的类型
             1. 如果实现了 `ImportSelector` 接口
@@ -275,13 +278,13 @@ context.refresh();
 
 **注意**：在 Spring 扫描过程中，可能出现 Bean 覆盖
 1. `@Component` 注解覆盖：当 `@Component` 注解指定了相同的 bean name 时，启动会报错
-2. `@Bean` 注解覆盖：当 `@Bean` 注解了重载的方法，会进行[推断构造方法](https://azh3ng.com/2022/01/13/Spring-infer-constructor.html)，只会生成一个 BeanDefinition
+2. `@Bean` 注解覆盖：当 `@Bean` 注解了重载的方法，会进行[推断构造方法](/2022/01/13/Spring-infer-constructor.html)，只会生成一个 BeanDefinition
 3. `@Component` 和 `@Bean` 注解同时存在：一般会先解析 `@Component` 的 Bean，后解析 `@Bean` 的方法，如果 BeanFactory 允许 BeanDefinition 覆盖（默认），则覆盖 BeanDefinition，所以最终 BeanDefinition 以 `@Bean` 方法为准
 
 #### ConfigurationClassPostProcessor.postProcessBeanFactory()
-1. 判断如果没有执行过 `processConfigBeanDefinitions()` 方法，则执行
+1. 判断如果没有执行过 [※ConfigurationClassPostProcessor.processConfigBeanDefinitions()](#configurationclasspostprocessorprocessconfigbeandefinitions) 方法，则执行
 2. 执行 `enhanceConfigurationClasses(beanFactory)`
-    1. 找到并 [增强 Full 配置类]()
+    1. 找到并 [[增强 Full 配置类]]
 
 ### registerBeanPostProcessors(beanFactory)
 前面的步骤完成了扫描，这一步就会把 BeanFactory 中所有的 BeanPostProcessor 找出来（包括自定义的 BeanPostProcessor）实例化，并添加到 BeanFactory 中去（属性**beanPostProcessors**），最后再重新添加一个 ApplicationListenerDetector 对象（为了把 ApplicationListenerDetector 移动到最后）
@@ -296,7 +299,7 @@ context.refresh();
 提供给 AbstractApplicationContext 的子类进行扩展
 
 ### registerListeners()
-- 从 BeanFactory 中获取 ApplicationListener （事件监听器）类型的 beanName，添加到 ApplicationContext 中的事件广播器 `applicationEventMulticaster` 中，并将所有还未被调用 [getBean()](https://azh3ng.com/2022/01/10/Spring-BeanFactory-getBean.html) 方法创建 Bean 对象的 beanName 添加到 `ApplicationEventMulticaster` 中，后续在 `ApplicationEventMulticaster` 调用 `getApplicationListeners()` 方法时再根据 beanName 创建 Bean（懒加载）
+- 从 BeanFactory 中获取 ApplicationListener （事件监听器）类型的 beanName，添加到 ApplicationContext 中的事件广播器 `applicationEventMulticaster` 中，并将所有还未被调用 [getBean()](/2022/01/10/Spring-BeanFactory-getBean.html) 方法创建 Bean 对象的 beanName 添加到 `ApplicationEventMulticaster` 中，后续在 `ApplicationEventMulticaster` 调用 `getApplicationListeners()` 方法时再根据 beanName 创建 Bean（懒加载）
 - 判断是否有 `earlyApplicationEvents`，如果有就使用事件广播器发布 （`earlyApplicationEvents` 表示在事件广播器还没生成之前 ApplicationContext 所发布的事件）
 
 ### finishBeanFactoryInitialization(beanFactory)
@@ -304,7 +307,7 @@ context.refresh();
 - 添加占位符解析器（`${}`）:`beanFactory.addEmbeddedValueResolver()`
 - 实例化所有 `LoadTimeWeaverAware`
 - 停止使用临时 ClassLoader 进行类型匹配
-- [初始化所有非懒加载单例Bean](https://azh3ng.com/2022/01/08/Spring-initializes-non-lazy-singleton-beans.html)
+- [Spring初始化所有非懒加载单例Bean](/2022/01/08/Spring-initializes-non-lazy-singleton-beans.html)
 
 
 ### finishRefresh()
