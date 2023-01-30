@@ -4,7 +4,7 @@ title: 【Spring实战】@Qualifier 注解的使用
 date: 2022-01-30 00:00
 titleEn: Spring-use-of-@Qualifier
 tags: [Spring]
-originFileName: @Qualifier使用.md
+originFileName: "@Qualifier使用.md"
 ---
 
 
