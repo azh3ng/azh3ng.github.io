@@ -2,8 +2,11 @@
 layout: article  
 title: 【Spring实战】动态获取Bean  
 date: 2022-02-01 00:00
+titleEn: Spring-dynamic-getBean
 tags: [Spring]  
+originFileName: "Spring动态获取Bean.md"
 ---
+
 
 在开发中，常常会定义接口，后对接口进行实现。实现的方式可能有一种，也可能有多种，在不同的场景，需要调用不同的实现。
 
