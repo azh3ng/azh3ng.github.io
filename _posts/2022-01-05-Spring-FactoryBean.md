@@ -2,9 +2,12 @@
 layout: article  
 title: 【理解Spring】FactoryBean  
 date: 2022-01-05 00:00
+titleEn: Spring-FactoryBean
 category:  
 tags: [Spring]
+originFileName: FactoryBean.md
 ---
+
 
 代码示例：
 ```java
