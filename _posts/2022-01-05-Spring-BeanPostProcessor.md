@@ -2,9 +2,12 @@
 layout: article  
 title: 【理解Spring】BeanPostProcessor  
 date: 2022-01-05 00:00
+titleEn: Spring-BeanPostProcessor
 category:  
 tags: [Spring]  
+originFileName: BeanPostProcessor.md
 ---
+
 
 `BeanPostProcess`表示 Bean 的后置处理器
 一个`BeanPostProcessor`可以在任意一个 Bean 的初始化之前以及初始化之后去额外的做一些用户自定义的逻辑
