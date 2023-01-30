@@ -2,8 +2,11 @@
 layout: article  
 title: 【理解Spring】扫描
 date: 2022-01-07 00:00 
+titleEn: Spring-scan
 tags: [Spring]  
+originFileName: Spring扫描.md
 ---
+
 
 Spring 启动的时候会调用 
 - `ClassPathBeanDefinitionScanner.scan(String... basePackages)`
