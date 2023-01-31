@@ -13,6 +13,7 @@ originFileName: "Spring.md"
 ## 核心原理
 - [[Spring核心接口]]
     - [BeanDefinition](/2022/01/02/Spring-BeanDefinition.html)
+    - [抽象 BeanDefinition](/2022/01/08/Spring-AbstractBeanDefinition.html)
     - [BeanFactory](/2022/01/03/Spring-BeanFactory.html)
     - [ApplicationContext](/2022/01/04/Spring-ApplicationContext.html)
     - [BeanPostProcessor](/2022/01/05/Spring-BeanPostProcessor.html)
@@ -36,5 +37,6 @@ originFileName: "Spring.md"
 - [Spring事务](/2022/01/17/Spring-Transaction.html)
 
 ## 实战相关
-- [@Qualifier 注解的使用](/2022/01/30/Spring-use-of-@Qualifier.html)
-- [动态获取Bean](/2022/02/01/Spring-dynamic-getBean.html)
+- [@Qualifier使用](/2022/01/30/Spring-use-of-@Qualifier.html)
+- [Spring动态获取Bean](/2022/02/01/Spring-dynamic-getBean.html)
+
