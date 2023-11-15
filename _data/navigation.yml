@@ -43,6 +43,23 @@ header:
 
   - titles:
       # @start locale config
+      en: &EN       Movies and TV shows
+      en-GB: *EN
+      en-US: *EN
+      en-CA: *EN
+      en-AU: *EN
+      zh-Hans: &ZH_HANS  影视清单
+      zh: *ZH_HANS
+      zh-CN: *ZH_HANS
+      zh-SG: *ZH_HANS
+      zh-Hant: &ZH_HANT  影視清單
+      zh-TW: *ZH_HANT
+      zh-HK: *ZH_HANT
+      # @end locale config
+    url: /movies-and-tv-shows.html
+
+  - titles:
+      # @start locale config
       en      : &EN       About
       en-GB   : *EN
       en-US   : *EN
