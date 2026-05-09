@@ -1,7 +1,7 @@
 ---
 layout: article
 title: 【理解Spring】系列前言
-date: 2099-01-01 00:00
+date: 2022-02-02 00:00
 titleEn: Spring-introduction
 tags: [Spring]
 originFileName: "Spring.md"
@@ -39,4 +39,3 @@ originFileName: "Spring.md"
 ## 实战相关
 - [@Qualifier使用](/2022/01/30/Spring-use-of-@Qualifier.html)
 - [Spring动态获取Bean](/2022/02/01/Spring-dynamic-getBean.html)
-
