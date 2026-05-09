@@ -2,7 +2,7 @@
 layout: article  
 title: thymeleaf替换回车为br标签  
 date: 2019-03-12
-tags: []  
+tags: [Thymeleaf, HTML]
 ---
 
 项目中使用 thymeleaf 生成邮件信息，当数据中有换行符时，邮件内容无法正常显示换行（特别是使用 Outlook）  

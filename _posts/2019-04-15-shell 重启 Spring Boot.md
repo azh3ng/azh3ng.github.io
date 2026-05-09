@@ -3,7 +3,7 @@ layout: article
 title: shell 重启 Spring Boot  
 date: 2019-04-15  
 category:  
-tags: []  
+tags: [Shell, Spring Boot]
 ---
 
 ```shell

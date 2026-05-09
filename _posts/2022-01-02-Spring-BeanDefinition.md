@@ -49,8 +49,8 @@ BeanDefinition.SetLazyInit(true); // 设置懒加载
 
 ## RootBeanDefinition
 
-TOOD
+待补充。
 
 ## GenericBeanDefinition
 
-TODO
+待补充。

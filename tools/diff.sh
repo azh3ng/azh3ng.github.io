@@ -1,5 +1,4 @@
-Diffmerge ./_config.yml ./docs/_config.yml ./docs/_config.dev.yml
-Diffmerge ./_config.yml ./test/_config.yml
+#!/usr/bin/env bash
+set -euo pipefail
 
-Diffmerge ./_data/ ./docs/_data/
-Diffmerge ./_data/ ./test/_data
+git diff -- _config.yml _data docker tools

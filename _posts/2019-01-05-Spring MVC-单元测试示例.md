@@ -3,7 +3,7 @@ layout: article
 title: Spring MVC-单元测试示例  
 date: 2019-01-05  
 category:  
-tags: []  
+tags: [Spring MVC, UnitTest]
 ---
 
 记录 Spring Boot 中 Spring MVC 的单体测试样例, 方便以后写单体测试直接复制粘贴

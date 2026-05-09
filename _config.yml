@@ -36,7 +36,7 @@ timezone: Asia/Shanghai # see https://en.wikipedia.org/wiki/List_of_tz_database_
 author:
   type      : # "person" (default), "organization"
   name      : azh3ng
-  url       : http://azh3ng.com
+  url       : https://azh3ng.com
   avatar    : # path or url of avatar image (square)
   bio       : 程序员一枚，生活在上海。
   email     :
@@ -106,7 +106,7 @@ sources: unpkg # bootcdn (default), unpkg
 
 ## => Future
 ##############################
-future: true # default false. Publish posts or collection documents with a future date.
+future: false # default false. Publish posts or collection documents with a future date.
 
 
 ## => Sharing

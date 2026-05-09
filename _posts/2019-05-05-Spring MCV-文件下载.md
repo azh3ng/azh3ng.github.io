@@ -1,9 +1,9 @@
 ---
 layout: article  
-title: Spring MCV-文件下载  
+title: Spring MVC-文件下载
 date: 2019-05-05  
 category:  
-tags: []  
+tags: [Spring MVC, Java]
 ---
 
 在 springmvc 应用程序中下载文件有几种方法:

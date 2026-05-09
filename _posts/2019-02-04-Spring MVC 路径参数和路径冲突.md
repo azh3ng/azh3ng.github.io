@@ -3,7 +3,7 @@ layout: article
 title: Spring MVC 路径参数和路径冲突  
 date: 2019-02-04  
 category:  
-tags: []  
+tags: [Spring MVC, Java]
 ---
 
 SpringMVC可以对 `@RequestMapping` 中的URL进行匹配, 转发到相应的`Controller`方法
@@ -27,4 +27,3 @@ public String test1() {
 当访问 `/test/aa` 时, 返回 `Path: /aa`
 
 当访问 `/test/aaa` 或者其他时, 返回 `PathVariable Value: aaa`
-

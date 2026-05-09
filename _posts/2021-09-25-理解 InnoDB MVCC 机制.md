@@ -386,7 +386,7 @@ sequenceDiagram
 两次查询结果相同，实现了 Repeatable Read 级别的隔离，查询没有读到其他事务未提交的修改，没有读到事务开启之后的数据修改，并且两次查询结果相同。
 
 
-TODO https://xiaolincoding.com/mysql/transaction/phantom.html#%E6%80%BB%E7%BB%93 对MVCC与幻读之间的关系做了较为详细的说明
+补充参考：<https://xiaolincoding.com/mysql/transaction/phantom.html#%E6%80%BB%E7%BB%93> 对 MVCC 与幻读之间的关系做了较为详细的说明。
 
 ## 参考
 - <https://www.cnblogs.com/CodeBear/p/12710670.html>

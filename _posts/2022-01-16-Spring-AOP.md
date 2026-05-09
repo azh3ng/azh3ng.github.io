@@ -4,7 +4,7 @@ alias: Spring AOP
 title: 【理解Spring】AOP
 date: 2022-01-16 00:00
 titleEn: Spring-AOP
-tags: []
+tags: [Spring, AOP]
 mermaid: true
 originFileName: "Spring AOP.md"
 ---
@@ -381,4 +381,3 @@ public class Azh3ngAspect {
 ## 参考
 - [Spring-AOP @AspectJ切点函数之execution()](https://blog.51cto.com/u_15239532/5203448)
 - [Spring AOP Concepts](https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#aop-introduction-defn)
-

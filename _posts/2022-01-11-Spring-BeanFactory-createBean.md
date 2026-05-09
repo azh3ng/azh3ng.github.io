@@ -381,7 +381,7 @@ public class Azh3ngBeanPostProcessor implements BeanPostProcessor {
             - 此时如果方法返回不为空，则直接执行初始化后
 - 创建 Bean（`AbstractAutowireCapableBeanFactory.doCreateBean()`）
     - 实例化（`AbstractAutowireCapableBeanFactory.createBeanInstance()`）
-        - ==TODO==
+        - 推断构造方法、选择实例化策略并创建对象
     - 修改BeanDefinition（`AbstractAutowireCapableBeanFactory.applyMergedBeanDefinitionPostProcessors`）
         - `MergedBeanDefinitionPostProcessor.postProcessMergedBeanDefinition()`
           - 寻找[依赖注入#自动注入](/2022/01/14/Spring-Dependency-Injection.html#自动注入)的注入点（[依赖注入#寻找注入点](/2022/01/14/Spring-Dependency-Injection.html#寻找注入点)），并缓存 

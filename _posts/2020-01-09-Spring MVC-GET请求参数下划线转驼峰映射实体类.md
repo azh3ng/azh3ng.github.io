@@ -3,7 +3,7 @@ layout: article
 title: Spring MVC-GET请求参数下划线转驼峰映射实体类  
 date: 2020-01-09  
 category:  
-tags: []  
+tags: [Spring MVC, Java]
 ---
 
 环境: Spring MVC/Spring-Boot  

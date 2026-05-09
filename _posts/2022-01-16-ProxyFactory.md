@@ -4,7 +4,7 @@ alias: ProxyFactory
 title: 【理解Spring】ProxyFactory
 date: 2022-01-16 02:00
 titleEn: ProxyFactory
-tags: []
+tags: [Spring, Proxy]
 originFileName: "ProxyFactory.md"
 ---
 
@@ -177,4 +177,3 @@ if (config.isOptimize() || config.isProxyTargetClass() || hasNoUserSuppliedProxy
 - 或被代理的类是由 JDK 生成的代理对象
 
 **小结：** 除非被代理的类是接口，或者被代理的类是由 JDK 生成的代理对象，否则 ProxyFactory 默认会选择使用 CGLIB 代理方式生成代理对象。
-

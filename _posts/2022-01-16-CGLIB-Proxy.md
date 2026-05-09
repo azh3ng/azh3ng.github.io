@@ -4,7 +4,7 @@ alias: CGLIB动态代理
 title: 理解 CGLIB 动态代理
 date: 2022-01-16 01:01
 titleEn: CGLIB-Proxy
-tags: []
+tags: [Java, Proxy, CGLIB]
 originFileName: "CGLIB动态代理.md"
 ---
 
